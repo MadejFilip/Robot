@@ -12,6 +12,6 @@ public class Main {
 		// Set up a simple configuration that logs on the console.
 
 		logger.trace("Starting our great robot application.");
-
+		System.out.println("BUŁUNIA"!);
 	}
 }
