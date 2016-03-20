@@ -6,11 +6,11 @@ import com.epam.ja.kmw.model.Book;
 
 public interface BookDao {
 
-	public void addBook(Book book);
+	public boolean addBook(Book book);
 	
-	public void updateBook (Book book);
+	public boolean updateBook (Book book);
 	
-	public void delBook(int bookId);
+	public boolean delBook(int bookId);
 	
 	public List<Book> getAllBooks();
 	
