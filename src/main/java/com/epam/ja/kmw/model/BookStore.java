@@ -2,20 +2,29 @@ package com.epam.ja.kmw.model;
 
 public class BookStore {
 
+	private int id;
+	private String name;
 	private String url;
 	private String tag;
-	private String name;
 	private String container;
 	private String nameTag;
 	private String priceTag;
 
-	public BookStore(String name, String url, String tag,String container, String nameTag,String priceTag) {
+	public BookStore(String name, String url, String tag, String container, String nameTag, String priceTag) {
 		this.setName(name);
 		this.setUrl(url);
 		this.setTag(tag);
 		this.setContainer(container);
 		this.setNameTag(nameTag);
 		this.setPriceTag(priceTag);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUrl() {
