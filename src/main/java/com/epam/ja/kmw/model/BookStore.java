@@ -8,14 +8,16 @@ public class BookStore {
 	private String container;
 	private String nameTag;
 	private String priceTag;
+	private String nextTag;
 
-	public BookStore(String name, String url, String tag,String container, String nameTag,String priceTag) {
+	public BookStore(String name, String url, String tag,String container, String nameTag,String priceTag,String nextTag) {
 		this.setName(name);
 		this.setUrl(url);
 		this.setTag(tag);
 		this.setContainer(container);
 		this.setNameTag(nameTag);
 		this.setPriceTag(priceTag);
+		this.setNextTag(nextTag);
 	}
 
 	public String getUrl() {
@@ -64,6 +66,14 @@ public class BookStore {
 
 	public void setPriceTag(String priceTag) {
 		this.priceTag = priceTag;
+	}
+
+	public String getNextTag() {
+		return nextTag;
+	}
+
+	public void setNextTag(String nextTag) {
+		this.nextTag = nextTag;
 	}
 
 }

@@ -1,33 +1,35 @@
 package scraping;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.epam.ja.kmw.model.Book;
 import com.epam.ja.kmw.model.BookStore;
-import com.jaunt.Document;
 import com.jaunt.Element;
 import com.jaunt.Elements;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
+import com.jaunt.component.Hyperlink;
+
+
 
 public class LibraryChecker {
-	private static final UserAgent userAgent = new UserAgent();
+	private static UserAgent userAgent = new UserAgent();
 	
 	public static List<Book> getFreeBooks(BookStore library) throws ResponseException, NotFound{
 		List<Book> bookList = new ArrayList<>();
-		String url = library.getUrl(); 
+		String url = library.getUrl();	
 		boolean flag = false;
 		while(!flag) {		
-		try {
-			userAgent.doc=userAgent.visit(url);
-			bookList.addAll(getFromSubSite(library));
-			url=userAgent.doc.findFirst("<a class=\"next\">").getAt("href").toString();
-			System.out.println(url);
+			try {		
+				bookList.addAll(getFromSubSite(library,url));
+				String link = userAgent.doc.findFirst(library.getNextTag()).outerHTML();
+				link = link.substring(link.indexOf("http"));
+				link = link.substring(0,link.indexOf("\">"));
+				url= link;
 			
-		} catch(NotFound | ResponseException nf){
+		} catch(ResponseException | NotFound nf){
 			nf.printStackTrace();
 			flag=true;
 		}
@@ -37,16 +39,18 @@ public class LibraryChecker {
 		return bookList;
 	}
 	
-	private static List<Book> getFromSubSite(BookStore library) throws NotFound, ResponseException {
-
+	private static List<Book> getFromSubSite(BookStore library,String url) throws NotFound, ResponseException {
+		userAgent.visit(url);
 		List<Book> subsiteBookList = new ArrayList<>();
 		Elements links = userAgent.doc.findFirst(library.getTag()).findEach(library.getContainer());
 		for(Element element : links)
 		{		
 			
-			if(element.findFirst(library.getPriceTag()).innerText().contains("0,00"))
-			subsiteBookList.add(new Book(element.getFirst(library.getNameTag()).innerText(),library.getName()));
-			System.out.println(element.getFirst(library.getNameTag()).innerText());
+			if(element.findFirst(library.getPriceTag()).innerText().contains("0,00")||element.findFirst(library.getPriceTag()).innerText().contains("For Free"))
+			{
+			subsiteBookList.add(new Book(element.findFirst(library.getNameTag()).innerText(),library.getName()));
+			System.out.println(element.findFirst(library.getNameTag()).innerText());
+			}
 		}
 		return subsiteBookList;
 	}
