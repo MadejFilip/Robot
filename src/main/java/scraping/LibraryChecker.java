@@ -18,11 +18,12 @@ public class LibraryChecker {
 		List<Book> bookList = new ArrayList<>();
 		
 		userAgent.visit(library.getUrl());
-		Elements links = userAgent.doc.findFirst(library.getTag()).findEach("<li>");
+		Elements links = userAgent.doc.findFirst(library.getTag()).findEach(library.getContainer());
 		for(Element element : links)
 		{		
-			if(element.findFirst("<strong class=nprice>").getText().contains("0,00"))
-			bookList.add(new Book(library.getName(),element.getFirst("<h3>").findFirst("<a>").getText()));
+			
+			if(element.findFirst(library.getPriceTag()).innerText().contains("0,00"))
+			bookList.add(new Book(element.getFirst(library.getNameTag()).innerText(),library.getName()));
 			
 		}
 	

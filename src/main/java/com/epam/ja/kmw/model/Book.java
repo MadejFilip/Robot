@@ -29,6 +29,7 @@ public class Book {
 		this.id.set(id);
 	}
 
+
 	public StringProperty titleProperty() {
 		return title;
 	}
@@ -52,4 +53,10 @@ public class Book {
 	public void setBookStore(String bookStore) {
 		this.bookStore.set(bookStore);
 	}
+	
+	@Override
+	public String toString() {
+		return "Book [ id= " + id.get() + ", title= " + title.get() + ", bookStore= " + bookStore.get() + " ]";
+	}
+	
 }
