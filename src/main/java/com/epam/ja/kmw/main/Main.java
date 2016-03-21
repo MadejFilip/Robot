@@ -22,12 +22,14 @@ public class Main {
 		// Set up a simple configuration that logs on the console.
 
 		LOGGER.trace("Starting our great robot application.");
-		BookStore lib = new BookStore("www.nexto.pl", "http://www.nexto.pl/ebooki_c1015.xml?_order=-5#filters",
-				"<ul class=\"productslist\">", "<li>", "<h3>", "<strong class=\"nprice\">");
+		//BookStore lib = new BookStore("www.nexto.pl", "http://www.nexto.pl/ebooki_c1015.xml",
+				//"<ul class=\"productslist\">", "<li>", "<h3>", "<strong class=\"nprice\">","<a class=\"next\">");
+		BookStore lib2 = new BookStore("bookrix.com", "http://www.bookrix.com/books.html", "<section id=\"booksList\">",
+				"<div class=\"item\">", "<a class=\"word-break\">", "<p class=\"item-price\">", "<li class=\"next\">");
 		
 		List<Book> bookList = new ArrayList<>();
 		try {
-			bookList.addAll(LibraryChecker.getFreeBooks(lib));
+			bookList.addAll(LibraryChecker.getFreeBooks(lib2));
 		} catch (NotFound | ResponseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,6 +38,7 @@ public class Main {
 		
 		for(Book bk : bookList) {
 			System.out.println(bk);
+			
 		}
 		
 
