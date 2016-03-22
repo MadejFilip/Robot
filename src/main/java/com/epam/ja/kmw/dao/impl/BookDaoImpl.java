@@ -21,7 +21,7 @@ public class BookDaoImpl implements BookDao {
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
 
 	private static final String DB_DRIVER = "org.sqlite.JDBC";
-	private static final String DB_URL = "jdbc:sqlite:/home/marcin/books.db";
+	private static final String DB_URL = "jdbc:sqlite:/home/kj/books.db";
 
 	private Connection connection;
 	private Statement statement;
