@@ -33,6 +33,7 @@ public class LibraryChecker {
 				link = link.substring(link.indexOf("http"));
 				link = link.substring(0, link.indexOf("\">"));
 				url = link;
+				System.out.println(url);
 			} catch (IndexOutOfBoundsException | ResponseException ie) {
 				LOGGER.error(ie.getMessage());
 				flag = true;
@@ -49,12 +50,14 @@ public class LibraryChecker {
 
 		Elements names = userAgent.doc.findEvery(library.getNameTag());
 		Elements prices = userAgent.doc.findEvery(library.getPriceTag());
-		
 		for(int i=0;i<names.size();i++) {
-			if(prices.getElement(i).innerText().contains("0,00") || prices.getElement(i).innerText().contains("For Free")){
-				subsiteBookList.add(new Book(names.getElement(i).innerText(), library.getName()));
-				counter++;
-			}
+				if(i<prices.size());
+				if(prices.getElement(i).innerText().contains("0,00") || prices.getElement(i).innerText().contains("For Free")){
+					subsiteBookList.add(new Book(names.getElement(i).innerText(), library.getName()));
+					System.out.println(names.getElement(i).innerText());
+					counter++;
+				}
+			
 		}
 		return subsiteBookList;
 	}

@@ -1,8 +1,6 @@
 package com.epam.ja.kmw.main;
 
 import java.awt.AWTException;
-import java.awt.Image;
-import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
@@ -11,12 +9,11 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,25 +29,83 @@ import scraping.LibraryChecker;
 public class Main {
 
 	public static final Logger LOGGER = LogManager.getLogger(Main.class);
-	private static int RUN_COUNTER;
-	private static String LAST_DATE;
-	public static void main(final String... args) {
+	private static int RUN_COUNTER=0;
+	private static String LAST_DATE="sdsd";
+	
+	public static void main(final String... args) {  
+        if (!SystemTray.isSupported()) {
+            System.out.println("SystemTray is not supported");
+            return;
+        }
+        final PopupMenu popup = new PopupMenu();
+        final TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("/home/kj/icon.png"),"BookStoreRobot",popup);
+        trayIcon.setImageAutoSize(true);
+        final SystemTray tray = SystemTray.getSystemTray();
+        MenuItem openItem = new MenuItem("Open");
+        
+        MenuItem closeItem = new MenuItem("Close");
+        closeItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);				
+			}
+		});
+        
+        popup.add(openItem);
+        popup.add(closeItem);
+        
+        
+        
+        SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+               
+        
+        try{
+            tray.add(trayIcon);
+        }catch(AWTException awtException){
+           LOGGER.error(awtException.getMessage());
+        }
+        
+        Timer timer = new Timer ();
+        TimerTask hourlyTask = new TimerTask () {
+            @Override
+            public void run () {
+            	Date curDate = new Date();
+               if(RUN_COUNTER <7 && hourFormat.format(curDate).equals("05") && !LAST_DATE.equals(dateFormat.format(curDate))){
+               downloading();
+               LAST_DATE=dateFormat.format(curDate);
+            }
+        }};
 
-		/*BookDaoImpl bookDao = new BookDaoImpl();
+        // schedule the task to run starting now and then every hour...
+        timer.schedule (hourlyTask, 0l,1000*60*10);
+
+        
+        
+        
+	}
+	
+
+	private static void downloading() {
+		BookDaoImpl bookDao = new BookDaoImpl();
 
 		// Set up a simple configuration that logs on the console.
 
 		LOGGER.trace("Starting our great robot application.");
 
-		BookStore lib = new BookStore("NEXTO", "http://www.nexto.pl/ebooki_c1015.xml",
+		BookStore lib = new BookStore("Nexto", "http://www.nexto.pl/ebooki_c1015.xml",
 				"<a class=\"title\">", "<strong class=\"nprice\">", "<a class=\"next\">");
 
-		BookStore lib2 = new BookStore("BOOKRIX", "http://www.bookrix.com/books.html", "<section id=\"booksList\">",
+		BookStore lib2 = new BookStore("BookRix", "http://www.bookrix.com/books.html", "<a class=\"word-break\">",
 				"<p class=\"item-price\">", "<li class=\"next\">");
+		
+		//BookStore lib3 = new BookStore("EBookPoint(Informatyka)","http://upolujebooka.pl/kategoria,8042,informatyka.html","<span class=\"product-tile-title-long\">","<span itemprop="price">","<a class=\"page page--next\">");
 
 		List<BookStore> libraries = new ArrayList<>();
-		libraries.add(lib);
+		//libraries.add(lib);
 		libraries.add(lib2);
+		//libraries.add(lib3);
 		// TODO libraries.addAll(from datebase);
 
 		List<Book> bookList = new ArrayList<>();
@@ -75,53 +130,7 @@ public class Main {
 			System.out.println(book);
 		}
 
-		bookDao.closeConnection();*/
-		
-	       
-        if (!SystemTray.isSupported()) {
-            System.out.println("SystemTray is not supported");
-            return;
-        }
-        final PopupMenu popup = new PopupMenu();
-        final TrayIcon trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("your_image/path_here.gif"),"blabla",popup);
-        trayIcon.setImageAutoSize(true);
-        final SystemTray tray = SystemTray.getSystemTray();
-        MenuItem openItem = new MenuItem("Open");
-        
-        MenuItem closeItem = new MenuItem("Close");
-        closeItem.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);				
-			}
-		});
-        
-        popup.add(openItem);
-        popup.add(closeItem);
-        
-        
-        
-        Date curDate = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("hh");
-        String dateToStr = format.format(curDate);
-        System.out.println(dateToStr);
-        
-        
-        
-        try{
-            tray.add(trayIcon);
-        }catch(AWTException awtException){
-            awtException.printStackTrace();
-        }
-        
-        while(true) {
-        	if(dateToStr.equals("12")) {
-        		
-        		break;
-        	}
-        		
-        }
-        
+		bookDao.closeConnection();
 	}
+	
 }
