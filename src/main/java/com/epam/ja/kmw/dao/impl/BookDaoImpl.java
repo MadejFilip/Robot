@@ -109,6 +109,15 @@ public class BookDaoImpl implements BookDao {
 
 	}
 
+	public boolean addAllBooks(List<Book> listOfBooks) {
+
+		for (Book book : listOfBooks) {
+			if (!addBook(book))
+				return false;
+		}
+		return true;
+	}
+
 	public boolean updateBook(Book book) {
 		String addBookQuery = "UPDATE Books SET Title = ?, BookStore = ?, add_date = ? WHERE id = ?";
 
@@ -204,6 +213,38 @@ public class BookDaoImpl implements BookDao {
 			return null;
 		}
 
+	}
+
+	@Override
+	public List<Book> getAllBooksForOneBookStore(String bookStoreName) {
+		List<Book> books = new ArrayList<>();
+
+		String getListOfBooksQuery = "SELECT * FROM Books WHERE = " + bookStoreName;
+
+		LOGGER.info("Getting books from base for " + bookStoreName + " bookstore...");
+
+		try {
+
+			ResultSet result = statement.executeQuery(getListOfBooksQuery);
+			while (result.next()) {
+
+				int id = result.getInt(1);
+				String title = result.getString(2);
+				String bookStore = result.getString(3);
+
+				Book book = new Book(title, bookStore);
+				books.add(book);
+				book.setId(id);
+			}
+			LOGGER.info("Successfully collected books from the database for " + bookStoreName + " bookstore.");
+			result.close();
+
+			return books;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			LOGGER.error("Fail to collect list of books from database for " + bookStoreName + "bookstore.");
+			return null;
+		}
 	}
 
 }
