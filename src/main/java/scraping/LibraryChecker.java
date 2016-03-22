@@ -46,12 +46,13 @@ public class LibraryChecker {
 		LOGGER.info("Visit: " + url);
 		userAgent.visit(url);
 		List<Book> subsiteBookList = new LinkedList<>();
-		Elements links = userAgent.doc.findFirst(library.getTag()).findEach(library.getContainer());
-		for (Element element : links) {
 
-			if (element.findFirst(library.getPriceTag()).innerText().contains("0,00")
-					|| element.findFirst(library.getPriceTag()).innerText().contains("For Free")) {
-				subsiteBookList.add(new Book(element.findFirst(library.getNameTag()).innerText(), library.getName()));
+		Elements names = userAgent.doc.findEvery(library.getNameTag());
+		Elements prices = userAgent.doc.findEvery(library.getPriceTag());
+		
+		for(int i=0;i<names.size();i++) {
+			if(prices.getElement(i).innerText().contains("0,00") || prices.getElement(i).innerText().contains("For Free")){
+				subsiteBookList.add(new Book(names.getElement(i).innerText(), library.getName()));
 				counter++;
 			}
 		}

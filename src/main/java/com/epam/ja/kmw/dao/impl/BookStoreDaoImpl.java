@@ -103,8 +103,6 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
-			prepareStatement.setString(3, bookStore.getTag());
-			prepareStatement.setString(4, bookStore.getContainer());
 			prepareStatement.setString(5, bookStore.getNameTag());
 			prepareStatement.setString(6, bookStore.getPriceTag());
 			prepareStatement.setString(7, bookStore.getNextTag());
@@ -131,8 +129,6 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			PreparedStatement prepareStatement = connection.prepareStatement(updateBookStoreQuery);
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
-			prepareStatement.setString(3, bookStore.getTag());
-			prepareStatement.setString(4, bookStore.getContainer());
 			prepareStatement.setString(5, bookStore.getNameTag());
 			prepareStatement.setString(6, bookStore.getPriceTag());
 			prepareStatement.setString(7, bookStore.getNextTag());
@@ -187,7 +183,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 				String priceTag = result.getString(7);
 				String nextTag = result.getString(8);
 
-				BookStore bookStore = new BookStore(name, url, tag, container, nameTag, priceTag, nextTag);
+				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag);
 				bookStore.setId(id);
 				listOfBookStores.add(bookStore);
 			}
@@ -221,7 +217,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			String priceTag = result.getString(7);
 			String nextTag = result.getString(8);
 
-			BookStore bookStore = new BookStore(name, url, tag, container, nameTag, priceTag, nextTag);
+			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag);
 			bookStore.setId(id);
 			result.close();
 
