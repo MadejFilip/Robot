@@ -1,12 +1,9 @@
 package com.epam.ja.kmw.dao.impl;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,54 +13,9 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookDao;
 import com.epam.ja.kmw.model.Book;
 
-public class BookDaoImpl implements BookDao {
+public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
-
-	private static final String DB_DRIVER = "org.sqlite.JDBC";
-	private static final String DB_URL = "jdbc:sqlite:/home/kj/books.db";
-
-	private Connection connection;
-	private Statement statement;
-
-	public BookDaoImpl() {
-		try {
-			Class.forName(BookDaoImpl.DB_DRIVER);
-		} catch (ClassNotFoundException e) {
-			LOGGER.error(e.getMessage());
-		}
-
-	}
-
-	public void createConnection() {
-
-		LOGGER.info("Connecting to database...");
-
-		try {
-			connection = DriverManager.getConnection(DB_URL);
-			statement = connection.createStatement();
-			LOGGER.info("Successfully connected with database.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.info("Fail to cennect with database.");
-		}
-	}
-
-	public void closeConnection() {
-
-		LOGGER.info("Closing connection with database...");
-
-		try {
-			statement.close();
-			connection.close();
-
-			LOGGER.info("Successfully ended connection with database.");
-		} catch (SQLException e) {
-			LOGGER.error("Fail to end connection.");
-			e.printStackTrace();
-		}
-
-	}
 
 	public void createTable() {
 

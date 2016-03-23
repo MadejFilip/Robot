@@ -12,18 +12,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import scraping.Scraper;
+import com.epam.ja.kmw.dao.impl.BookDaoImpl;
+import com.epam.ja.kmw.model.Book;
+import com.epam.ja.kmw.model.BookStore;
+
+import scraping.LibraryChecker;
 
 public class Main {
 
 	public static final Logger LOGGER = LogManager.getLogger(Main.class);
-	private static int RUN_COUNTER=0;
-	private static String LAST_DATE="sdsd";
-	
+
 	public static void main(final String... args) {  
 
 		LOGGER.trace("Starting our great robot application.");
@@ -39,10 +44,10 @@ public class Main {
         
         MenuItem closeItem = new MenuItem("Close");
         closeItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);				
+				System.exit(0);
 			}
 		});
         
@@ -72,12 +77,7 @@ public class Main {
             }
         }};
 
-        // schedule the task to run starting now and then every hour...
        timer.schedule (hourlyTask, 0l,1000*60*10);
 
-        
-        
-        
 	}
-	
 }
