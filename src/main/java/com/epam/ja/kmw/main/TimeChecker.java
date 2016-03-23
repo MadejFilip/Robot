@@ -1,0 +1,37 @@
+package com.epam.ja.kmw.main;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimerTask;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.epam.ja.kmw.dao.impl.PropertiesDaoImpl;
+import com.epam.ja.kmw.model.Properties;
+
+public class TimeChecker extends TimerTask {
+	public static final Logger LOGGER = LogManager.getLogger(TimeChecker.class);
+	SimpleDateFormat hourFormat = new SimpleDateFormat("kk");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+
+	@Override
+	public void run() {
+		Date curDate = new Date();
+		try(PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl()){
+			propertiesDaoImpl.createConnection();
+			propertiesDaoImpl.createTable();
+			Properties properties = propertiesDaoImpl.getProperties();
+			if(properties.getRunCounter() <7 && hourFormat.format(curDate).equals("23") && !properties.getLastDate().equals(dateFormat.format(curDate))){
+				               new Scraper().downloading();
+				               properties.setLastDate(dateFormat.format(curDate));
+				               properties.setRunCounter(properties.getRunCounter()+1);
+				               propertiesDaoImpl.updateProperties(properties);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Can't close Properties database connection" + e.getMessage());
+		}
+		
+	}
+
+}
