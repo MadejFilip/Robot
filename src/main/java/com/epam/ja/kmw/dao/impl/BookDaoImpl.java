@@ -22,20 +22,12 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime)";
 		try {
-			boolean execute = statement.execute(createBooksTableQuery);
-			if (execute) {
-				LOGGER.info("Can't find table 'Books' in database...");
-				LOGGER.info("Creating new table.");
-				LOGGER.info("Successfully created table 'Books' in database.");
-			} else {
-				LOGGER.info("Successfully connected with table 'Books' in database.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to find or create a table 'Books' in database.");
-		} finally {
+			statement.execute(createBooksTableQuery);
+			LOGGER.info("Created Book database");
 
-		}
+		} catch (SQLException e) {
+			LOGGER.error("Fail to create a table 'Book' in database. :" + e.getMessage());
+		} 
 	}
 
 	public boolean addBook(Book book) {

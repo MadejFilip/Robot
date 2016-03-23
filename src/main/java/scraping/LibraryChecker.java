@@ -14,7 +14,7 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
 public class LibraryChecker {
-	private static UserAgent userAgent = new UserAgent();
+	private UserAgent userAgent;
 	private int counter;
 	private List<Book> bookList;
 	private final BookStore library;
@@ -25,6 +25,7 @@ public class LibraryChecker {
 		this.counter = 0;
 		this.library = library;
 		this.bookList = new LinkedList<>();
+		this.userAgent = new UserAgent();
 	}
 
 	public List<Book> getFreeBooks() {

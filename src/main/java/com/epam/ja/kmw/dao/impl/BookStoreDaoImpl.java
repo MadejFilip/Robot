@@ -19,23 +19,14 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 
 	public void createTable() {
 
-		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		String createBookStoresTableQuery = "CREATE TABLE BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
 				+ "nextTag varchar(255), add_date datetime default current_datetime)";
 		try {
-			boolean execute = statement.execute(createBookStoresTableQuery);
-			if (execute) {
-				LOGGER.info("Can't find table 'BookStores' in database...");
-				LOGGER.info("Creating new table.");
-				LOGGER.info("Successfully created table 'BookStores' in database.");
-			} else {
-				LOGGER.info("Successfully connected with table 'BookStores' in database.");
-			}
+			statement.executeQuery(createBookStoresTableQuery);
+			LOGGER.info("Created BookStore database");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to find or create a table 'BookStores' in database.");
-		} finally {
-
+			LOGGER.error("Fail to create a table 'BookStore' in database. :" + e.getMessage());
 		}
 	}
 
