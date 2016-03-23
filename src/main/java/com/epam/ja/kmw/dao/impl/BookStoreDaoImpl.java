@@ -180,8 +180,9 @@ public class BookStoreDaoImpl implements BookStoreDao {
 				String nameTag = result.getString(4);
 				String priceTag = result.getString(5);
 				String nextTag = result.getString(6);
+				String priceValue = result.getString(7);
 
-				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag);
+				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue);
 				bookStore.setId(id);
 				listOfBookStores.add(bookStore);
 			}
@@ -212,8 +213,9 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			String nameTag = result.getString(4);
 			String priceTag = result.getString(5);
 			String nextTag = result.getString(6);
+			String priceValue = result.getString(7);
 
-			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag);
+			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue);
 			bookStore.setId(id);
 			result.close();
 

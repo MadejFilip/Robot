@@ -8,14 +8,16 @@ public class BookStore {
 	private String nameTag;
 	private String priceTag;
 	private String nextTag;
+	private String priceValue;
 
 
-	public BookStore(String name, String url, String nameTag,String priceTag,String nextTag) {
+	public BookStore(String name, String url, String nameTag,String priceTag,String nextTag, String priceValue) {
 		this.setName(name);
 		this.setUrl(url);
 		this.setNameTag(nameTag);
 		this.setPriceTag(priceTag);
 		this.setNextTag(nextTag);
+		this.setPriceValue(priceValue);
 	}
 
 	public int getId() {
@@ -65,5 +67,15 @@ public class BookStore {
 	public void setNextTag(String nextTag) {
 		this.nextTag = nextTag;
 	}
+
+	public String getPriceValue() {
+		return priceValue;
+	}
+
+	public void setPriceValue(String priceValue) {
+		this.priceValue = priceValue;
+	}
+	
+	
 
 }

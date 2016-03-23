@@ -67,19 +67,20 @@ public class Main {
            LOGGER.error(awtException.getMessage());
         }
         
-        Timer timer = new Timer ();
-        TimerTask hourlyTask = new TimerTask () {
-            @Override
-            public void run () {
-            	Date curDate = new Date();
-               if(RUN_COUNTER <7 && hourFormat.format(curDate).equals("05") && !LAST_DATE.equals(dateFormat.format(curDate))){
-               downloading();
-               LAST_DATE=dateFormat.format(curDate);
-            }
-        }};
-
-        // schedule the task to run starting now and then every hour...
-        timer.schedule (hourlyTask, 0l,1000*60*10);
+        downloading();
+//        Timer timer = new Timer ();
+//        TimerTask hourlyTask = new TimerTask () {
+//            @Override
+//            public void run () {
+//            	Date curDate = new Date();
+//               if(RUN_COUNTER <7 && hourFormat.format(curDate).equals("05") && !LAST_DATE.equals(dateFormat.format(curDate))){
+//               downloading();
+//               LAST_DATE=dateFormat.format(curDate);
+//            }
+//        }};
+//
+//        // schedule the task to run starting now and then every hour...
+//        timer.schedule (hourlyTask, 0l,1000*60*10);
 
         
         
@@ -95,26 +96,22 @@ public class Main {
 		LOGGER.trace("Starting our great robot application.");
 
 		BookStore lib = new BookStore("Nexto", "http://www.nexto.pl/ebooki_c1015.xml",
-				"<a class=\"title\">", "<strong class=\"nprice\">", "<a class=\"next\">");
+				"<a class=\"title\">", "<strong class=\"nprice\">", "<a class=\"next\">", "0,00");
 
 		BookStore lib2 = new BookStore("BookRix", "http://www.bookrix.com/books.html", "<a class=\"word-break\">",
-				"<p class=\"item-price\">", "<li class=\"next\">");
+				"<p class=\"item-price\">", "<li class=\"next\">", "For Free");
 		
-		//BookStore lib3 = new BookStore("EBookPoint(Informatyka)","http://upolujebooka.pl/kategoria,8042,informatyka.html","<span class=\"product-tile-title-long\">","<span itemprop="price">","<a class=\"page page--next\">");
+		BookStore lib3 = new BookStore("Upoluj Ebooka","http://upolujebooka.pl/kategoria,8248,darmowe_e-booki.html","<h2>","<span itemprop=\"price\">","<a class=\"normal\">", "---");
 
 		List<BookStore> libraries = new ArrayList<>();
-		//libraries.add(lib);
+		libraries.add(lib);
 		libraries.add(lib2);
-		//libraries.add(lib3);
+		libraries.add(lib3);
 		// TODO libraries.addAll(from datebase);
 
 		List<Book> bookList = new ArrayList<>();
 		for (BookStore bookStore : libraries) {
-			try {
-				bookList.addAll(LibraryChecker.getFreeBooks(bookStore));
-			} catch (NotFound | ResponseException e) {
-				LOGGER.error(e.getMessage());
-			}
+				bookList.addAll(new LibraryChecker(bookStore).getFreeBooks());
 		}
 
 		bookDao.createConnection();
