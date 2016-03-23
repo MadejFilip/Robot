@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.model.Book;
 import com.epam.ja.kmw.model.BookStore;
-import com.jaunt.Element;
 import com.jaunt.Elements;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
@@ -71,7 +70,6 @@ public class LibraryChecker {
 			try {
 				if (prices.getElement(i).innerText().contains(library.getPriceValue())) {
 					bookList.add(new Book(names.getElement(i).innerText(), library.getName()));
-					LOGGER.info("tralalalala");
 					counter++;
 					if(counter>=100){
 						return false;
