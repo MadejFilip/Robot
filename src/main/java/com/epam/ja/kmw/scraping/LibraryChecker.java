@@ -1,4 +1,4 @@
-package scraping;
+package com.epam.ja.kmw.scraping;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,14 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.model.Book;
 import com.epam.ja.kmw.model.BookStore;
-import com.jaunt.Element;
 import com.jaunt.Elements;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
 public class LibraryChecker {
-	private static UserAgent userAgent = new UserAgent();
+	private UserAgent userAgent;
 	private int counter;
 	private List<Book> bookList;
 	private final BookStore library;
@@ -26,6 +25,7 @@ public class LibraryChecker {
 		this.counter = 0;
 		this.library = library;
 		this.bookList = new LinkedList<>();
+		this.userAgent = new UserAgent();
 	}
 
 	public List<Book> getFreeBooks() {
@@ -66,14 +66,21 @@ public class LibraryChecker {
 		}
 
 		Elements names = userAgent.doc.findEvery(library.getNameTag());
+		System.out.println("NameTag:" + library.getNameTag());
+		
 		Elements prices = userAgent.doc.findEvery(library.getPriceTag());
+		System.out.println("PriceTag" + library.getPriceTag());
 		for (int i = 0; i < names.size(); i++) {
 			try {
+				System.out.println(names.getElement(i).innerText());
+				System.out.println(library.getPriceValue());
+				
 				if (prices.getElement(i).innerText().contains(library.getPriceValue())) {
+					
+					System.out.println("dodaje ksiazke");
 					bookList.add(new Book(names.getElement(i).innerText(), library.getName()));
-					LOGGER.info("tralalalala");
 					counter++;
-					if(counter>=100){
+					if (counter >= 100) {
 						return false;
 					}
 				}

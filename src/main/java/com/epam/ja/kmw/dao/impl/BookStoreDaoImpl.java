@@ -19,30 +19,22 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 
 	public void createTable() {
 
-		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		String createBookStoresTableQuery = "CREATE TABLE BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
-				+ "nextTag varchar(255), add_date datetime default current_datetime)";
+				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime)";
 		try {
-			boolean execute = statement.execute(createBookStoresTableQuery);
-			if (!execute) {
-				LOGGER.info("Can't find table 'BookStores' in database...");
-				LOGGER.info("Creating new table.");
-				LOGGER.info("Successfully created table 'BookStores' in database.");
-			} else {
-				LOGGER.info("Successfully connected with table 'BookStores' in database.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to find or create a table 'BookStores' in database.");
-		} finally {
 
+			statement.executeQuery(createBookStoresTableQuery);
+			LOGGER.info("Created BookStore database");
+		} catch (SQLException e) {
+			LOGGER.error("Fail to create a table 'BookStore' in database. :" + e.getMessage());
 		}
 	}
 
 	@Override
 	public boolean addBookStore(BookStore bookStore) {
 
-		String addBoookStoreQuery = "INSERT INTO BookStores VALUES (NULL, ?, ?, ?, ?, ?, ?)";
+		String addBoookStoreQuery = "INSERT INTO BookStores VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
 
 		LOGGER.info("Adding bookstore to database...");
 
@@ -58,7 +50,9 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 			prepareStatement.setString(3, bookStore.getNameTag());
 			prepareStatement.setString(4, bookStore.getPriceTag());
 			prepareStatement.setString(5, bookStore.getNextTag());
-			prepareStatement.setDate(6, sqlDate);
+			prepareStatement.setString(6, bookStore.getPriceValue());
+
+			prepareStatement.setDate(7, sqlDate);
 
 			prepareStatement.executeUpdate();
 
@@ -73,7 +67,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 	@Override
 	public boolean updateBookStore(BookStore bookStore) {
 		String updateBookStoreQuery = "UPDATE BookStores SET name = ?, url = ?, nameTag = ?, "
-				+ "priceTag = ?, nextTag = ?  WHERE id = ?";
+				+ "priceTag = ?, nextTag = ?, priceValue = ?,  WHERE id = ?";
 
 		LOGGER.info("Updating book in database...");
 
@@ -84,7 +78,8 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 			prepareStatement.setString(3, bookStore.getNameTag());
 			prepareStatement.setString(4, bookStore.getPriceTag());
 			prepareStatement.setString(5, bookStore.getNextTag());
-			prepareStatement.setInt(6, bookStore.getId());
+			prepareStatement.setString(6, bookStore.getPriceValue());
+			prepareStatement.setInt(7, bookStore.getId());
 			prepareStatement.executeUpdate();
 			LOGGER.info("Successfully updated bookstore in database.");
 			return true;
@@ -177,6 +172,36 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			LOGGER.error("Fail when try to collect bookStore " + bookStoreId + " form database.");
+			return null;
+		}
+	}
+
+	public BookStore getBookStoreByName(String bookStoreName) {
+		String getBooksQuery = "SELECT * FROM BookStores WHERE name = '" + bookStoreName + "';";
+
+		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
+
+		try {
+			ResultSet result = statement.executeQuery(getBooksQuery);
+			result.next();
+
+			int id = result.getInt(1);
+			String url = result.getString(3);
+			String nameTag = result.getString(4);
+			String priceTag = result.getString(5);
+			String nextTag = result.getString(6);
+			String priceValue = result.getString(7);
+
+			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue);
+			bookStore.setId(id);
+			result.close();
+
+			LOGGER.info("Successfully collected bookStore " + bookStoreName + " from database.");
+
+			return bookStore;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			LOGGER.error("Fail when try to collect bookStore " + bookStoreName + " form database.");
 			return null;
 		}
 	}

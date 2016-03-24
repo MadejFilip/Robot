@@ -15,22 +15,14 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 	private static final Logger LOGGER = LogManager.getLogger(AbstracDaoImpl.class);
 
 	public void createTable() {
-		String createPropertiesTableQuery = "CREATE TABLE IF NOT EXISTS Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		String createPropertiesTableQuery = "CREATE TABLE Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "lastDate varchar(255), runCounter INTEGER)";
 		try {
-			boolean execute = statement.execute(createPropertiesTableQuery);
-			if (!execute) {
-				LOGGER.info("Can't find table 'Properties' in database...");
-				LOGGER.info("Creating new table.");
-				LOGGER.info("Successfully created table 'Properties' in database.");
-			} else {
-				LOGGER.info("Successfully connected with table 'Properties' in database.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to find or create a table 'Properties' in database.");
-		} finally {
 
+			statement.execute(createPropertiesTableQuery);
+			LOGGER.info("Created Properties database");
+		} catch (SQLException e) {
+			LOGGER.error("Fail to create a table 'Properties' in database. :" + e.getMessage());
 		}
 	}
 
@@ -43,7 +35,16 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 		try {
 
 			ResultSet result = statement.executeQuery(getPropertiesQuery);
-			result.next();
+			if (!result.next()) {
+
+				String addDefaultQuery = "INSERT INTO Properties VALUES(NULL,?, ?)";
+
+				PreparedStatement preparedStatement = connection.prepareStatement(addDefaultQuery);
+				preparedStatement.setString(1, "");
+				preparedStatement.setInt(2, 0);
+				preparedStatement.executeUpdate();
+				result = statement.executeQuery(getPropertiesQuery);
+			}
 
 			String lastDate = result.getString(2);
 			int runCounter = result.getInt(3);

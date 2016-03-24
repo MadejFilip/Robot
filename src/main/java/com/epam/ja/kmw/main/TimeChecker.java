@@ -1,0 +1,62 @@
+package com.epam.ja.kmw.main;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimerTask;
+
+import javax.swing.JOptionPane;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.epam.ja.kmw.dao.impl.PropertiesDaoImpl;
+import com.epam.ja.kmw.model.Properties;
+import com.epam.ja.kmw.scraping.Scraper;
+
+import javafx.application.Platform;
+import javafx.stage.Stage;
+
+public class TimeChecker extends TimerTask {
+	public static final Logger LOGGER = LogManager.getLogger(TimeChecker.class);
+	SimpleDateFormat hourFormat = new SimpleDateFormat("kk");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+	Stage primaryStage;
+
+	public TimeChecker(Stage thisStage) {
+		super();
+		this.primaryStage = thisStage;
+	}
+
+	@Override
+	public void run() {
+
+		Date curDate = new Date();
+		try (PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl()) {
+			propertiesDaoImpl.createConnection();
+			propertiesDaoImpl.createTable();
+			Properties properties = propertiesDaoImpl.getProperties();
+			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("11")
+					&& !properties.getLastDate().equals(dateFormat.format(curDate))) {
+				TrayApp.changeOpeningStatus();
+				Platform.runLater(new Runnable() {
+
+					@Override
+					public void run() {
+						primaryStage.hide();
+					}
+				});
+				JOptionPane.showMessageDialog(null,
+						"BookStoreRobot is curently downloading data... \nCheck in couple of minutes");
+				new Scraper().downloading();
+				properties.setLastDate(dateFormat.format(curDate));
+				properties.setRunCounter(properties.getRunCounter() + 1);
+				propertiesDaoImpl.updateProperties(properties);
+				TrayApp.changeOpeningStatus();
+			}
+		} catch (Exception e) {
+			LOGGER.error("Can't close Properties database connection" + e.getMessage());
+		}
+
+	}
+
+}

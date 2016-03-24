@@ -8,10 +8,11 @@ import java.sql.Statement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AbstracDaoImpl {
+public class AbstracDaoImpl implements AutoCloseable {
 
 	private static final String DB_DRIVER = "org.sqlite.JDBC";
-	private static final String DB_URL = "jdbc:sqlite:books.db";
+
+	private static final String DB_URL = "jdbc:sqlite:./books.db";
 
 	private static final Logger LOGGER = LogManager.getLogger(AbstracDaoImpl.class);
 
@@ -53,6 +54,12 @@ public class AbstracDaoImpl {
 			LOGGER.error("Fail to end connection.");
 			e.printStackTrace();
 		}
+
+	}
+
+	@Override
+	public void close() throws Exception {
+		closeConnection();
 
 	}
 }
