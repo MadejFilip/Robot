@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.epam.ja.kmw.Main;
 import com.epam.ja.kmw.viewer.FreeBookViewer;
 
 import javafx.application.Platform;
@@ -30,7 +31,7 @@ public class TrayApp {
 			LOGGER.error("SystemTray is not supported");
 			System.exit(0);
 		}
-		trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("./src/main/resources/icon.png"),
+		trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage(Main.class.getResource("/icon.png")),
 				"BookStoreRobot", popup);
 		trayIcon.setImageAutoSize(true);
 

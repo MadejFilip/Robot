@@ -1,4 +1,4 @@
-package com.epam.ja.kmw.main;
+package com.epam.ja.kmw;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -6,6 +6,8 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.epam.ja.kmw.main.TimeChecker;
+import com.epam.ja.kmw.main.TrayApp;
 import com.epam.ja.kmw.viewer.FreeBookViewer;
 
 import javafx.application.Application;
@@ -33,7 +35,7 @@ public class Main extends Application {
 		trayApp.initializeTray(freeBookViewer);
 		Timer timer = new Timer();
 		TimerTask timeChecker = new TimeChecker(thisStage);
-		timer.schedule(timeChecker, 0l, 1000 * 60 * 10);
+		timer.schedule(timeChecker, 0l, 1000 * 60);
 
 	}
 }

@@ -38,7 +38,7 @@ public class TimeChecker extends TimerTask {
 			propertiesDaoImpl.createTable();
 
 			Properties properties = propertiesDaoImpl.getProperties();
-			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("12")
+			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("14")
 					&& !properties.getLastDate().equals(dateFormat.format(curDate))) {
 				TrayApp.changeOpeningStatus();
 				Platform.runLater(new Runnable() {
