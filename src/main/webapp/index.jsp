@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<form action="Robot">
+		<input type="submit" value="Run Robot">
+	</form>
 </body>
 </html>
