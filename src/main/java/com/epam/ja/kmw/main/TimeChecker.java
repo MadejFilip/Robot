@@ -9,11 +9,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.dao.impl.PropertiesDaoImpl;
 import com.epam.ja.kmw.model.Properties;
+import com.epam.ja.kmw.scraping.Scraper;
 
 public class TimeChecker extends TimerTask {
 	public static final Logger LOGGER = LogManager.getLogger(TimeChecker.class);
 	SimpleDateFormat hourFormat = new SimpleDateFormat("kk");
-	SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD");
 
 	@Override
 	public void run() {
@@ -22,11 +23,13 @@ public class TimeChecker extends TimerTask {
 			propertiesDaoImpl.createConnection();
 			propertiesDaoImpl.createTable();
 			Properties properties = propertiesDaoImpl.getProperties();
-			if(properties.getRunCounter() <7 && hourFormat.format(curDate).equals("23") && !properties.getLastDate().equals(dateFormat.format(curDate))){
+			if(properties.getRunCounter() <7 && hourFormat.format(curDate).equals("03") && !properties.getLastDate().equals(dateFormat.format(curDate))){
+							   TrayApp.changeOpeningStatus();
 				               new Scraper().downloading();
 				               properties.setLastDate(dateFormat.format(curDate));
 				               properties.setRunCounter(properties.getRunCounter()+1);
 				               propertiesDaoImpl.updateProperties(properties);
+				               TrayApp.changeOpeningStatus();
 			}
 		} catch (Exception e) {
 			LOGGER.error("Can't close Properties database connection" + e.getMessage());

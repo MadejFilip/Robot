@@ -1,4 +1,4 @@
-package com.epam.ja.kwm.scraping;
+package com.epam.ja.kmw.scraping;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -172,4 +172,34 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 		}
 	}
 
+	public BookStore getBookStoreByName(String bookStoreName) {
+		String getBooksQuery = "SELECT * FROM BookStores WHERE name = '" + bookStoreName + "';";
+
+		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
+
+		try {
+			ResultSet result = statement.executeQuery(getBooksQuery);
+			result.next();
+
+			int id = result.getInt(1);
+			String url = result.getString(3);
+			String nameTag = result.getString(4);
+			String priceTag = result.getString(5);
+			String nextTag = result.getString(6);
+			String priceValue = result.getString(7);
+
+			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue);
+			bookStore.setId(id);
+			result.close();
+
+			LOGGER.info("Successfully collected bookStore " + bookStoreName + " from database.");
+
+			return bookStore;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			LOGGER.error("Fail when try to collect bookStore " + bookStoreName + " form database.");
+			return null;
+		}
+	}
+
 }
