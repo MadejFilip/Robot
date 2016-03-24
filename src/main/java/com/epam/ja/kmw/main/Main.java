@@ -26,6 +26,9 @@ public class Main {
 	public static final Logger LOGGER = LogManager.getLogger(Main.class);
 
 	public static void main(final String... args) {
+		
+		
+		
 		if (!SystemTray.isSupported()) {
 			System.out.println("SystemTray is not supported");
 			return;

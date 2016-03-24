@@ -10,8 +10,7 @@ public class BookStore {
 	private String nextTag;
 	private String priceValue;
 
-
-	public BookStore(String name, String url, String nameTag,String priceTag,String nextTag, String priceValue) {
+	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue) {
 		this.setName(name);
 		this.setUrl(url);
 		this.setNameTag(nameTag);
@@ -75,7 +74,5 @@ public class BookStore {
 	public void setPriceValue(String priceValue) {
 		this.priceValue = priceValue;
 	}
-	
-	
 
 }

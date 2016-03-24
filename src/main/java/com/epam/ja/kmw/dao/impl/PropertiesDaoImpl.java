@@ -19,7 +19,7 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 				+ "lastDate varchar(255), runCounter INTEGER)";
 		try {
 			boolean execute = statement.execute(createPropertiesTableQuery);
-			if (execute) {
+			if (!execute) {
 				LOGGER.info("Can't find table 'Properties' in database...");
 				LOGGER.info("Creating new table.");
 				LOGGER.info("Successfully created table 'Properties' in database.");

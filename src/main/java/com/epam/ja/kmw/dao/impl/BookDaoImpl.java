@@ -23,7 +23,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime)";
 		try {
 			boolean execute = statement.execute(createBooksTableQuery);
-			if (execute) {
+			if (!execute) {
 				LOGGER.info("Can't find table 'Books' in database...");
 				LOGGER.info("Creating new table.");
 				LOGGER.info("Successfully created table 'Books' in database.");
