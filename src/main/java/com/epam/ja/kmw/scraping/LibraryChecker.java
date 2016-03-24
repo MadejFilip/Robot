@@ -57,7 +57,6 @@ public class LibraryChecker {
 	}
 
 	private boolean getFromSubSite(String url) {
-		LOGGER.info("Visit: " + url);
 		try {
 			userAgent.visit(url);
 		} catch (ResponseException e) {
@@ -66,18 +65,13 @@ public class LibraryChecker {
 		}
 
 		Elements names = userAgent.doc.findEvery(library.getNameTag());
-		System.out.println("NameTag:" + library.getNameTag());
-		
+
 		Elements prices = userAgent.doc.findEvery(library.getPriceTag());
-		System.out.println("PriceTag" + library.getPriceTag());
 		for (int i = 0; i < names.size(); i++) {
 			try {
-				System.out.println(names.getElement(i).innerText());
-				System.out.println(library.getPriceValue());
-				
+
 				if (prices.getElement(i).innerText().contains(library.getPriceValue())) {
-					
-					System.out.println("dodaje ksiazke");
+
 					bookList.add(new Book(names.getElement(i).innerText(), library.getName()));
 					counter++;
 					if (counter >= 100) {

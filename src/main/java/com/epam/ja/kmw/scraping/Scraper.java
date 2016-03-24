@@ -22,13 +22,16 @@ public class Scraper {
 
 	}
 
-	public void downloading() {
-
+	public boolean downloading() {
+			boolean result = true;
 		try (BookDaoImpl bookDaoImpl = new BookDaoImpl()) {
 			bookDaoImpl.createConnection();
 			bookDaoImpl.createTable();
 
 			List<BookStore> libraries = getBookStores();
+			if(libraries.size()==0){
+				result=false;
+			}
 			CountDownLatch latch = new CountDownLatch(libraries.size());
 			for (BookStore bookStore : libraries) {
 				new Thread(new Runnable() {
@@ -44,6 +47,7 @@ public class Scraper {
 		} catch (Exception e) {
 			LOGGER.error("Couldn't close database: " + e.getMessage());
 		}
+		return result;
 	}
 
 }

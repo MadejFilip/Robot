@@ -3,12 +3,14 @@ package com.epam.ja.kmw.main;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
 import com.epam.ja.kmw.dao.impl.PropertiesDaoImpl;
 import com.epam.ja.kmw.model.Properties;
 import com.epam.ja.kmw.scraping.Scraper;
@@ -34,8 +36,9 @@ public class TimeChecker extends TimerTask {
 		try (PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl()) {
 			propertiesDaoImpl.createConnection();
 			propertiesDaoImpl.createTable();
+
 			Properties properties = propertiesDaoImpl.getProperties();
-			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("11")
+			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("12")
 					&& !properties.getLastDate().equals(dateFormat.format(curDate))) {
 				TrayApp.changeOpeningStatus();
 				Platform.runLater(new Runnable() {
@@ -47,10 +50,11 @@ public class TimeChecker extends TimerTask {
 				});
 				JOptionPane.showMessageDialog(null,
 						"BookStoreRobot is curently downloading data... \nCheck in couple of minutes");
-				new Scraper().downloading();
+
 				properties.setLastDate(dateFormat.format(curDate));
 				properties.setRunCounter(properties.getRunCounter() + 1);
-				propertiesDaoImpl.updateProperties(properties);
+				if (new Scraper().downloading())
+					propertiesDaoImpl.updateProperties(properties);
 				TrayApp.changeOpeningStatus();
 			}
 		} catch (Exception e) {

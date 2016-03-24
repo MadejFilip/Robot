@@ -17,10 +17,18 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 	public void createTable() {
 		String createPropertiesTableQuery = "CREATE TABLE Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "lastDate varchar(255), runCounter INTEGER)";
+		String addDefaultQuery = "INSERT INTO Properties VALUES(NULL,?, ?)";
 		try {
 
 			statement.execute(createPropertiesTableQuery);
 			LOGGER.info("Created Properties database");
+			
+
+			PreparedStatement preparedStatement = connection.prepareStatement(addDefaultQuery);
+			preparedStatement.setString(1, "");
+			preparedStatement.setInt(2, 0);
+			preparedStatement.executeUpdate();
+			
 		} catch (SQLException e) {
 			LOGGER.error("Fail to create a table 'Properties' in database. :" + e.getMessage());
 		}
@@ -35,17 +43,7 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 		try {
 
 			ResultSet result = statement.executeQuery(getPropertiesQuery);
-			if (!result.next()) {
-
-				String addDefaultQuery = "INSERT INTO Properties VALUES(NULL,?, ?)";
-
-				PreparedStatement preparedStatement = connection.prepareStatement(addDefaultQuery);
-				preparedStatement.setString(1, "");
-				preparedStatement.setInt(2, 0);
-				preparedStatement.executeUpdate();
-				result = statement.executeQuery(getPropertiesQuery);
-			}
-
+			result.next();
 			String lastDate = result.getString(2);
 			int runCounter = result.getInt(3);
 
@@ -72,6 +70,7 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 			PreparedStatement prepareStatement = connection.prepareStatement(updatePropertiesQuery);
 			prepareStatement.setString(1, properties.getLastDate());
 			prepareStatement.setInt(2, properties.getRunCounter());
+			prepareStatement.setInt(3, 1);
 			prepareStatement.executeUpdate();
 			LOGGER.info("Successfully updated properties in database.");
 		} catch (SQLException e) {
