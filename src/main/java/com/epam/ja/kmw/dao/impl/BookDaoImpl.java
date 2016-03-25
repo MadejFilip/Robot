@@ -48,7 +48,7 @@ public class BookDaoImpl implements BookDao {
 	}
 	
 	private void createTableBooks() {
-		String createBooksTableQuery = "CREATE TABLE IF NOT EXIST Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime)";
 		try {
 

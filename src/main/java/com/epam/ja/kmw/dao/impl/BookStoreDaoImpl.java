@@ -25,7 +25,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	
 	private void createTableBookStores() {
 
-		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXIST BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
 				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime)";
 		try {
