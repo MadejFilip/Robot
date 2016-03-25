@@ -13,23 +13,16 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookDao;
 import com.epam.ja.kmw.model.Book;
 
-public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
+public class BookDaoImpl implements BookDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
-
-	public void createTable() {
-
-		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime)";
-		try {
-
-			statement.execute(createBooksTableQuery);
-			LOGGER.info("Created Book database");
-
-		} catch (SQLException e) {
-			LOGGER.error("Fail to create a table 'Book' in database. :" + e.getMessage());
-		}
+	private ConnectionDao connectionDao;
+	
+	public BookDaoImpl(ConnectionDao connectionDao) {
+		this.connectionDao=connectionDao;
+		createTableBooks();
 	}
+
 
 	public boolean addBook(Book book) {
 		String addBookQuery = "INSERT INTO Books VALUES (NULL, ?, ?, ?)";
@@ -40,7 +33,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 		Date sqlDate = new Date(date.getTime());
 
 		try {
-			PreparedStatement prepareStatement = connection.prepareStatement(addBookQuery);
+			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery);
 			prepareStatement.setString(1, book.getTitle());
 			prepareStatement.setString(2, book.getBookStore());
 			prepareStatement.setDate(3, sqlDate);
@@ -53,6 +46,20 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 		}
 
 	}
+	
+	private void createTableBooks() {
+		String createBooksTableQuery = "CREATE TABLE IF NOT EXIST Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime)";
+		try {
+
+			connectionDao.getStatement().execute(createBooksTableQuery);
+			LOGGER.info("Created Book database");
+
+		} catch (SQLException e) {
+			LOGGER.error("Fail to create a table 'Book' in database. :" + e.getMessage());
+		}
+
+}
 
 	public boolean addAllBooks(List<Book> listOfBooks) {
 
@@ -72,7 +79,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 		Date sqlDate = new Date(date.getTime());
 
 		try {
-			PreparedStatement prepareStatement = connection.prepareStatement(addBookQuery);
+			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery);
 			prepareStatement.setString(1, book.getTitle());
 			prepareStatement.setString(2, book.getBookStore());
 			prepareStatement.setDate(3, sqlDate);
@@ -93,7 +100,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 		LOGGER.info("Deleting book from database...");
 
 		try {
-			statement.executeQuery(delBookQuery);
+			connectionDao.getStatement().executeQuery(delBookQuery);
 			LOGGER.info("Successfully deleted book from database.");
 		} catch (SQLException e) {
 			LOGGER.error("Fail when deleting book from database. Caused by: \n" + e.getStackTrace());
@@ -111,7 +118,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 
 		try {
 
-			ResultSet result = statement.executeQuery(getListOfBooksQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery);
 			while (result.next()) {
 
 				int id = result.getInt(1);
@@ -139,7 +146,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 		LOGGER.info("Getting book " + bookId + " from database...");
 
 		try {
-			ResultSet result = statement.executeQuery(getBooksQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
 			result.next();
 
 			String title = result.getString(1);
@@ -170,7 +177,7 @@ public class BookDaoImpl extends AbstracDaoImpl implements BookDao {
 
 		try {
 
-			ResultSet result = statement.executeQuery(getListOfBooksQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery);
 			while (result.next()) {
 
 				int id = result.getInt(1);

@@ -10,21 +10,29 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.PropertiesDao;
 import com.epam.ja.kmw.model.Properties;
 
-public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
+public class PropertiesDaoImpl implements PropertiesDao {
 
-	private static final Logger LOGGER = LogManager.getLogger(AbstracDaoImpl.class);
+	private static final Logger LOGGER = LogManager.getLogger(ConnectionDao.class);
+	ConnectionDao connectionDao;
 
-	public void createTable() {
+	public PropertiesDaoImpl(ConnectionDao connectionDao) {
+		this.connectionDao=connectionDao;
+		createTableProperties();
+	}
+	
+
+	
+	private void createTableProperties() {
 		String createPropertiesTableQuery = "CREATE TABLE Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "lastDate varchar(255), runCounter INTEGER)";
 		String addDefaultQuery = "INSERT INTO Properties VALUES(NULL,?, ?)";
 		try {
 
-			statement.execute(createPropertiesTableQuery);
+			connectionDao.getStatement().execute(createPropertiesTableQuery);
 			LOGGER.info("Created Properties database");
 			
 
-			PreparedStatement preparedStatement = connection.prepareStatement(addDefaultQuery);
+			PreparedStatement preparedStatement = connectionDao.getConnection().prepareStatement(addDefaultQuery);
 			preparedStatement.setString(1, "");
 			preparedStatement.setInt(2, 0);
 			preparedStatement.executeUpdate();
@@ -33,7 +41,6 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 			LOGGER.error("Fail to create a table 'Properties' in database. :" + e.getMessage());
 		}
 	}
-
 	@Override
 	public Properties getProperties() {
 		String getPropertiesQuery = "SELECT * FROM Properties";
@@ -42,7 +49,7 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 
 		try {
 
-			ResultSet result = statement.executeQuery(getPropertiesQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getPropertiesQuery);
 			result.next();
 			String lastDate = result.getString(2);
 			int runCounter = result.getInt(3);
@@ -67,7 +74,7 @@ public class PropertiesDaoImpl extends AbstracDaoImpl implements PropertiesDao {
 		LOGGER.info("Updating properties in database...");
 
 		try {
-			PreparedStatement prepareStatement = connection.prepareStatement(updatePropertiesQuery);
+			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(updatePropertiesQuery);
 			prepareStatement.setString(1, properties.getLastDate());
 			prepareStatement.setInt(2, properties.getRunCounter());
 			prepareStatement.setInt(3, 1);

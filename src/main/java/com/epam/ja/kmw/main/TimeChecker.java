@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.dao.impl.PropertiesDaoImpl;
 import com.epam.ja.kmw.model.Properties;
 import com.epam.ja.kmw.scraping.Scraper;
@@ -30,10 +31,9 @@ public class TimeChecker extends TimerTask {
 	@Override
 	public void run() {
 		Date curDate = new Date();
-		try (PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl()) {
-			propertiesDaoImpl.createConnection();
-			propertiesDaoImpl.createTable();
-
+		try (ConnectionDao connectionDao = new ConnectionDao()) {
+			
+			PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl(connectionDao);
 			Properties properties = propertiesDaoImpl.getProperties();
 			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("14")
 					&& !properties.getLastDate().equals(dateFormat.format(curDate))) {

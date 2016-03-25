@@ -1,12 +1,14 @@
 package com.epam.ja.kmw.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.dao.impl.BookDaoImpl;
 import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
+import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.Book;
 import com.epam.ja.kmw.model.BookStore;
 import com.epam.ja.kmw.viewer.FreeBookViewer;
@@ -54,11 +56,9 @@ public class MainLayoutController {
 			@Override
 			public void run() {
 
-				try (BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl();
-						BookDaoImpl bookDao = new BookDaoImpl()) {
-
-					bookStoreDaoImpl.createConnection();
-					bookStoreDaoImpl.createTable();
+				try (ConnectionDao connectionDao = new ConnectionDao()) {
+					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
+					BookDaoImpl bookDao = new BookDaoImpl(connectionDao);
 
 					for (BookStore bookStore : bookStoreDaoImpl.getAllBooksStores()) {
 
@@ -66,8 +66,6 @@ public class MainLayoutController {
 
 						ListView<String> listView = new ListView<String>();
 
-						bookDao.createConnection();
-						bookDao.createTable();
 						for (Book book : bookDao.getAllBooksForOneBookStore(bookStore.getName())) {
 							listOfBooks.add(book.getTitle());
 						}
@@ -167,19 +165,15 @@ public class MainLayoutController {
 
 			@Override
 			public void run() {
-				try (BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl();
-						BookDaoImpl bookDao = new BookDaoImpl();) {
+				try (ConnectionDao connectionDao = new ConnectionDao() ) {
+					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
-					bookStoreDaoImpl.createConnection();
-					bookStoreDaoImpl.createTable();
 
 					BookStore bookStore = bookStoreDaoImpl
 							.getBookStoreByName(tabPane.getSelectionModel().getSelectedItem().getText());
 
 					bookStoreDaoImpl.delBookStore(bookStore.getId());
 
-					bookDao.createConnection();
-					bookDao.createTable();
 
 					Platform.runLater(new Runnable() {
 
@@ -190,7 +184,7 @@ public class MainLayoutController {
 					});
 				} catch (NullPointerException e) {
 					LOGGER.trace("Empty BookStore list. Can't delete.");
-				} catch (Exception e) {
+				} catch (SQLException e) {
 					LOGGER.error("Can't close database connection");
 				}
 			}

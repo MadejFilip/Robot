@@ -2,46 +2,50 @@ package com.epam.ja.kmw.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AbstracDaoImpl implements AutoCloseable {
+public class ConnectionDao implements AutoCloseable {
 
 	private static final String DB_DRIVER = "org.sqlite.JDBC";
 
 	private static final String DB_URL = "jdbc:sqlite:books.db";
 
-	private static final Logger LOGGER = LogManager.getLogger(AbstracDaoImpl.class);
+	private static final Logger LOGGER = LogManager.getLogger(ConnectionDao.class);
 
 	protected Connection connection;
 	protected Statement statement;
 
-	public AbstracDaoImpl() {
+	public ConnectionDao() {
 		try {
-			Class.forName(AbstracDaoImpl.DB_DRIVER);
+			Class.forName(ConnectionDao.DB_DRIVER);
 		} catch (ClassNotFoundException e) {
 			LOGGER.error(e.getMessage());
 		}
+		createConnection();
 	}
 
-	public void createConnection() {
+	private void createConnection() {
 
 		LOGGER.info("Connecting to database...");
 
 		try {
 			connection = DriverManager.getConnection(DB_URL);
 			statement = connection.createStatement();
+			
 			LOGGER.info("Successfully connected with database.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			LOGGER.info("Fail to cennect with database.");
 		}
 	}
+		
 
-	public void closeConnection() {
+	private void closeConnection() {
 
 		LOGGER.info("Closing connection with database...");
 
@@ -56,9 +60,23 @@ public class AbstracDaoImpl implements AutoCloseable {
 		}
 
 	}
+	
+	public Connection getConnection() throws SQLException {
+		if(connection != null)
+			return connection;
+		else
+			throw new SQLException("Connection is not available");
+	}
+	
+	public Statement getStatement() throws SQLException {
+		if(connection != null)
+			return statement;
+		else
+			throw new SQLException("Statement is not available");
+	}
 
 	@Override
-	public void close() throws Exception {
+	public void close() throws SQLException {
 		closeConnection();
 
 	}

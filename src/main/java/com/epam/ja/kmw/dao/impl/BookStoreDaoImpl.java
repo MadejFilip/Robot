@@ -13,24 +13,30 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookStoreDao;
 import com.epam.ja.kmw.model.BookStore;
 
-public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
+public class BookStoreDaoImpl implements BookStoreDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
+	ConnectionDao connectionDao;
+	
+	public BookStoreDaoImpl(ConnectionDao connectionDao) {
+		this.connectionDao=connectionDao;
+		createTableBookStores();
+	}
+	
+	private void createTableBookStores() {
 
-	public void createTable() {
-
-		String createBookStoresTableQuery = "CREATE TABLE BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXIST BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
 				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime)";
 		try {
 
-			statement.executeQuery(createBookStoresTableQuery);
+			connectionDao.getStatement().executeQuery(createBookStoresTableQuery);
 			LOGGER.info("Created BookStore database");
 		} catch (SQLException e) {
 			LOGGER.error("Fail to create a table 'BookStore' in database. :" + e.getMessage());
 		}
 	}
-
+	
 	@Override
 	public boolean addBookStore(BookStore bookStore) {
 
@@ -43,7 +49,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 
 		try {
 
-			PreparedStatement prepareStatement = connection.prepareStatement(addBoookStoreQuery);
+			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBoookStoreQuery);
 
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
@@ -72,7 +78,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 		LOGGER.info("Updating book in database...");
 
 		try {
-			PreparedStatement prepareStatement = connection.prepareStatement(updateBookStoreQuery);
+			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(updateBookStoreQuery);
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
 			prepareStatement.setString(3, bookStore.getNameTag());
@@ -97,7 +103,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 		LOGGER.info("Deleting bookstore from database...");
 
 		try {
-			statement.executeQuery(delBookStoreQuery);
+			connectionDao.getStatement().executeQuery(delBookStoreQuery);
 			LOGGER.info("Successfully deleted bookstore from database.");
 			return true;
 		} catch (SQLException e) {
@@ -118,7 +124,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 
 		try {
 
-			ResultSet result = statement.executeQuery(getListOfBookStoresQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getListOfBookStoresQuery);
 			while (result.next()) {
 
 				int id = result.getInt(1);
@@ -151,7 +157,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 		LOGGER.info("Getting bookStore " + bookStoreId + " from database...");
 
 		try {
-			ResultSet result = statement.executeQuery(getBooksQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
 			result.next();
 
 			int id = result.getInt(1);
@@ -182,7 +188,7 @@ public class BookStoreDaoImpl extends AbstracDaoImpl implements BookStoreDao {
 		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
 
 		try {
-			ResultSet result = statement.executeQuery(getBooksQuery);
+			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
 			result.next();
 
 			int id = result.getInt(1);

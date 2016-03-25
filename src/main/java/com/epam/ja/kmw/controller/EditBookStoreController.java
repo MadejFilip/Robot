@@ -1,9 +1,12 @@
 package com.epam.ja.kmw.controller;
 
+import java.sql.SQLException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
+import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.BookStore;
 
 import javafx.application.Platform;
@@ -43,8 +46,8 @@ public class EditBookStoreController {
 				@SuppressWarnings("unused")
 				Stage stage = (Stage) nameField.getScene().getWindow();
 
-				try (BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl()) {
-					bookStoreDaoImpl.createConnection();
+				try (ConnectionDao connectionDao = new ConnectionDao()) {
+					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
 					bookStore = bookStoreDaoImpl.getBookStoreByName(bookStoreName);
 
@@ -61,7 +64,7 @@ public class EditBookStoreController {
 						}
 
 					});
-				} catch (Exception e) {
+				} catch (SQLException e) {
 					LOGGER.error("Can't close database connection");
 				}
 			}
@@ -91,10 +94,9 @@ public class EditBookStoreController {
 				@Override
 				public void run() {
 
-					try (BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl()) {
+					try (ConnectionDao connectionDao = new ConnectionDao()) {
 
-						bookStoreDaoImpl.createConnection();
-						bookStoreDaoImpl.createTable();
+						BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
 						bookStoreDaoImpl.updateBookStore(bookStore);
 					} catch (Exception e) {

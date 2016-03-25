@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
+import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.BookStore;
 
 import javafx.fxml.FXML;
@@ -54,10 +55,8 @@ public class AddBookStoreController {
 				@Override
 				public void run() {
 
-					try(BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl()){
-
-					bookStoreDaoImpl.createConnection();
-					bookStoreDaoImpl.createTable();
+					try(ConnectionDao connectionDao = new ConnectionDao()){
+						BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
 					bookStoreDaoImpl.addBookStore(bookStore);
 					}catch (Exception e) {
