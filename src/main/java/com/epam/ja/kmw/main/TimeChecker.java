@@ -3,14 +3,12 @@ package com.epam.ja.kmw.main;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimerTask;
-import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
 import com.epam.ja.kmw.dao.impl.PropertiesDaoImpl;
 import com.epam.ja.kmw.model.Properties;
 import com.epam.ja.kmw.scraping.Scraper;
@@ -31,14 +29,13 @@ public class TimeChecker extends TimerTask {
 
 	@Override
 	public void run() {
-
 		Date curDate = new Date();
 		try (PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl()) {
 			propertiesDaoImpl.createConnection();
 			propertiesDaoImpl.createTable();
 
 			Properties properties = propertiesDaoImpl.getProperties();
-			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("12")
+			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("14")
 					&& !properties.getLastDate().equals(dateFormat.format(curDate))) {
 				TrayApp.changeOpeningStatus();
 				Platform.runLater(new Runnable() {
