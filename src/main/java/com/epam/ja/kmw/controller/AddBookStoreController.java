@@ -30,6 +30,8 @@ public class AddBookStoreController {
 	private TextField priceValueField;
 	@FXML
 	private TextField authorTagField;
+	@FXML
+	private TextField tagsTagField;
 
 	public void initialize() {
 
@@ -40,7 +42,7 @@ public class AddBookStoreController {
 
 		if (nameField.getText().equals("") || urlField.getText().equals("") || nameTagField.getText().equals("")
 				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")
-				|| authorTagField.getText().equals("")) {
+				|| authorTagField.getText().equals("")|| tagsTagField.getText().equals("")) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -52,7 +54,7 @@ public class AddBookStoreController {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
 					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),
-					authorTagField.getText());
+					authorTagField.getText(),tagsTagField.getText());
 
 			new Thread(new Runnable() {
 

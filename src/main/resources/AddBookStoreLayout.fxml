@@ -41,6 +41,8 @@
 							vgrow="SOMETIMES" />
 						<RowConstraints minHeight="10.0" prefHeight="30.0"
 							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0"
+							vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
 						<Label text="Name of Bookstore">
@@ -117,6 +119,18 @@
 						</Label>
 						<TextField fx:id="authorTagField" GridPane.columnIndex="1"
 							GridPane.rowIndex="6">
+							<GridPane.margin>
+								<Insets right="20.0" />
+							</GridPane.margin>
+						</TextField>
+						
+						<Label text="TagsTag" GridPane.rowIndex="7">
+							<GridPane.margin>
+								<Insets left="50.0" />
+							</GridPane.margin>
+						</Label>
+						<TextField fx:id="tagsTagField" GridPane.columnIndex="1"
+							GridPane.rowIndex="7">
 							<GridPane.margin>
 								<Insets right="20.0" />
 							</GridPane.margin>

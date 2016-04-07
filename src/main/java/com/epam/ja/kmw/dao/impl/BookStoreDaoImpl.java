@@ -27,7 +27,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
-				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime, authorTag varchar(255))";
+				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime, authorTag varchar(255), tagsTag varchar(255))";
 		try {
 
 			connectionDao.getStatement().executeQuery(createBookStoresTableQuery);
@@ -40,7 +40,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	@Override
 	public boolean addBookStore(BookStore bookStore) {
 
-		String addBoookStoreQuery = "INSERT INTO BookStores VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String addBoookStoreQuery = "INSERT INTO BookStores VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
 		LOGGER.info("Adding bookstore to database...");
 
@@ -60,6 +60,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 			prepareStatement.setDate(7, sqlDate);
 			prepareStatement.setString(8, bookStore.getAuthorTag());
+			prepareStatement.setString(9, bookStore.getTagsTag());
 
 			prepareStatement.executeUpdate();
 
@@ -74,7 +75,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	@Override
 	public boolean updateBookStore(BookStore bookStore) {
 		String updateBookStoreQuery = "UPDATE BookStores SET name = ?, url = ?, nameTag = ?, "
-				+ "priceTag = ?, nextTag = ?, priceValue = ?, authorTag = ?   WHERE id = ?";
+				+ "priceTag = ?, nextTag = ?, priceValue = ?, authorTag = ?, tagsTag = ?   WHERE id = ?";
 
 		LOGGER.info("Updating book in database...");
 
@@ -88,6 +89,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			prepareStatement.setString(6, bookStore.getPriceValue());
 			prepareStatement.setInt(7, bookStore.getId());
 			prepareStatement.setString(8, bookStore.getAuthorTag());
+			prepareStatement.setString(9, bookStore.getTagsTag());
 			prepareStatement.executeUpdate();
 			LOGGER.info("Successfully updated bookstore in database.");
 			return true;
@@ -137,8 +139,9 @@ public class BookStoreDaoImpl implements BookStoreDao {
 				String nextTag = result.getString(6);
 				String priceValue = result.getString(7);
 				String authorTag = result.getString(9);
+				String tagsTag = result.getString(10);
 
-				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag);
+				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag,tagsTag);
 
 				bookStore.setId(id);
 				listOfBookStores.add(bookStore);
@@ -173,7 +176,8 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			String priceValue = result.getString(7);
 
 			String authorTag = result.getString(9);
-			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag);
+			String tagsTag = result.getString(10);
+			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag,tagsTag);
 			bookStore.setId(id);
 			result.close();
 
@@ -203,7 +207,8 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			String nextTag = result.getString(6);
 			String priceValue = result.getString(7);
 			String authorTag = result.getString(9);
-			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue, authorTag);
+			String tagsTag = result.getString(10);
+			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue, authorTag,tagsTag);
 
 			bookStore.setId(id);
 			result.close();

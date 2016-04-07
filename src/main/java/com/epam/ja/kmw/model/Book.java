@@ -11,10 +11,11 @@ public class Book {
 	private StringProperty title;
 	private StringProperty bookStore;
 	private StringProperty author;
-
-	public Book(String title, String bookStore, String author) {
+	private StringProperty tags;
+	public Book(String title, String bookStore, String author, String tags) {
 		id = new SimpleIntegerProperty(0);
 		this.title = new SimpleStringProperty(title);
+		this.tags = new SimpleStringProperty(tags);
 		this.bookStore = new SimpleStringProperty(bookStore);
 		this.author = new SimpleStringProperty(author);
 
@@ -43,6 +44,15 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author.set(author);
 	}
+	
+	public String getTags() {
+		return tags.get();
+	}
+
+	public void setTags(String tags) {
+		this.tags.set(tags);
+	}
+
 
 	public String getTitle() {
 		return title.get();
@@ -105,5 +115,6 @@ public class Book {
 			return false;
 		return true;
 	}
+
 
 }

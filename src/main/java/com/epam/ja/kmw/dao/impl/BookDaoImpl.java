@@ -24,7 +24,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	public boolean addBook(Book book) {
-		String addBookQuery = "INSERT INTO Books VALUES (NULL, ?, ?, ?, ?)";
+		String addBookQuery = "INSERT INTO Books VALUES (NULL, ?, ?, ?, ?, ?)";
 
 		LOGGER.info("Adding book to database...");
 
@@ -37,6 +37,7 @@ public class BookDaoImpl implements BookDao {
 			prepareStatement.setString(2, book.getBookStore());
 			prepareStatement.setDate(3, sqlDate);
 			prepareStatement.setString(4, book.getAuthor());
+			prepareStatement.setString(5, book.getTags());
 			prepareStatement.executeUpdate();
 			LOGGER.info("Successfully added book to database.");
 			return true;
@@ -49,7 +50,7 @@ public class BookDaoImpl implements BookDao {
 
 	private void createTableBooks() {
 		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime, Author varchar(255) )";
+				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime, Author varchar(255),  Tags varchar(255) )";
 		try {
 
 			connectionDao.getStatement().execute(createBooksTableQuery);
@@ -71,7 +72,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	public boolean updateBook(Book book) {
-		String addBookQuery = "UPDATE Books SET Title = ?, BookStore = ?, add_date = ?, Author = ? WHERE id = ?";
+		String addBookQuery = "UPDATE Books SET Title = ?, BookStore = ?, add_date = ?, Author = ?, Tags = ? WHERE id = ?";
 
 		LOGGER.info("Updating book in database...");
 
@@ -84,6 +85,7 @@ public class BookDaoImpl implements BookDao {
 			prepareStatement.setString(2, book.getBookStore());
 			prepareStatement.setDate(3, sqlDate);
 			prepareStatement.setInt(4, book.getId());
+
 			prepareStatement.executeUpdate();
 			LOGGER.info("Successfully updated book in database.");
 			return true;
@@ -125,7 +127,8 @@ public class BookDaoImpl implements BookDao {
 				String title = result.getString(2);
 				String bookStore = result.getString(3);
 				String author = result.getString(5);
-				Book book = new Book(title, bookStore, author);
+				String tags = result.getString(6);
+				Book book = new Book(title, bookStore, author,tags);
 				books.add(book);
 				book.setId(id);
 			}
@@ -152,7 +155,8 @@ public class BookDaoImpl implements BookDao {
 			String title = result.getString(1);
 			String bookStore = result.getString(2);
 			String author = result.getString(5);
-			Book book = new Book(title, bookStore, author);
+			String tags = result.getString(6);
+			Book book = new Book(title, bookStore, author,tags);
 
 			result.close();
 
@@ -184,7 +188,8 @@ public class BookDaoImpl implements BookDao {
 				String title = result.getString(2);
 				String bookStore = result.getString(3);
 				String author = result.getString(5);
-				Book book = new Book(title, bookStore, author);
+				String tags = result.getString(6);
+				Book book = new Book(title, bookStore, author,tags);
 				books.add(book);
 				book.setId(id);
 			}

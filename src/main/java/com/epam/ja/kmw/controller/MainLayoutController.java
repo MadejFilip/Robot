@@ -67,7 +67,8 @@ public class MainLayoutController {
 						ListView<String> listView = new ListView<String>();
 
 						for (Book book : bookDao.getAllBooksForOneBookStore(bookStore.getName())) {
-							listOfBooks.add(book.getTitle());
+			 
+							listOfBooks.add(book.getTitle()+" *** "+book.getAuthor()+" *** "+book.getTags());
 						}
 
 						Platform.runLater(new Runnable() {

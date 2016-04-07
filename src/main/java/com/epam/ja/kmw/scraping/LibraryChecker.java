@@ -68,17 +68,16 @@ public class LibraryChecker {
 		
 		
 		Elements author = userAgent.doc.findEvery(library.getAuthorTag());
-		String tags="<p class=\"item-keywords word-break\">";
-		Elements tag = userAgent.doc.findEvery(tags);
+		//String tags="<p class="item-keywords word-break">";
+		System.out.println(library.getTagsTag());
+		Elements tag = userAgent.doc.findEvery(library.getTagsTag());
 		
-
 		Elements prices = userAgent.doc.findEvery(library.getPriceTag());
 		for (int i = 0; i < names.size(); i++) {
 			try {
 
 				if (prices.getElement(i).innerText().contains(library.getPriceValue())) {
-					System.out.println(" "+tag.getElement(i).innerText());
-					bookList.add(new Book(names.getElement(i).innerText(), library.getName(), author.getElement(i).innerText()));
+					bookList.add(new Book(names.getElement(i).innerText(), library.getName(), author.getElement(i).innerText(), tag.getElement(i).innerText()));
 					counter++;
 					if (counter >= 100) {
 						return false;
