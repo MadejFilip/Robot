@@ -35,8 +35,10 @@ public class TimeChecker extends TimerTask {
 			
 			PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl(connectionDao);
 			Properties properties = propertiesDaoImpl.getProperties();
-			if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("14")
-					&& !properties.getLastDate().equals(dateFormat.format(curDate))) {
+			/*if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("14")
+					&& !properties.getLastDate().equals(dateFormat.format(curDate))) */
+			Thread.sleep(10000);
+			if(true){
 				TrayApp.changeOpeningStatus();
 				Platform.runLater(new Runnable() {
 

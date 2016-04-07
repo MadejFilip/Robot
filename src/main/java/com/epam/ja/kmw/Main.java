@@ -35,7 +35,7 @@ public class Main extends Application {
 		trayApp.initializeTray(freeBookViewer);
 		Timer timer = new Timer();
 		TimerTask timeChecker = new TimeChecker(thisStage);
-		timer.schedule(timeChecker, 0l, 1000 * 60);
+		timer.schedule(timeChecker, 0l, 5000);
 
 	}
 }

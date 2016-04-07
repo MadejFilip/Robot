@@ -36,6 +36,9 @@ public class EditBookStoreController {
 	private TextField nextTagField;
 	@FXML
 	private TextField priceValueField;
+	@FXML
+	private TextField authorTagField;
+
 	private BookStore bookStore;
 
 	public void initialize() {
@@ -61,6 +64,7 @@ public class EditBookStoreController {
 							nameTagField.setText(bookStore.getNameTag());
 							priceTagField.setText(bookStore.getPriceTag());
 							nextTagField.setText(bookStore.getNextTag());
+							authorTagField.setText(bookStore.getAuthorTag());
 						}
 
 					});
@@ -76,7 +80,7 @@ public class EditBookStoreController {
 	@FXML
 	private void handleOk() {
 		if (nameField.getText().equals("") || urlField.getText().equals("") || nameTagField.getText().equals("")
-				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")) {
+				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")|| authorTagField.getText().equals("")) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -87,7 +91,7 @@ public class EditBookStoreController {
 		} else {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
-					priceTagField.getText(), nextTagField.getText(), priceValueField.getText());
+					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),authorTagField.getText());
 
 			new Thread(new Runnable() {
 

@@ -10,11 +10,14 @@ public class Book {
 	private IntegerProperty id;
 	private StringProperty title;
 	private StringProperty bookStore;
+	private StringProperty author;
 
-	public Book(String title, String bookStore) {
+	public Book(String title, String bookStore, String author) {
 		id = new SimpleIntegerProperty(0);
 		this.title = new SimpleStringProperty(title);
 		this.bookStore = new SimpleStringProperty(bookStore);
+		this.author = new SimpleStringProperty(author);
+
 	}
 
 	public IntegerProperty idProperty() {
@@ -29,9 +32,16 @@ public class Book {
 		this.id.set(id);
 	}
 
-
 	public StringProperty titleProperty() {
 		return title;
+	}
+
+	public String getAuthor() {
+		return author.get();
+	}
+
+	public void setAuthor(String author) {
+		this.author.set(author);
 	}
 
 	public String getTitle() {
@@ -53,7 +63,7 @@ public class Book {
 	public void setBookStore(String bookStore) {
 		this.bookStore.set(bookStore);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Book [ id= " + id.get() + ", title= " + title.get() + ", bookStore= " + bookStore.get() + " ]";
@@ -95,6 +105,5 @@ public class Book {
 			return false;
 		return true;
 	}
-	
-	
+
 }

@@ -28,6 +28,8 @@ public class AddBookStoreController {
 	private TextField nextTagField;
 	@FXML
 	private TextField priceValueField;
+	@FXML
+	private TextField authorTagField;
 
 	public void initialize() {
 
@@ -37,7 +39,8 @@ public class AddBookStoreController {
 	private void handleOk() {
 
 		if (nameField.getText().equals("") || urlField.getText().equals("") || nameTagField.getText().equals("")
-				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")) {
+				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")
+				|| authorTagField.getText().equals("")) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -48,18 +51,19 @@ public class AddBookStoreController {
 		} else {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
-					priceTagField.getText(), nextTagField.getText(), priceValueField.getText());
+					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),
+					authorTagField.getText());
 
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 
-					try(ConnectionDao connectionDao = new ConnectionDao()){
+					try (ConnectionDao connectionDao = new ConnectionDao()) {
 						BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
-					bookStoreDaoImpl.addBookStore(bookStore);
-					}catch (Exception e) {
+						bookStoreDaoImpl.addBookStore(bookStore);
+					} catch (Exception e) {
 						LOGGER.error("Can't close database");
 					}
 

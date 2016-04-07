@@ -9,8 +9,11 @@ public class BookStore {
 	private String priceTag;
 	private String nextTag;
 	private String priceValue;
+	private String authorTag ;
+ 
 
-	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue) {
+	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue, String authorTag) {
+		this.setAuthorTag(authorTag);
 		this.setName(name);
 		this.setUrl(url);
 		this.setNameTag(nameTag);
@@ -73,6 +76,14 @@ public class BookStore {
 
 	public void setPriceValue(String priceValue) {
 		this.priceValue = priceValue;
+	}
+
+	public String getAuthorTag() {
+		return authorTag;
+	}
+
+	public void setAuthorTag(String authorTag) {
+		this.authorTag = authorTag;
 	}
 
 }
