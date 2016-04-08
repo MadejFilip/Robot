@@ -134,6 +134,18 @@
 								<Insets right="20.0" />
 							</GridPane.margin>
 						</TextField>
+						
+						<Label text="Type" GridPane.rowIndex="8">
+							<GridPane.margin>
+								<Insets left="50.0" />
+							</GridPane.margin>
+						</Label>
+						<TextField fx:id="typeField" GridPane.columnIndex="1"
+							GridPane.rowIndex="8">
+							<GridPane.margin>
+								<Insets right="20.0" />
+							</GridPane.margin>
+						</TextField>
 					</children>
 				</GridPane>
 				<ButtonBar prefHeight="40.0" prefWidth="200.0">

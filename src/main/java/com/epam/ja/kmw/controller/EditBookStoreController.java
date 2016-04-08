@@ -40,6 +40,8 @@ public class EditBookStoreController {
 	private TextField authorTagField;
 	@FXML
 	private TextField tagsTagField;
+	@FXML
+	private TextField typeField;
 
 	private BookStore bookStore;
 
@@ -94,7 +96,7 @@ public class EditBookStoreController {
 		} else {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
-					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),authorTagField.getText(),tagsTagField.getText());
+					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),authorTagField.getText(),tagsTagField.getText(),typeField.getText());
 
 			new Thread(new Runnable() {
 

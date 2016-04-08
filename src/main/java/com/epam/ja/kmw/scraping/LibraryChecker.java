@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.model.Book;
 import com.epam.ja.kmw.model.BookStore;
+import com.jaunt.Element;
 import com.jaunt.Elements;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
@@ -45,9 +46,11 @@ public class LibraryChecker {
 		String url = null;
 		try {
 			userAgent.visit(link);
-			url = userAgent.doc.findFirst(library.getNextTag()).outerHTML();
-			url = url.substring(url.indexOf("http"));
-			url = url.substring(0, url.indexOf("\""));
+			if (!library.getNextTag().equals("---")) {
+				url = userAgent.doc.findFirst(library.getNextTag()).outerHTML();
+				url = url.substring(url.indexOf("http"));
+				url = url.substring(0, url.indexOf("\""));
+			}
 
 		} catch (ResponseException | NotFound e) {
 			LOGGER.trace("Can't find next subsite on :" + link);
@@ -65,23 +68,21 @@ public class LibraryChecker {
 		}
 
 		Elements names = userAgent.doc.findEvery(library.getNameTag());
-		
-		
 		Elements author = userAgent.doc.findEvery(library.getAuthorTag());
-		//String tags="<p class="item-keywords word-break">";
-		System.out.println(library.getTagsTag());
 		Elements tag = userAgent.doc.findEvery(library.getTagsTag());
-		
-		Elements prices = userAgent.doc.findEvery(library.getPriceTag());
+
 		for (int i = 0; i < names.size(); i++) {
 			try {
 
-				if (prices.getElement(i).innerText().contains(library.getPriceValue())) {
-					bookList.add(new Book(names.getElement(i).innerText(), library.getName(), author.getElement(i).innerText(), tag.getElement(i).innerText()));
-					counter++;
-					if (counter >= 100) {
-						return false;
-					}
+				String text = tag.getElement(i).innerText();
+				if (!text.toLowerCase().contains(library.getType().toLowerCase()))
+					continue;
+				bookList.add(new Book(names.getElement(i).innerText(), library.getName(),
+						author.getElement(i).innerText(), tag.getElement(i).innerText()));
+				counter++;
+				if (counter >= 100) {
+					return false;
+
 				}
 			} catch (NotFound e) {
 				LOGGER.trace("Can't find Book on :");
@@ -89,7 +90,6 @@ public class LibraryChecker {
 			}
 
 		}
-
 		return true;
 	}
 }

@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookDao;
 import com.epam.ja.kmw.model.Book;
 
+ 
 public class BookDaoImpl implements BookDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);

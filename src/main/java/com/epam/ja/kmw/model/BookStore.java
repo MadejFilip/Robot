@@ -11,9 +11,11 @@ public class BookStore {
 	private String priceValue;
 	private String authorTag ;
 	private String tagsTag ;
+	private String type ;
 
 
-	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue, String authorTag,String tagsTag) {
+	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue, String authorTag,String tagsTag, String type) {
+		this.setType(type);
 		this.setTagsTag(tagsTag);
 		this.setAuthorTag(authorTag);
 		this.setName(name);
@@ -94,6 +96,14 @@ public class BookStore {
 
 	public void setTagsTag(String tagsTag) {
 		this.tagsTag = tagsTag;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

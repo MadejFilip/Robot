@@ -13,6 +13,11 @@ import com.epam.ja.kmw.viewer.FreeBookViewer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * @author Adam, Filip, Team Bula
+ * @version 1.1
+ * Project Robots witch get information about Books
+ */
 public class Main extends Application {
 
 	public static final Logger LOGGER = LogManager.getLogger(Main.class);
@@ -24,7 +29,8 @@ public class Main extends Application {
 
 		launch(args);
 	}
-
+	
+ 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
