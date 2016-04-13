@@ -23,6 +23,9 @@ public class BookStoreDaoImpl implements BookStoreDao {
 		createTableBookStores();
 	}
 
+	/**
+	 * add column authorTag, tags
+	 */
 	private void createTableBookStores() {
 
 		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"

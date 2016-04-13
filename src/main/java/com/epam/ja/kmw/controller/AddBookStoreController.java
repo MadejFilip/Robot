@@ -56,7 +56,7 @@ public class AddBookStoreController {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
 					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),
-					authorTagField.getText(),tagsTagField.getText(),typeField.getText());
+					authorTagField.getText(),tagsTagField.getText(), typeField.getText());
 
 			new Thread(new Runnable() {
 

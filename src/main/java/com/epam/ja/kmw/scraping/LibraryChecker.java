@@ -42,6 +42,12 @@ public class LibraryChecker {
 		return bookList;
 	}
 
+	/**
+	 * @param link
+	 * @return String
+	 * propaguje linki dodany zostal warunek:
+	 * if (!library.getNextTag().equals("---")) {
+	 */
 	private String linkPropagator(String link) {
 		String url = null;
 		try {
@@ -58,7 +64,14 @@ public class LibraryChecker {
 		return url;
 
 	}
-
+	
+	/**
+	 * @param url
+	 * @return boolean
+	 * Metoda pobierajaca dane z strony, 
+	 * dodane zostalo do niej author, tag, 
+	 * oraz uzuniete zostalo Price, poniewaz nie byla potrzebna.
+	 */
 	private boolean getFromSubSite(String url) {
 		try {
 			userAgent.visit(url);
@@ -70,14 +83,17 @@ public class LibraryChecker {
 		Elements names = userAgent.doc.findEvery(library.getNameTag());
 		Elements author = userAgent.doc.findEvery(library.getAuthorTag());
 		Elements tag = userAgent.doc.findEvery(library.getTagsTag());
-
+		
 		for (int i = 0; i < names.size(); i++) {
 			try {
-
+				
 				String text = tag.getElement(i).innerText();
+				text =text.replaceAll("&amp;", "&");
 				if (!text.toLowerCase().contains(library.getType().toLowerCase()))
 					continue;
-				bookList.add(new Book(names.getElement(i).innerText(), library.getName(),
+				
+				System.out.println(text);
+				bookList.add(new Book (names.getElement(i).innerText(), library.getName(),
 						author.getElement(i).innerText(), tag.getElement(i).innerText()));
 				counter++;
 				if (counter >= 100) {

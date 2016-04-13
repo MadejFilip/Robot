@@ -7,41 +7,53 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.epam.ja.kmw.dao.PropertiesDao;
 import com.epam.ja.kmw.model.Properties;
 
-public class PropertiesDaoImpl implements PropertiesDao {
+public class PropertiesDaoImpl {
 
 	private static final Logger LOGGER = LogManager.getLogger(ConnectionDao.class);
 	ConnectionDao connectionDao;
+	CreateTablePropertiesDelegation createTablePropertiesDelegation = new CreateTablePropertiesDelegation();
 
 	public PropertiesDaoImpl(ConnectionDao connectionDao) {
-		this.connectionDao=connectionDao;
-		createTableProperties();
+		this.connectionDao = connectionDao;
+		methodCreateTableProperties();
 	}
-	
 
-	
-	private void createTableProperties() {
-		String createPropertiesTableQuery = "CREATE TABLE Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "lastDate varchar(255), runCounter INTEGER)";
-		String addDefaultQuery = "INSERT INTO Properties VALUES(NULL,?, ?)";
+	public boolean methodCreateTableProperties() {
+		return createTableProperties();
+	}
+
+	private boolean createTableProperties() {
+
 		try {
 
+			createTablePropertiesDelegation.createTablePropertiesDelegation();
+			return true;
+
+		} catch (SQLException e) {
+			LOGGER.error("Fail to create a table 'Properties' in database. :" + e.getMessage());
+			return false;
+		}
+	}
+
+	class CreateTablePropertiesDelegation {
+		public void createTablePropertiesDelegation() throws SQLException {
+			String createPropertiesTableQuery = "CREATE TABLE Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+					+ "lastDate varchar(255), runCounter INTEGER)";
+			String addDefaultQuery = "INSERT INTO Properties VALUES(NULL,?, ?)";
 			connectionDao.getStatement().execute(createPropertiesTableQuery);
 			LOGGER.info("Created Properties database");
-			
 
 			PreparedStatement preparedStatement = connectionDao.getConnection().prepareStatement(addDefaultQuery);
 			preparedStatement.setString(1, "");
 			preparedStatement.setInt(2, 0);
 			preparedStatement.executeUpdate();
-			
-		} catch (SQLException e) {
-			LOGGER.error("Fail to create a table 'Properties' in database. :" + e.getMessage());
+
 		}
+
 	}
-	@Override
+
 	public Properties getProperties() {
 		String getPropertiesQuery = "SELECT * FROM Properties";
 
@@ -67,8 +79,7 @@ public class PropertiesDaoImpl implements PropertiesDao {
 		}
 	}
 
-	@Override
-	public void updateProperties(Properties properties) {
+	public boolean updateProperties(Properties properties) {
 		String updatePropertiesQuery = "UPDATE Properties SET lastDate = ?, runCounter = ?  WHERE id = ?";
 
 		LOGGER.info("Updating properties in database...");
@@ -80,10 +91,11 @@ public class PropertiesDaoImpl implements PropertiesDao {
 			prepareStatement.setInt(3, 1);
 			prepareStatement.executeUpdate();
 			LOGGER.info("Successfully updated properties in database.");
+			return true;
 		} catch (SQLException e) {
 			LOGGER.error("Fail when updating properties in databse. Caused by: \n" + e.getStackTrace());
+			return false;
 		}
-
 	}
 
 }

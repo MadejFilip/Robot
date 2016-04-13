@@ -12,6 +12,7 @@ public class Book {
 	private StringProperty bookStore;
 	private StringProperty author;
 	private StringProperty tags;
+
 	public Book(String title, String bookStore, String author, String tags) {
 		id = new SimpleIntegerProperty(0);
 		this.title = new SimpleStringProperty(title);
@@ -44,7 +45,7 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author.set(author);
 	}
-	
+
 	public String getTags() {
 		return tags.get();
 	}
@@ -52,7 +53,6 @@ public class Book {
 	public void setTags(String tags) {
 		this.tags.set(tags);
 	}
-
 
 	public String getTitle() {
 		return title.get();
@@ -98,23 +98,22 @@ public class Book {
 		if (getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
-		if (bookStore == null) {
-			if (other.bookStore != null)
+		if (bookStore.getValue() == null) {
+			if (other.bookStore!= null)
 				return false;
-		} else if (!bookStore.equals(other.bookStore))
+		} else if (!bookStore.getValue().equals(other.bookStore.getValue()))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.getValue().equals(other.id.getValue()))
 			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
-		} else if (!title.equals(other.title))
+		} else if (!title.getValue().equals(other.title.getValue()))
 			return false;
 		return true;
 	}
-
 
 }

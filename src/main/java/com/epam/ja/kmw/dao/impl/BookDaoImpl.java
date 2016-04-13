@@ -153,8 +153,8 @@ public class BookDaoImpl implements BookDao {
 			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
 			result.next();
 
-			String title = result.getString(1);
-			String bookStore = result.getString(2);
+			String title = result.getString(2);
+			String bookStore = result.getString(3);
 			String author = result.getString(5);
 			String tags = result.getString(6);
 			Book book = new Book(title, bookStore, author,tags);
