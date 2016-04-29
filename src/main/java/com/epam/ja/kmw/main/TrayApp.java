@@ -27,9 +27,15 @@ public class TrayApp {
 	private static boolean downloadingFlag = false;
 
 	/**
-	 * Initialize TrayIcon object.
+	 * Initialize TrayIcon object. There are two text fields with
+	 * functionalities: open and close. If user clicks on field 'open' main
+	 * bookstore robot window will be open. If user clicks on field 'close'
+	 * application will be close. Method adds those functionalities to
+	 * SystemTray object. If this operation fails it caught an AWTException.
 	 * 
 	 * @param freeBookViewer
+	 *            stores informations about free books downloaded from
+	 *            bookstores.
 	 */
 	public void initializeTray(FreeBookViewer freeBookViewer) {
 		if (!SystemTray.isSupported()) {
