@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,17 +14,23 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookDao;
 import com.epam.ja.kmw.model.Book;
 
- 
 public class BookDaoImpl implements BookDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
 	private ConnectionDao connectionDao;
 
+	/**
+	 * Creates BookDaoImpl object and calls private method createTableBooks.
+	 * 
+	 * @param connectionDao
+	 *            initialize created object.
+	 */
 	public BookDaoImpl(ConnectionDao connectionDao) {
 		this.connectionDao = connectionDao;
 		createTableBooks();
 	}
 
+	@Override
 	public boolean addBook(Book book) {
 		String addBookQuery = "INSERT INTO Books VALUES (NULL, ?, ?, ?, ?, ?)";
 
@@ -32,8 +39,8 @@ public class BookDaoImpl implements BookDao {
 		java.util.Date date = new java.util.Date();
 		Date sqlDate = new Date(date.getTime());
 
-		try {
-			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery);
+		try (PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery)) {
+
 			prepareStatement.setString(1, book.getTitle());
 			prepareStatement.setString(2, book.getBookStore());
 			prepareStatement.setDate(3, sqlDate);
@@ -43,12 +50,16 @@ public class BookDaoImpl implements BookDao {
 			LOGGER.info("Successfully added book to database.");
 			return true;
 		} catch (SQLException e) {
-			LOGGER.error("Fail when adding book to databse. Caused by: \n" + e.getStackTrace());
+			LOGGER.error("Fail when adding book to databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
 			return false;
 		}
 
 	}
 
+	/**
+	 * Creates table named Books in a database if it doesn't exists. If
+	 * executing statement fails method catches SQLException.
+	 */
 	private void createTableBooks() {
 		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime, Author varchar(255),  Tags varchar(255) )";
@@ -80,8 +91,8 @@ public class BookDaoImpl implements BookDao {
 		java.util.Date date = new java.util.Date();
 		Date sqlDate = new Date(date.getTime());
 
-		try {
-			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery);
+		try (PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery)) {
+
 			prepareStatement.setString(1, book.getTitle());
 			prepareStatement.setString(2, book.getBookStore());
 			prepareStatement.setDate(3, sqlDate);
@@ -91,7 +102,7 @@ public class BookDaoImpl implements BookDao {
 			LOGGER.info("Successfully updated book in database.");
 			return true;
 		} catch (SQLException e) {
-			LOGGER.error("Fail when updating book in databse. Caused by: \n" + e.getStackTrace());
+			LOGGER.error("Fail when updating book in databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
 			return false;
 		}
 
@@ -102,11 +113,11 @@ public class BookDaoImpl implements BookDao {
 		String delBookQuery = "DELETE From Books WHERE id = " + bookId;
 		LOGGER.info("Deleting book from database...");
 
-		try {
-			connectionDao.getStatement().executeQuery(delBookQuery);
+		try (ResultSet result = connectionDao.getStatement().executeQuery(delBookQuery);) {
+
 			LOGGER.info("Successfully deleted book from database.");
 		} catch (SQLException e) {
-			LOGGER.error("Fail when deleting book from database. Caused by: \n" + e.getStackTrace());
+			LOGGER.error("Fail when deleting book from database. Caused by: \n" + Arrays.toString(e.getStackTrace()));
 		}
 		return false;
 
@@ -119,9 +130,8 @@ public class BookDaoImpl implements BookDao {
 
 		LOGGER.info("Getting all books from base...");
 
-		try {
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery)) {
 
-			ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery);
 			while (result.next()) {
 
 				int id = result.getInt(1);
@@ -129,12 +139,11 @@ public class BookDaoImpl implements BookDao {
 				String bookStore = result.getString(3);
 				String author = result.getString(5);
 				String tags = result.getString(6);
-				Book book = new Book(title, bookStore, author,tags);
+				Book book = new Book(title, bookStore, author, tags);
 				books.add(book);
 				book.setId(id);
 			}
 			LOGGER.info("Successfully collected all the books from the database.");
-			result.close();
 
 			return books;
 		} catch (SQLException e) {
@@ -149,17 +158,15 @@ public class BookDaoImpl implements BookDao {
 
 		LOGGER.info("Getting book " + bookId + " from database...");
 
-		try {
-			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {
+
 			result.next();
 
 			String title = result.getString(2);
 			String bookStore = result.getString(3);
 			String author = result.getString(5);
 			String tags = result.getString(6);
-			Book book = new Book(title, bookStore, author,tags);
-
-			result.close();
+			Book book = new Book(title, bookStore, author, tags);
 
 			LOGGER.info("Successfully collected book " + bookId + " from database.");
 
@@ -180,9 +187,8 @@ public class BookDaoImpl implements BookDao {
 
 		LOGGER.info("Getting books from base for " + bookStoreName + " bookstore...");
 
-		try {
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery);) {
 
-			ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery);
 			while (result.next()) {
 
 				int id = result.getInt(1);
@@ -190,12 +196,11 @@ public class BookDaoImpl implements BookDao {
 				String bookStore = result.getString(3);
 				String author = result.getString(5);
 				String tags = result.getString(6);
-				Book book = new Book(title, bookStore, author,tags);
+				Book book = new Book(title, bookStore, author, tags);
 				books.add(book);
 				book.setId(id);
 			}
 			LOGGER.info("Successfully collected books from the database for " + bookStoreName + " bookstore.");
-			result.close();
 
 			return books;
 		} catch (SQLException e) {

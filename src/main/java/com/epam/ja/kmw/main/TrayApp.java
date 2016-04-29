@@ -26,6 +26,11 @@ public class TrayApp {
 	private TrayIcon trayIcon;
 	private static boolean downloadingFlag = false;
 
+	/**
+	 * Initialize TrayIcon object.
+	 * 
+	 * @param freeBookViewer
+	 */
 	public void initializeTray(FreeBookViewer freeBookViewer) {
 		if (!SystemTray.isSupported()) {
 			LOGGER.error("SystemTray is not supported");
@@ -75,6 +80,9 @@ public class TrayApp {
 		Platform.setImplicitExit(false);
 	}
 
+	/**
+	 * Change status of a flag which shows if books are downloading or not.
+	 */
 	public static void changeOpeningStatus() {
 		downloadingFlag = !downloadingFlag;
 	}

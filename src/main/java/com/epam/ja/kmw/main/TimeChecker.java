@@ -23,6 +23,12 @@ public class TimeChecker extends TimerTask {
 	SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 	Stage primaryStage;
 
+	/**
+	 * Creates TimeChecker object.
+	 * 
+	 * @param thisStage
+	 *            initialize Stage class object.
+	 */
 	public TimeChecker(Stage thisStage) {
 		super();
 		this.primaryStage = thisStage;
@@ -32,13 +38,16 @@ public class TimeChecker extends TimerTask {
 	public void run() {
 		Date curDate = new Date();
 		try (ConnectionDao connectionDao = new ConnectionDao()) {
-			
+
 			PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl(connectionDao);
 			Properties properties = propertiesDaoImpl.getProperties();
-			/*if (properties.getRunCounter() < 7 && hourFormat.format(curDate).equals("14")
-					&& !properties.getLastDate().equals(dateFormat.format(curDate))) */
-			 System.in.read();
-			if(true){
+			/*
+			 * if (properties.getRunCounter() < 7 &&
+			 * hourFormat.format(curDate).equals("14") &&
+			 * !properties.getLastDate().equals(dateFormat.format(curDate)))
+			 */
+			System.in.read();
+			if (true) {
 				TrayApp.changeOpeningStatus();
 				Platform.runLater(new Runnable() {
 

@@ -3,6 +3,7 @@ package com.epam.ja.kmw.dao.impl;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,15 +16,33 @@ public class PropertiesDaoImpl {
 	ConnectionDao connectionDao;
 	CreateTablePropertiesDelegation createTablePropertiesDelegation = new CreateTablePropertiesDelegation();
 
+	/**
+	 * Creates PropertiesDaoIml object and calls methodCreateTableProperties.
+	 * 
+	 * @param connectionDao
+	 *            initialize created object.
+	 */
 	public PropertiesDaoImpl(ConnectionDao connectionDao) {
 		this.connectionDao = connectionDao;
 		methodCreateTableProperties();
 	}
 
+	/**
+	 * Calls private method createTableProperties.
+	 * 
+	 * @return true if operation succeed, false if not.
+	 */
 	public boolean methodCreateTableProperties() {
 		return createTableProperties();
 	}
 
+	/**
+	 * Calls method createTablePropertiesDelegation and returns true. If called
+	 * method throws SQLException, this exception is caught and false is
+	 * returned.
+	 * 
+	 * @return true if operation succeed, false if not.
+	 */
 	private boolean createTableProperties() {
 
 		try {
@@ -38,6 +57,14 @@ public class PropertiesDaoImpl {
 	}
 
 	class CreateTablePropertiesDelegation {
+
+		/**
+		 * Creates table named Properties and inserts in its columns initial
+		 * values.
+		 * 
+		 * @throws SQLException
+		 *             when connection with a database fails
+		 */
 		public void createTablePropertiesDelegation() throws SQLException {
 			String createPropertiesTableQuery = "CREATE TABLE Properties (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ "lastDate varchar(255), runCounter INTEGER)";
@@ -49,19 +76,26 @@ public class PropertiesDaoImpl {
 			preparedStatement.setString(1, "");
 			preparedStatement.setInt(2, 0);
 			preparedStatement.executeUpdate();
+			preparedStatement.close();
 
 		}
 
 	}
 
+	/**
+	 * Returned object is an instance of a Properties class and is selected from
+	 * a table named Properties in a database. If statement execution fails
+	 * method catches SQLException and returns null.
+	 * 
+	 * @return properties
+	 */
 	public Properties getProperties() {
 		String getPropertiesQuery = "SELECT * FROM Properties";
 
 		LOGGER.info("Getting properties from base...");
 
-		try {
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getPropertiesQuery)) {
 
-			ResultSet result = connectionDao.getStatement().executeQuery(getPropertiesQuery);
 			result.next();
 			String lastDate = result.getString(2);
 			int runCounter = result.getInt(3);
@@ -69,7 +103,6 @@ public class PropertiesDaoImpl {
 			Properties properties = new Properties(lastDate, runCounter);
 
 			LOGGER.info("Successfully collected properties from the database.");
-			result.close();
 
 			return properties;
 		} catch (SQLException e) {
@@ -79,13 +112,22 @@ public class PropertiesDaoImpl {
 		}
 	}
 
+	/**
+	 * Updates properties in a database and returns true. If connection fails
+	 * method catches SQLException and returns false.
+	 * 
+	 * @param properties
+	 *            object that will be updated.
+	 * @return true if operation succeed, false if not.
+	 */
 	public boolean updateProperties(Properties properties) {
 		String updatePropertiesQuery = "UPDATE Properties SET lastDate = ?, runCounter = ?  WHERE id = ?";
 
 		LOGGER.info("Updating properties in database...");
 
-		try {
-			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(updatePropertiesQuery);
+		try (PreparedStatement prepareStatement = connectionDao.getConnection()
+				.prepareStatement(updatePropertiesQuery)) {
+
 			prepareStatement.setString(1, properties.getLastDate());
 			prepareStatement.setInt(2, properties.getRunCounter());
 			prepareStatement.setInt(3, 1);
@@ -93,7 +135,8 @@ public class PropertiesDaoImpl {
 			LOGGER.info("Successfully updated properties in database.");
 			return true;
 		} catch (SQLException e) {
-			LOGGER.error("Fail when updating properties in databse. Caused by: \n" + e.getStackTrace());
+			LOGGER.error(
+					"Fail when updating properties in databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
 			return false;
 		}
 	}

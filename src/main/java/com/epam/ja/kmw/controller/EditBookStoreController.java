@@ -1,7 +1,5 @@
 package com.epam.ja.kmw.controller;
 
-import java.sql.SQLException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +18,12 @@ public class EditBookStoreController {
 	public static final Logger LOGGER = LogManager.getLogger(EditBookStoreController.class);
 	private String bookStoreName;
 
+	/**
+	 * Sets sent String as book store name.
+	 * 
+	 * @param bookStoreName
+	 *            name of the bookstore
+	 */
 	public void setBookStoreName(String bookStoreName) {
 		this.bookStoreName = bookStoreName;
 	}
@@ -45,6 +49,10 @@ public class EditBookStoreController {
 
 	private BookStore bookStore;
 
+	/**
+	 * Initialize bookstore window responsible for editing books. Fills all
+	 * fields with proper informations.
+	 */
 	public void initialize() {
 		new Thread(new Runnable() {
 
@@ -53,39 +61,45 @@ public class EditBookStoreController {
 				@SuppressWarnings("unused")
 				Stage stage = (Stage) nameField.getScene().getWindow();
 
-				try (ConnectionDao connectionDao = new ConnectionDao()) {
-					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
+				ConnectionDao connectionDao = new ConnectionDao();
+				BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
-					bookStore = bookStoreDaoImpl.getBookStoreByName(bookStoreName);
+				bookStore = bookStoreDaoImpl.getBookStoreByName(bookStoreName);
 
-					Platform.runLater(new Runnable() {
+				Platform.runLater(new Runnable() {
 
-						@Override
-						public void run() {
+					@Override
+					public void run() {
 
-							nameField.setText(bookStore.getName());
-							urlField.setText(bookStore.getUrl());
-							nameTagField.setText(bookStore.getNameTag());
-							priceTagField.setText(bookStore.getPriceTag());
-							nextTagField.setText(bookStore.getNextTag());
-							authorTagField.setText(bookStore.getAuthorTag());
-							tagsTagField.setText(bookStore.getTagsTag());
-						}
+						nameField.setText(bookStore.getName());
+						urlField.setText(bookStore.getUrl());
+						nameTagField.setText(bookStore.getNameTag());
+						priceTagField.setText(bookStore.getPriceTag());
+						nextTagField.setText(bookStore.getNextTag());
+						authorTagField.setText(bookStore.getAuthorTag());
+						tagsTagField.setText(bookStore.getTagsTag());
+					}
 
-					});
-				} catch (SQLException e) {
-					LOGGER.error("Can't close database connection");
-				}
+				});
+
+				LOGGER.error("Can't close database connection");
+				connectionDao.close();
 			}
 
 		}).start();
 
 	}
 
+	/**
+	 * If all fields contained in a window are filled calls the method
+	 * updateBookStore which updates bookstore in a database and closes the
+	 * bookstore robot window responsible for editing a bookstore.
+	 */
 	@FXML
 	private void handleOk() {
 		if (nameField.getText().equals("") || urlField.getText().equals("") || nameTagField.getText().equals("")
-				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")|| authorTagField.getText().equals("")) {
+				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")
+				|| authorTagField.getText().equals("")) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -96,7 +110,8 @@ public class EditBookStoreController {
 		} else {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
-					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),authorTagField.getText(),tagsTagField.getText(),typeField.getText());
+					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),
+					authorTagField.getText(), tagsTagField.getText(), typeField.getText());
 
 			new Thread(new Runnable() {
 
@@ -120,6 +135,9 @@ public class EditBookStoreController {
 		}
 	}
 
+	/**
+	 * Close the bookstore robot window responsible for editing a bookstore.
+	 */
 	@FXML
 	private void handleCancel() {
 		Stage thisStage = (Stage) nameField.getScene().getWindow();

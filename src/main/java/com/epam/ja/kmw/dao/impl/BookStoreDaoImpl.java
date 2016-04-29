@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,22 +19,29 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
 	ConnectionDao connectionDao;
 
+	/**
+	 * Creates BookStoreDaoImpl object and calls private method
+	 * createTableBooks.
+	 * 
+	 * @param connectionDao
+	 *            initialize created object.
+	 */
 	public BookStoreDaoImpl(ConnectionDao connectionDao) {
 		this.connectionDao = connectionDao;
 		createTableBookStores();
 	}
 
 	/**
-	 * add column authorTag, tags
+	 * Creates table named BookStores in a database if it doesn't exists. If
+	 * executing statement fails method catches SQLException.
 	 */
 	private void createTableBookStores() {
 
 		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
 				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
 				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime, authorTag varchar(255), tagsTag varchar(255), type varchar(255))";
-		try {
+		try (ResultSet result = connectionDao.getStatement().executeQuery(createBookStoresTableQuery);) {
 
-			connectionDao.getStatement().executeQuery(createBookStoresTableQuery);
 			LOGGER.info("Created BookStore database");
 		} catch (SQLException e) {
 			LOGGER.error("Fail to create a table 'BookStore' in database. :" + e.getMessage());
@@ -50,9 +58,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 		java.util.Date date = new java.util.Date();
 		Date sqlDate = new Date(date.getTime());
 
-		try {
-
-			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBoookStoreQuery);
+		try (PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBoookStoreQuery)) {
 
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
@@ -69,7 +75,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 			LOGGER.info("Successfully add bookstore to database.");
 		} catch (SQLException e) {
-			LOGGER.error("Fail when adding bookstore to database caused by: " + e.getStackTrace());
+			LOGGER.error("Fail when adding bookstore to database caused by: " + Arrays.toString(e.getStackTrace()));
 		}
 
 		return false;
@@ -82,8 +88,9 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 		LOGGER.info("Updating book in database...");
 
-		try {
-			PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(updateBookStoreQuery);
+		try (PreparedStatement prepareStatement = connectionDao.getConnection()
+				.prepareStatement(updateBookStoreQuery)) {
+
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
 			prepareStatement.setString(3, bookStore.getNameTag());
@@ -97,7 +104,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			LOGGER.info("Successfully updated bookstore in database.");
 			return true;
 		} catch (SQLException e) {
-			LOGGER.error("Fail when updating bookstore in databse. Caused by: \n" + e.getStackTrace());
+			LOGGER.error("Fail when updating bookstore in databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
 			return false;
 		}
 	}
@@ -109,12 +116,12 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 		LOGGER.info("Deleting bookstore from database...");
 
-		try {
-			connectionDao.getStatement().executeQuery(delBookStoreQuery);
+		try (ResultSet result = connectionDao.getStatement().executeQuery(delBookStoreQuery)) {
+
 			LOGGER.info("Successfully deleted bookstore from database.");
 			return true;
 		} catch (SQLException e) {
-			LOGGER.error("Fail when deleting bookstore from database caused by: " + e.getStackTrace());
+			LOGGER.error("Fail when deleting bookstore from database caused by: " + Arrays.toString(e.getStackTrace()));
 			return false;
 		}
 
@@ -129,9 +136,8 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 		LOGGER.info("Getting all bookstores from base...");
 
-		try {
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getListOfBookStoresQuery)) {
 
-			ResultSet result = connectionDao.getStatement().executeQuery(getListOfBookStoresQuery);
 			while (result.next()) {
 
 				int id = result.getInt(1);
@@ -144,13 +150,13 @@ public class BookStoreDaoImpl implements BookStoreDao {
 				String authorTag = result.getString(9);
 				String tagsTag = result.getString(10);
 				String type = result.getString(11);
-				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag,tagsTag,type);
+				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag,
+						tagsTag, type);
 
 				bookStore.setId(id);
 				listOfBookStores.add(bookStore);
 			}
 			LOGGER.info("Successfully collected all the bookstores from the database.");
-			result.close();
 
 			return listOfBookStores;
 		} catch (SQLException e) {
@@ -166,8 +172,8 @@ public class BookStoreDaoImpl implements BookStoreDao {
 
 		LOGGER.info("Getting bookStore " + bookStoreId + " from database...");
 
-		try {
-			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {
+
 			result.next();
 
 			int id = result.getInt(1);
@@ -181,9 +187,9 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			String authorTag = result.getString(9);
 			String tagsTag = result.getString(10);
 			String type = result.getString(11);
-			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag,tagsTag,type);
+			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag, tagsTag,
+					type);
 			bookStore.setId(id);
-			result.close();
 
 			LOGGER.info("Successfully collected bookStore " + bookStoreId + " from database.");
 
@@ -195,13 +201,22 @@ public class BookStoreDaoImpl implements BookStoreDao {
 		}
 	}
 
+	/**
+	 * Returned object is stored in a database and is an instance of a BookStore
+	 * class. It is selected by its name. If executing statement fails method
+	 * catches SQLException and returns null.
+	 * 
+	 * @param bookStoreName
+	 *            name of a bookstore that will be returned.
+	 * @return a specific bookstore by its name.
+	 */
 	public BookStore getBookStoreByName(String bookStoreName) {
 		String getBooksQuery = "SELECT * FROM BookStores WHERE name = '" + bookStoreName + "';";
 
 		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
 
-		try {
-			ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery);
+		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {
+
 			result.next();
 
 			int id = result.getInt(1);
@@ -213,10 +228,10 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			String authorTag = result.getString(9);
 			String tagsTag = result.getString(10);
 			String type = result.getString(11);
-			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue, authorTag,tagsTag,type);
+			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue, authorTag,
+					tagsTag, type);
 
 			bookStore.setId(id);
-			result.close();
 
 			LOGGER.info("Successfully collected bookStore " + bookStoreName + " from database.");
 

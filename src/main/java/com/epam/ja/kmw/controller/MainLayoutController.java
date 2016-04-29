@@ -1,7 +1,6 @@
 package com.epam.ja.kmw.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,6 +45,11 @@ public class MainLayoutController {
 	@FXML
 	private Button addBookStoreButton;
 
+	/**
+	 * Initialize main bookstore window. Fills all fields with proper
+	 * informations (prints a list of all books contained in a specific
+	 * bookstore).
+	 */
 	public void initialize() {
 
 		showBooksByDateButton.setDisable(true);
@@ -67,8 +71,8 @@ public class MainLayoutController {
 						ListView<String> listView = new ListView<String>();
 
 						for (Book book : bookDao.getAllBooksForOneBookStore(bookStore.getName())) {
-			 
-							listOfBooks.add(book.getTitle()+" *** "+book.getAuthor()+" *** "+book.getTags());
+
+							listOfBooks.add(book.getTitle() + " *** " + book.getAuthor() + " *** " + book.getTags());
 						}
 
 						Platform.runLater(new Runnable() {
@@ -91,15 +95,16 @@ public class MainLayoutController {
 
 	}
 
+	/**
+	 * Opens new window responsible for editing selected bookstore.
+	 */
 	@FXML
 	private void handleEditBookStore() {
-
-		AnchorPane anchorPane = new AnchorPane();
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(FreeBookViewer.class.getResource("/EditBookStoreLayout.fxml"));
-			anchorPane = (AnchorPane) loader.load();
+			AnchorPane anchorPane = (AnchorPane) loader.load();
 
 			Scene scene = new Scene(anchorPane);
 			Stage thisStage = (Stage) tabPane.getScene().getWindow();
@@ -108,8 +113,8 @@ public class MainLayoutController {
 			stage.initOwner(thisStage);
 			stage.initModality(Modality.WINDOW_MODAL);
 
-			@SuppressWarnings("unused")
-			EditBookStoreController controller = loader.getController();
+			// @SuppressWarnings("unused")
+			// EditBookStoreController controller = loader.getController();
 			stage.show();
 
 		} catch (IOException e) {
@@ -117,22 +122,23 @@ public class MainLayoutController {
 		}
 	}
 
+	/**
+	 * Opens new window responsible for adding new a bookstore.
+	 */
 	@FXML
 	private void handleAddBookStore() {
-
-		AnchorPane anchorPane = new AnchorPane();
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(FreeBookViewer.class.getResource("/AddBookStoreLayout.fxml"));
-			anchorPane = (AnchorPane) loader.load();
+			AnchorPane anchorPane = (AnchorPane) loader.load();
 
 			Scene scene = new Scene(anchorPane);
 			Stage stage = new Stage();
 			stage.setScene(scene);
 
-			@SuppressWarnings("unused")
-			AddBookStoreController controller = loader.getController();
+			// @SuppressWarnings("unused")
+			// AddBookStoreController controller = loader.getController();
 
 			stage.showAndWait();
 
@@ -159,6 +165,9 @@ public class MainLayoutController {
 
 	}
 
+	/**
+	 * Deletes selected bookstore (calls the method delBookStore).
+	 */
 	@FXML
 	private void handleDelBookStore() {
 
@@ -166,15 +175,13 @@ public class MainLayoutController {
 
 			@Override
 			public void run() {
-				try (ConnectionDao connectionDao = new ConnectionDao() ) {
+				try (ConnectionDao connectionDao = new ConnectionDao()) {
 					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
-
 
 					BookStore bookStore = bookStoreDaoImpl
 							.getBookStoreByName(tabPane.getSelectionModel().getSelectedItem().getText());
 
 					bookStoreDaoImpl.delBookStore(bookStore.getId());
-
 
 					Platform.runLater(new Runnable() {
 
@@ -185,8 +192,6 @@ public class MainLayoutController {
 					});
 				} catch (NullPointerException e) {
 					LOGGER.trace("Empty BookStore list. Can't delete.");
-				} catch (SQLException e) {
-					LOGGER.error("Can't close database connection");
 				}
 			}
 
@@ -194,15 +199,30 @@ public class MainLayoutController {
 
 	}
 
+	/**
+	 * Closes main bookstore robot window.
+	 */
 	@FXML
 	private void handleExit() {
-		primaryStage.hide();
+		primaryStage.close();
 	}
 
+	/**
+	 * Sets object which is an instance of Stage class.
+	 * 
+	 * @param primaryStage
+	 *            object of the Stage class - main component of the bookstore
+	 *            robot window..
+	 */
 	public void setStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
+	/**
+	 * Returned object is an instance of Stage class.
+	 * 
+	 * @return Stage object - main component of the bookstore robot window.
+	 */
 	public Stage getStage() {
 		return primaryStage;
 	}

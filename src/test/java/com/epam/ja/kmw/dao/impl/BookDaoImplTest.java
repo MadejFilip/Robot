@@ -10,7 +10,6 @@ import com.epam.ja.kmw.model.Book;
 public class BookDaoImplTest {
 	// private SoftAssert softAssert = new SoftAssert();
 
-
 	@Test
 	public void testsMethodAddBook() {
 		// given
@@ -31,16 +30,16 @@ public class BookDaoImplTest {
 	public void testsMethodAddAllBooks() {
 		// given
 		ArrayList<Book> booksOne = new ArrayList<>();
-		booksOne.addAll(Arrays.asList(new Book("wojna", "matrys", "adam", "tag"), new Book("pokoj", "matrys", "adam", "tag"),
-				new Book("romansidlo", "matrys", "adam", "tag")));
+		booksOne.addAll(Arrays.asList(new Book("wojna", "matrys", "adam", "tag"),
+				new Book("pokoj", "matrys", "adam", "tag"), new Book("romansidlo", "matrys", "adam", "tag")));
 		ConnectionDao connectionDao = new ConnectionDao();
 		BookDaoImpl bookDaoImpl = new BookDaoImpl(connectionDao);
 		boolean ifBookAdded = bookDaoImpl.addAllBooks(booksOne);
 		// when
 		boolean expectedValue = true;
 		ArrayList<Book> booksTwo = new ArrayList<>();
-		booksTwo.addAll(Arrays.asList(new Book("wojna", "matrys", "adam", "tag"), new Book("pokoj", "matrys", "adam", "tag"),
-				new Book("romansidlo", "matrys", "adam", "tag")));
+		booksTwo.addAll(Arrays.asList(new Book("wojna", "matrys", "adam", "tag"),
+				new Book("pokoj", "matrys", "adam", "tag"), new Book("romansidlo", "matrys", "adam", "tag")));
 		// then
 		assert booksOne.equals(booksTwo) && ifBookAdded == expectedValue;
 	}
@@ -74,7 +73,7 @@ public class BookDaoImplTest {
 		// when
 		boolean expectedValue = false;
 
-		ArrayList<Book> booksTwo = new ArrayList<>();
+		// ArrayList<Book> booksTwo = new ArrayList<>();
 		// booksOne.addAll(Arrays.asList(new Book("wojna", "matrys"), new
 		// Book("pokoj", "matrys")));
 		// then
@@ -94,20 +93,20 @@ public class BookDaoImplTest {
 		assert booksOne != emptyBooksList;
 	}
 
-//	@Test
-//	public void testsMethodGetBookByID() {
-//		// given
-//		ConnectionDao connectionDao = new ConnectionDao();
-//		BookDaoImpl bookDaoImpl = new BookDaoImpl(connectionDao);
-//		Book bookDwonloaded = bookDaoImpl.getBookById(2);
-//		// when
-//		bookDaoImpl.addBook(new Book("wojna", "matrys", "adam", "tag"));
-//		Book bookExpected = new Book("wojna", "matrys", "adam", "tag");
-//		System.out.println(bookDaoImpl.getAllBooks());
-//		System.out.println(" CHUJJJJJ1111111111111" +bookDwonloaded);
-//		System.out.println(" CHUJJJJJ" +bookExpected);
-//		// then
-//		assert bookDwonloaded.equals(bookExpected);
-//	}
+	// @Test
+	// public void testsMethodGetBookByID() {
+	// // given
+	// ConnectionDao connectionDao = new ConnectionDao();
+	// BookDaoImpl bookDaoImpl = new BookDaoImpl(connectionDao);
+	// Book bookDwonloaded = bookDaoImpl.getBookById(2);
+	// // when
+	// bookDaoImpl.addBook(new Book("wojna", "matrys", "adam", "tag"));
+	// Book bookExpected = new Book("wojna", "matrys", "adam", "tag");
+	// System.out.println(bookDaoImpl.getAllBooks());
+	// System.out.println(" CHUJJJJJ1111111111111" +bookDwonloaded);
+	// System.out.println(" CHUJJJJJ" +bookExpected);
+	// // then
+	// assert bookDwonloaded.equals(bookExpected);
+	// }
 
 }

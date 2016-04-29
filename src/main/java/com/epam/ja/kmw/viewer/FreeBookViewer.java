@@ -12,18 +12,17 @@ import javafx.stage.Stage;
 public class FreeBookViewer {
 	private MainLayoutController controller;
 	private Stage primaryStage;
-	
-	public FreeBookViewer(Stage stage) {
-		this.primaryStage=stage;
-	}
-	public void showMainUserLayout() {
 
-		AnchorPane anchorPane = new AnchorPane();
+	public FreeBookViewer(Stage stage) {
+		this.primaryStage = stage;
+	}
+
+	public void showMainUserLayout() {
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(FreeBookViewer.class.getResource("/MainLayout.fxml"));
-			anchorPane = (AnchorPane) loader.load();
+			AnchorPane anchorPane = (AnchorPane) loader.load();
 
 			Scene scene = new Scene(anchorPane);
 			primaryStage.setScene(scene);

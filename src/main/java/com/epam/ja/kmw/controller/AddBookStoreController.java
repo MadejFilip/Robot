@@ -35,16 +35,25 @@ public class AddBookStoreController {
 	@FXML
 	private TextField typeField;
 
+	/**
+	 * Initialize bookstore window responsible for adding books.
+	 */
 	public void initialize() {
 
 	}
 
+	/**
+	 * If all fields contained in window are filled calls method addBookStore
+	 * which adds bookstore to database and closes bookstore robot window
+	 * responsible for adding bookstore.
+	 */
 	@FXML
 	private void handleOk() {
 
 		if (nameField.getText().equals("") || urlField.getText().equals("") || nameTagField.getText().equals("")
 				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")
-				|| authorTagField.getText().equals("")|| (tagsTagField.getText().equals("") && typeField.getText().equals(""))) {
+				|| authorTagField.getText().equals("")
+				|| (tagsTagField.getText().equals("") && typeField.getText().equals(""))) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -56,20 +65,20 @@ public class AddBookStoreController {
 
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
 					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),
-					authorTagField.getText(),tagsTagField.getText(), typeField.getText());
+					authorTagField.getText(), tagsTagField.getText(), typeField.getText());
 
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 
-					try (ConnectionDao connectionDao = new ConnectionDao()) {
-						BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
+					ConnectionDao connectionDao = new ConnectionDao();
+					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 
-						bookStoreDaoImpl.addBookStore(bookStore);
-					} catch (Exception e) {
-						LOGGER.error("Can't close database");
-					}
+					bookStoreDaoImpl.addBookStore(bookStore);
+
+					LOGGER.error("Can't close database");
+					connectionDao.close();
 
 				}
 
@@ -80,6 +89,9 @@ public class AddBookStoreController {
 		}
 	}
 
+	/**
+	 * Close the bookstore robot window responsible for adding bookstore.
+	 */
 	@FXML
 	private void handleCancel() {
 		Stage thisStage = (Stage) nameField.getScene().getWindow();

@@ -52,12 +52,12 @@ public class PropertiesDaoImplTest {
 
 	}
 
-	@Test
-	public void getPropertiesIsNotGood() {
-		PropertiesDaoImpl modzajto1 = mock(PropertiesDaoImpl.class);
-
-	}
-
+	/*
+	 * @Test public void getPropertiesIsNotGood() { PropertiesDaoImpl modzajto1
+	 * = mock(PropertiesDaoImpl.class);
+	 * 
+	 * }
+	 */
 	@Test
 	public void upgradeIsGood() throws IOException {
 		PropertiesDaoImpl propertiesDaoImpl = new PropertiesDaoImpl(new ConnectionDao());

@@ -1,33 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="5" passed="5">
+<testng-results skipped="0" failed="0" total="11" passed="11">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="609" started-at="2016-04-13T10:42:28Z" finished-at="2016-04-13T10:42:28Z">
+  <suite name="Default suite" duration-ms="1028" started-at="2016-04-28T09:31:06Z" finished-at="2016-04-28T09:31:07Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="609" started-at="2016-04-13T10:42:28Z" finished-at="2016-04-13T10:42:28Z">
+    <test name="Default test" duration-ms="1028" started-at="2016-04-28T09:31:06Z" finished-at="2016-04-28T09:31:07Z">
+      <class name="com.epam.ja.kmw.dao.impl.ConnectionDaoTest">
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@deb3b60]" name="sadasdasdasdsadas" is-config="true" duration-ms="203" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sadasdasdasdsadas -->
+        <test-method status="PASS" signature="connectionDaoIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@deb3b60]" name="connectionDaoIsGood" duration-ms="23" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- connectionDaoIsGood -->
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@deb3b60]" name="sadasdasdasdsadas" is-config="true" duration-ms="1" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sadasdasdasdsadas -->
+        <test-method status="PASS" signature="connectionDaoIsWrong()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@deb3b60]" name="connectionDaoIsWrong" duration-ms="97" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- connectionDaoIsWrong -->
+      </class> <!-- com.epam.ja.kmw.dao.impl.ConnectionDaoTest -->
       <class name="com.epam.ja.kmw.dao.impl.BookDaoImplTest">
-        <test-method status="PASS" signature="testsMethodAddAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@7c16905e]" name="testsMethodAddAllBooks" duration-ms="566" started-at="2016-04-13T12:42:28Z" finished-at="2016-04-13T12:42:28Z">
+        <test-method status="PASS" signature="testsMethodAddAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@718607eb]" name="testsMethodAddAllBooks" duration-ms="620" started-at="2016-04-28T11:31:06Z" finished-at="2016-04-28T11:31:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testsMethodAddAllBooks -->
-        <test-method status="PASS" signature="testsMethodAddBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@7c16905e]" name="testsMethodAddBook" duration-ms="9" started-at="2016-04-13T12:42:28Z" finished-at="2016-04-13T12:42:28Z">
+        <test-method status="PASS" signature="testsMethodAddBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@718607eb]" name="testsMethodAddBook" duration-ms="4" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testsMethodAddBook -->
-        <test-method status="PASS" signature="testsMethodDelBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@7c16905e]" name="testsMethodDelBook" duration-ms="5" started-at="2016-04-13T12:42:28Z" finished-at="2016-04-13T12:42:28Z">
+        <test-method status="PASS" signature="testsMethodDelBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@718607eb]" name="testsMethodDelBook" duration-ms="1" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testsMethodDelBook -->
-        <test-method status="PASS" signature="testsMethodGetAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@7c16905e]" name="testsMethodGetAllBooks" duration-ms="3" started-at="2016-04-13T12:42:28Z" finished-at="2016-04-13T12:42:28Z">
+        <test-method status="PASS" signature="testsMethodGetAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@718607eb]" name="testsMethodGetAllBooks" duration-ms="6" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testsMethodGetAllBooks -->
-        <test-method status="PASS" signature="testsMethodUpdateBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@7c16905e]" name="testsMethodUpdateBook" duration-ms="2" started-at="2016-04-13T12:42:28Z" finished-at="2016-04-13T12:42:28Z">
+        <test-method status="PASS" signature="testsMethodUpdateBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@718607eb]" name="testsMethodUpdateBook" duration-ms="2" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testsMethodUpdateBook -->
       </class> <!-- com.epam.ja.kmw.dao.impl.BookDaoImplTest -->
+      <class name="com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest">
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="sadasdasdasdsadas" is-config="true" duration-ms="8" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sadasdasdasdsadas -->
+        <test-method status="PASS" signature="createTablePropertiesIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="createTablePropertiesIsGood" duration-ms="6" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createTablePropertiesIsGood -->
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="sadasdasdasdsadas" is-config="true" duration-ms="1" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sadasdasdasdsadas -->
+        <test-method status="PASS" signature="createTablePropertiesIsWrong()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="createTablePropertiesIsWrong" duration-ms="2" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createTablePropertiesIsWrong -->
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="sadasdasdasdsadas" is-config="true" duration-ms="1" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sadasdasdasdsadas -->
+        <test-method status="PASS" signature="getPropertiesIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="getPropertiesIsGood" duration-ms="2" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getPropertiesIsGood -->
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="sadasdasdasdsadas" is-config="true" duration-ms="1" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- sadasdasdasdsadas -->
+        <test-method status="PASS" signature="upgradeIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@757194dc]" name="upgradeIsGood" duration-ms="16" started-at="2016-04-28T11:31:07Z" finished-at="2016-04-28T11:31:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- upgradeIsGood -->
+      </class> <!-- com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
