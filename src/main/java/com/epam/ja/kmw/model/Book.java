@@ -17,13 +17,13 @@ public class Book {
 	 * Creates object of a Book class and initializes it.
 	 * 
 	 * @param title
-	 *            name of a created book which is stored in database
+	 *            name of a created book which is stored in database.
 	 * @param bookStore
-	 *            name of a bookstore from which books were downloaded
+	 *            name of a bookstore from which books were downloaded.
 	 * @param author
-	 *            name of a downloaded book author
+	 *            name of a downloaded book author.
 	 * @param tags
-	 *            names of all downloaded book tags
+	 *            names of all downloaded book tags.
 	 */
 	public Book(String title, String bookStore, String author, String tags) {
 		id = new SimpleIntegerProperty(0);

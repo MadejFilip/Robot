@@ -9,12 +9,27 @@ public class BookStore {
 	private String priceTag;
 	private String nextTag;
 	private String priceValue;
-	private String authorTag ;
-	private String tagsTag ;
-	private String type ;
+	private String authorTag;
+	private String tagsTag;
+	private String type;
 
-
-	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue, String authorTag,String tagsTag, String type) {
+	/**
+	 * Creates object of a BookStore class and initializes it.
+	 * 
+	 * @param name
+	 *            name of a created bookstore
+	 * @param url
+	 *            URL of a created bookstore
+	 * @param nameTag
+	 * @param priceTag
+	 * @param nextTag
+	 * @param priceValue
+	 * @param authorTag
+	 * @param tagsTag
+	 * @param type
+	 */
+	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue,
+			String authorTag, String tagsTag, String type) {
 		this.setType(type);
 		this.setTagsTag(tagsTag);
 		this.setAuthorTag(authorTag);
