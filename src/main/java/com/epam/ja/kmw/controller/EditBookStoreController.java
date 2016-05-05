@@ -16,7 +16,9 @@ import javafx.stage.Stage;
 
 public class EditBookStoreController {
 	public static final Logger LOGGER = LogManager.getLogger(EditBookStoreController.class);
+	public static String tabPanel;
 	private String bookStoreName;
+	private int idBookEdit;
 
 	/**
 	 * Sets sent String as book store name.
@@ -58,14 +60,11 @@ public class EditBookStoreController {
 
 			@Override
 			public void run() {
-				@SuppressWarnings("unused")
-				Stage stage = (Stage) nameField.getScene().getWindow();
 
 				ConnectionDao connectionDao = new ConnectionDao();
 				BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
-
-				bookStore = bookStoreDaoImpl.getBookStoreByName(bookStoreName);
-
+				bookStore = bookStoreDaoImpl.getBookStoreByName(tabPanel);
+				idBookEdit = bookStore.getId();
 				Platform.runLater(new Runnable() {
 
 					@Override
@@ -76,8 +75,10 @@ public class EditBookStoreController {
 						nameTagField.setText(bookStore.getNameTag());
 						priceTagField.setText(bookStore.getPriceTag());
 						nextTagField.setText(bookStore.getNextTag());
+						priceValueField.setText(bookStore.getPriceValue());
 						authorTagField.setText(bookStore.getAuthorTag());
 						tagsTagField.setText(bookStore.getTagsTag());
+						typeField.setText(bookStore.getType());
 					}
 
 				});
@@ -112,6 +113,7 @@ public class EditBookStoreController {
 			BookStore bookStore = new BookStore(nameField.getText(), urlField.getText(), nameTagField.getText(),
 					priceTagField.getText(), nextTagField.getText(), priceValueField.getText(),
 					authorTagField.getText(), tagsTagField.getText(), typeField.getText());
+			bookStore.setId(idBookEdit);
 
 			new Thread(new Runnable() {
 

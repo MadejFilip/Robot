@@ -84,12 +84,15 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	@Override
 	public boolean updateBookStore(BookStore bookStore) {
 		String updateBookStoreQuery = "UPDATE BookStores SET name = ?, url = ?, nameTag = ?, "
-				+ "priceTag = ?, nextTag = ?, priceValue = ?, authorTag = ?, tagsTag = ?, type  = ?    WHERE id = ?";
+				+ "priceTag = ?, nextTag = ?, priceValue = ?, add_date = ?, authorTag = ?, tagsTag = ?, type  = ?    WHERE id = ?";
 
 		LOGGER.info("Updating book in database...");
-
+		java.util.Date date = new java.util.Date();
+		Date sqlDate = new Date(date.getTime());
 		try (PreparedStatement prepareStatement = connectionDao.getConnection()
 				.prepareStatement(updateBookStoreQuery)) {
+			System.out.println(bookStore.getId());
+			System.out.println(bookStore.getName());
 
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
@@ -97,10 +100,14 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			prepareStatement.setString(4, bookStore.getPriceTag());
 			prepareStatement.setString(5, bookStore.getNextTag());
 			prepareStatement.setString(6, bookStore.getPriceValue());
-			prepareStatement.setInt(7, bookStore.getId());
+			prepareStatement.setDate(7, sqlDate);
 			prepareStatement.setString(8, bookStore.getAuthorTag());
 			prepareStatement.setString(9, bookStore.getTagsTag());
+			prepareStatement.setString(10, bookStore.getType());
+			prepareStatement.setInt(11, bookStore.getId());
+
 			prepareStatement.executeUpdate();
+			System.out.println(updateBookStoreQuery);
 			LOGGER.info("Successfully updated bookstore in database.");
 			return true;
 		} catch (SQLException e) {
@@ -212,7 +219,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	 */
 	public BookStore getBookStoreByName(String bookStoreName) {
 		String getBooksQuery = "SELECT * FROM BookStores WHERE name = '" + bookStoreName + "';";
-
+		System.out.println(getBooksQuery);
 		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
 
 		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {

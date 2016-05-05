@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -33,17 +32,10 @@ public class MainLayoutController {
 	private Stage primaryStage;
 
 	@FXML
-	private TabPane tabPane;
+	public TabPane tabPane;
 
 	@FXML
 	private DatePicker datePicker;
-
-	@FXML
-	private Button showBooksByDateButton;
-	@FXML
-	private Button editBookStoreButton;
-	@FXML
-	private Button addBookStoreButton;
 
 	/**
 	 * Initialize main bookstore window. Fills all fields with proper
@@ -51,9 +43,6 @@ public class MainLayoutController {
 	 * bookstore).
 	 */
 	public void initialize() {
-
-		showBooksByDateButton.setDisable(true);
-		editBookStoreButton.setDisable(true);
 
 		new Thread(new Runnable() {
 
@@ -102,20 +91,33 @@ public class MainLayoutController {
 	private void handleEditBookStore() {
 
 		try {
+			EditBookStoreController.tabPanel = tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex())
+					.getText();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(FreeBookViewer.class.getResource("/EditBookStoreLayout.fxml"));
 			AnchorPane anchorPane = (AnchorPane) loader.load();
 
 			Scene scene = new Scene(anchorPane);
 			Stage thisStage = (Stage) tabPane.getScene().getWindow();
+
 			Stage stage = new Stage();
 			stage.setScene(scene);
 			stage.initOwner(thisStage);
 			stage.initModality(Modality.WINDOW_MODAL);
 
-			// @SuppressWarnings("unused")
-			// EditBookStoreController controller = loader.getController();
-			stage.show();
+			stage.showAndWait();
+
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+
+					tabPane.getTabs().clear();
+					initialize();
+
+				}
+
+			});
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -160,9 +162,43 @@ public class MainLayoutController {
 
 	}
 
+	/**
+	 * Opens new window responsible for showing books with specific tags.
+	 */
 	@FXML
 	private void handleShowBooks() {
+		try {
+			EditBookStoreController.tabPanel = tabPane.getTabs().get(tabPane.getSelectionModel().getSelectedIndex())
+					.getText();
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(FreeBookViewer.class.getResource("/ShowBooksLayout.fxml"));
+			AnchorPane anchorPane = (AnchorPane) loader.load();
 
+			Scene scene = new Scene(anchorPane);
+			Stage thisStage = (Stage) tabPane.getScene().getWindow();
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.initOwner(thisStage);
+			stage.initModality(Modality.WINDOW_MODAL);
+
+			stage.showAndWait();
+
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+
+					tabPane.getTabs().clear();
+					initialize();
+
+				}
+
+			});
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
