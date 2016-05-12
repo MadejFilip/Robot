@@ -12,10 +12,14 @@ import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
 import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.BookStore;
 
+/**
+ * @author filipm Provides functions needed to initialize downloading of books
+ *         from library sites and saving them in database.
+ */
 public class Scraper {
 	public static final Logger LOGGER = LogManager.getLogger(Scraper.class);
 
-	private List<BookStore> getBookStores() throws SQLException{
+	private List<BookStore> getBookStores() throws SQLException {
 		try (ConnectionDao connectionDao = new ConnectionDao()) {
 			BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
 			return bookStoreDaoImpl.getAllBooksStores();
@@ -23,17 +27,24 @@ public class Scraper {
 
 	}
 
+	/**
+	 * Initializes downloading of books from proper bookstores and saves those
+	 * books to database. If connection to database fails method catches
+	 * SQLException.
+	 * 
+	 * @return true if operation succeed, false if there is not any bookstores.
+	 */
 	public boolean downloading() {
-			boolean result = true;
+		boolean result = true;
 		try (ConnectionDao connectionDao = new ConnectionDao()) {
 			BookDaoImpl bookDaoImpl = new BookDaoImpl(connectionDao);
 
-
 			List<BookStore> libraries = getBookStores();
-			if(libraries.size()==0){
-				result=false;
+			if (libraries.size() == 0) {
+				result = false;
 			}
 			CountDownLatch latch = new CountDownLatch(libraries.size());
+			latch.await();
 			for (BookStore bookStore : libraries) {
 				new Thread(new Runnable() {
 

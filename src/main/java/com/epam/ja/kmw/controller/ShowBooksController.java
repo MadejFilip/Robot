@@ -3,12 +3,9 @@ package com.epam.ja.kmw.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.epam.ja.kmw.dao.impl.BookDaoImpl;
-import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
 import com.epam.ja.kmw.dao.impl.ConnectionDao;
+import com.epam.ja.kmw.dao.impl.SearcherDaoImpl;
 import com.epam.ja.kmw.model.Book;
-import com.epam.ja.kmw.model.BookStore;
-import com.epam.ja.kmw.model.Searcher;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,23 +13,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
+/**
+ * @author filipm This is controller which allows user showing downloaded books
+ *         by GUI.
+ */
 public class ShowBooksController {
 	public static final Logger LOGGER = LogManager.getLogger(MainLayoutController.class);
 
-	private Stage primaryStage;
-
 	@FXML
 	public TabPane tabPane;
-
-	@FXML
-	private DatePicker datePicker;
 
 	@FXML
 	private TextField tagsField;
@@ -46,36 +40,21 @@ public class ShowBooksController {
 			@Override
 			public void run() {
 
-				try (ConnectionDao connectionDao = new ConnectionDao()) {
-					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
-					BookDaoImpl bookDao = new BookDaoImpl(connectionDao);
+				ObservableList<String> listOfBooks = FXCollections.observableArrayList();
 
-					for (BookStore bookStore : bookStoreDaoImpl.getAllBooksStores()) {
+				ListView<String> listView = new ListView<String>();
 
-						ObservableList<String> listOfBooks = FXCollections.observableArrayList();
+				Platform.runLater(new Runnable() {
 
-						ListView<String> listView = new ListView<String>();
-
-						for (Book book : bookDao.getAllBooksForOneBookStore(bookStore.getName())) {
-
-							listOfBooks.add(book.getTitle() + " *** " + book.getAuthor() + " *** " + book.getTags());
-						}
-
-						Platform.runLater(new Runnable() {
-
-							@Override
-							public void run() {
-								listView.setItems(listOfBooks);
-								Tab tab = new Tab(bookStore.getName());
-								tab.setContent(listView);
-								tabPane.getTabs().add(tab);
-							}
-						});
+					@Override
+					public void run() {
+						listView.setItems(listOfBooks);
+						Tab tab = new Tab();
+						tab.setContent(listView);
+						tabPane.getTabs().add(tab);
 					}
-				} catch (Exception e) {
-					LOGGER.error("Can't close database connection");
+				});
 
-				}
 			}
 		}).start();
 
@@ -86,7 +65,7 @@ public class ShowBooksController {
 	 */
 	@FXML
 	private void handleShowBooks() {
-		if (tagsField.getText().equals("") || datePicker.equals(null)) {
+		if (tagsField.getText().equals("")) {
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
@@ -96,8 +75,6 @@ public class ShowBooksController {
 			alert.showAndWait();
 		} else {
 
-			Searcher searcher = new Searcher(tagsField.getText(), datePicker.getValue());
-
 			new Thread(new Runnable() {
 
 				@Override
@@ -105,9 +82,31 @@ public class ShowBooksController {
 
 					try (ConnectionDao connectionDao = new ConnectionDao()) {
 
-						BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
+						SearcherDaoImpl searcherDaoImpl = new SearcherDaoImpl(connectionDao);
 
-						bookStoreDaoImpl.updateBookStore(bookStore);
+						searcherDaoImpl.getBooksByTag(tagsField.getText());
+
+						ObservableList<String> listOfBooks = FXCollections.observableArrayList();
+
+						ListView<String> listView = new ListView<String>();
+
+						for (Book book : searcherDaoImpl.getBooksByTag(tagsField.getText())) {
+
+							listOfBooks.add(book.getTitle() + " *** " + book.getAuthor() + " *** " + book.getTags());
+						}
+
+						Platform.runLater(new Runnable() {
+
+							@Override
+							public void run() {
+
+								listView.setItems(listOfBooks);
+								Tab tab = new Tab(tagsField.getText() + " ");
+								tab.setContent(listView);
+								tabPane.getTabs().add(tab);
+							}
+
+						});
 					} catch (Exception e) {
 						LOGGER.error("Can't close database connection");
 					}
@@ -117,33 +116,4 @@ public class ShowBooksController {
 		}
 
 	}
-
-	/**
-	 * Closes main bookstore robot window.
-	 */
-	@FXML
-	private void handleExit() {
-		primaryStage.close();
-	}
-
-	/**
-	 * Sets object which is an instance of Stage class.
-	 * 
-	 * @param primaryStage
-	 *            object of the Stage class - main component of the bookstore
-	 *            robot window..
-	 */
-	public void setStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
-	/**
-	 * Returned object is an instance of Stage class.
-	 * 
-	 * @return Stage object - main component of the bookstore robot window.
-	 */
-	public Stage getStage() {
-		return primaryStage;
-	}
-
 }

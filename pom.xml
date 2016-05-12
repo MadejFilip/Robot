@@ -4,6 +4,10 @@
 	<groupId>com.epam.ja</groupId>
 	<artifactId>BookStoreRobot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<description>BookStore Robot downloads informations associated with free books from two bookstores sites and saves them in database.
+	Database stores informations about titles, authors, tags, dates of book addition and bookstores names. Main window shows all books but the interface of this robot
+	allows user to choose those with specific tags and shows them in a separate window. User can also add new bookstore, delete or edit existing one thanks to an interface.
+	BookStore Robot provides quick access to data associated with books. User doesn't waste time on searching promotions.</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -132,9 +136,6 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 		</dependency>
-
-
-
 	</dependencies>
 	<packaging>war</packaging>
 </project>

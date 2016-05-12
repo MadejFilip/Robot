@@ -28,12 +28,6 @@
 						<Insets bottom="10.0" top="10.0" />
 					</BorderPane.margin>
 					<children>
-						<DatePicker fx:id="datePicker" HBox.hgrow="ALWAYS">
-							<HBox.margin>
-								<Insets left="20.0" />
-							</HBox.margin>
-						</DatePicker>
-		 
 						<TextField fx:id="tagsField" HBox.hgrow="ALWAYS">
 							<HBox.margin>
 								<Insets left="20.0" />
@@ -53,10 +47,6 @@
 					</children>
 				</HBox>
 			</top>
-			<bottom>
-				<Button mnemonicParsing="false" onAction="#handleExit" text="Exit"
-					BorderPane.alignment="CENTER" />
-			</bottom>
 		</BorderPane>
 	</children>
 </AnchorPane>

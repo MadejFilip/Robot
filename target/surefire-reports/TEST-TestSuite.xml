@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="16" failures="0" name="TestSuite" time="0.754" errors="0" skipped="0">
+<testsuite tests="20" failures="0" name="TestSuite" time="0.704" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -14,7 +14,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/home/filipm/workspace/robotBuly/BookStoreRobot"/>
+    <property name="user.dir" value="/home/filipm/workspace/robotBuly2/Robot"/>
     <property name="java.runtime.version" value="1.8.0_77-b03"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-8-oracle/jre/lib/endorsed"/>
@@ -24,7 +24,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Linux"/>
-    <property name="net.sourceforge.cobertura.datafile" value="/home/filipm/workspace/robotBuly/BookStoreRobot/target/cobertura/cobertura.ser"/>
+    <property name="net.sourceforge.cobertura.datafile" value="/home/filipm/workspace/robotBuly2/Robot/target/cobertura/cobertura.ser"/>
     <property name="classworlds.conf" value="/usr/share/maven/bin/m2.conf"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
@@ -42,7 +42,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/lib/jvm/java-8-oracle/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher site"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install site"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -57,24 +57,28 @@
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="project.build.outputDirectory" value="/home/filipm/workspace/robotBuly/BookStoreRobot/target/generated-classes/cobertura"/>
+    <property name="project.build.outputDirectory" value="/home/filipm/workspace/robotBuly2/Robot/target/generated-classes/cobertura"/>
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.364"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.001"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.354"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.006"/>
   <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodDelBook" time="0.001"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodGetAllBooks" time="0.004"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0"/>
-  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0.02"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodGetAllBooks" time="0.005"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.001"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0.019"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoDifferentObjects" time="0.001"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoDifferentObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoDifferentObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoEvenObjects" time="0.001"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoEvenObjects" time="0"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsGood" time="0.02"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsWrong" time="0.002"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoEvenObjects" time="0"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsGood" time="0.027"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsWrong" time="0.003"/>
   <testcase classname="com.epam.ja.kmw.scraping.LibraryCheckerTest" name="badlyNamedTest" time="0"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest" name="createTablePropertiesIsGood" time="0.002"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest" name="createTablePropertiesIsWrong" time="0.002"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest" name="getPropertiesIsGood" time="0.001"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest" name="upgradeIsGood" time="0.006"/>
 </testsuite>

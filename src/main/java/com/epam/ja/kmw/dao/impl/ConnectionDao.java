@@ -8,6 +8,10 @@ import java.sql.Statement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author filipm Provides functions needed to control connection between
+ *         application and database.
+ */
 public class ConnectionDao implements AutoCloseable {
 
 	private static final String DB_DRIVER = "org.sqlite.JDBC";

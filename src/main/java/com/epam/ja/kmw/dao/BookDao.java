@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.epam.ja.kmw.model.Book;
 
+/**
+ * @author filipm It stores functions needed to operate on books.
+ */
 public interface BookDao {
 
 	/**

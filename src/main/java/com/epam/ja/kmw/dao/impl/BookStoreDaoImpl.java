@@ -14,6 +14,10 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookStoreDao;
 import com.epam.ja.kmw.model.BookStore;
 
+/**
+ * @author filipm This is implementation of BookStoreDao. Provides functions
+ *         needed to operate on bookstores.
+ */
 public class BookStoreDaoImpl implements BookStoreDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
@@ -91,8 +95,6 @@ public class BookStoreDaoImpl implements BookStoreDao {
 		Date sqlDate = new Date(date.getTime());
 		try (PreparedStatement prepareStatement = connectionDao.getConnection()
 				.prepareStatement(updateBookStoreQuery)) {
-			System.out.println(bookStore.getId());
-			System.out.println(bookStore.getName());
 
 			prepareStatement.setString(1, bookStore.getName());
 			prepareStatement.setString(2, bookStore.getUrl());
@@ -107,7 +109,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 			prepareStatement.setInt(11, bookStore.getId());
 
 			prepareStatement.executeUpdate();
-			System.out.println(updateBookStoreQuery);
+
 			LOGGER.info("Successfully updated bookstore in database.");
 			return true;
 		} catch (SQLException e) {
@@ -219,7 +221,7 @@ public class BookStoreDaoImpl implements BookStoreDao {
 	 */
 	public BookStore getBookStoreByName(String bookStoreName) {
 		String getBooksQuery = "SELECT * FROM BookStores WHERE name = '" + bookStoreName + "';";
-		System.out.println(getBooksQuery);
+
 		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
 
 		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {

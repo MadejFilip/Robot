@@ -1,4 +1,4 @@
-package com.epam.ja.kmw.main;
+package com.epam.ja.kmw.controller;
 
 import java.awt.AWTException;
 import java.awt.MenuItem;
@@ -19,8 +19,12 @@ import com.epam.ja.kmw.viewer.FreeBookViewer;
 
 import javafx.application.Platform;
 
-public class TrayApp {
-	public static final Logger LOGGER = LogManager.getLogger(TrayApp.class);
+/**
+ * @author filipm Initializes icon which allows user to open main window or shut
+ *         down application.
+ */
+public class InicializateTrayAppControler {
+	public static final Logger LOGGER = LogManager.getLogger(InicializateTrayAppControler.class);
 	private final static SystemTray tray = SystemTray.getSystemTray();
 	private PopupMenu popup = new PopupMenu();
 	private TrayIcon trayIcon;
@@ -77,6 +81,7 @@ public class TrayApp {
 		});
 
 		popup.add(openItem);
+
 		popup.add(closeItem);
 
 		try {

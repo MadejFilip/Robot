@@ -1,105 +1,367 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="16" passed="16">
+<testng-results skipped="0" failed="0" total="20" passed="20">
   <reporter-output>
   </reporter-output>
-  <suite name="Command line suite" duration-ms="538" started-at="2016-05-04T15:03:12Z" finished-at="2016-05-04T15:03:13Z">
+  <suite name="Command line suite" duration-ms="510" started-at="2016-05-10T16:37:26Z" finished-at="2016-05-10T16:37:27Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="538" started-at="2016-05-04T15:03:12Z" finished-at="2016-05-04T15:03:13Z">
+    <test name="Command line test" duration-ms="510" started-at="2016-05-10T16:37:26Z" finished-at="2016-05-10T16:37:27Z">
       <class name="com.epam.ja.kmw.dao.impl.ConnectionDaoTest">
-        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@67b64c45]" name="sadasdasdasdsadas" is-config="true" duration-ms="83" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:13Z">
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@4411d970]" name="sadasdasdasdsadas" is-config="true" duration-ms="71" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sadasdasdasdsadas -->
-        <test-method status="PASS" signature="connectionDaoIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@67b64c45]" name="connectionDaoIsGood" duration-ms="16" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        <test-method status="PASS" signature="connectionDaoIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@4411d970]" name="connectionDaoIsGood" duration-ms="27" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- connectionDaoIsGood -->
-        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@67b64c45]" name="sadasdasdasdsadas" is-config="true" duration-ms="1" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@4411d970]" name="sadasdasdasdsadas" is-config="true" duration-ms="0" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sadasdasdasdsadas -->
-        <test-method status="PASS" signature="connectionDaoIsWrong()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@67b64c45]" name="connectionDaoIsWrong" duration-ms="2" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        <test-method status="PASS" signature="connectionDaoIsWrong()[pri:0, instance:com.epam.ja.kmw.dao.impl.ConnectionDaoTest@4411d970]" name="connectionDaoIsWrong" duration-ms="4" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- connectionDaoIsWrong -->
       </class> <!-- com.epam.ja.kmw.dao.impl.ConnectionDaoTest -->
-      <class name="com.epam.ja.kmw.dao.impl.BookDaoImplTest">
-        <test-method status="PASS" signature="testsMethodAddAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2812cbfa]" name="testsMethodAddAllBooks" duration-ms="365" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testsMethodAddAllBooks -->
-        <test-method status="PASS" signature="testsMethodAddBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2812cbfa]" name="testsMethodAddBook" duration-ms="4" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testsMethodAddBook -->
-        <test-method status="PASS" signature="testsMethodDelBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2812cbfa]" name="testsMethodDelBook" duration-ms="2" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testsMethodDelBook -->
-        <test-method status="PASS" signature="testsMethodGetAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2812cbfa]" name="testsMethodGetAllBooks" duration-ms="5" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testsMethodGetAllBooks -->
-        <test-method status="PASS" signature="testsMethodUpdateBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2812cbfa]" name="testsMethodUpdateBook" duration-ms="1" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testsMethodUpdateBook -->
-      </class> <!-- com.epam.ja.kmw.dao.impl.BookDaoImplTest -->
       <class name="com.epam.ja.kmw.model.BookTest">
-        <test-method status="PASS" signature="testIfHashCodeIsDifferentForTwoDifferObjects()[pri:0, instance:com.epam.ja.kmw.model.BookTest@2d6e8792]" name="testIfHashCodeIsDifferentForTwoDifferObjects" duration-ms="20" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
+        <test-method status="PASS" signature="testIfHashCodeIsDifferentForTwoDifferObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testIfHashCodeIsDifferentForTwoDifferObjects" duration-ms="18" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[wojna]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testIfHashCodeIsDifferentForTwoDifferObjects -->
-        <test-method status="PASS" signature="testMethodEqualsForTwoDifferentObjects()[pri:0, instance:com.epam.ja.kmw.model.BookTest@2d6e8792]" name="testMethodEqualsForTwoDifferentObjects" duration-ms="1" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
+        <test-method status="PASS" signature="testIfHashCodeIsDifferentForTwoDifferObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testIfHashCodeIsDifferentForTwoDifferObjects" duration-ms="1" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[pokoj]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testMethodEqualsForTwoDifferentObjects -->
-        <test-method status="PASS" signature="testIfHashCodeIsSameForIdenticalObjects()[pri:0, instance:com.epam.ja.kmw.model.BookTest@2d6e8792]" name="testIfHashCodeIsSameForIdenticalObjects" duration-ms="0" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
+        </test-method> <!-- testIfHashCodeIsDifferentForTwoDifferObjects -->
+        <test-method status="PASS" signature="testIfHashCodeIsSameForIdenticalObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testIfHashCodeIsSameForIdenticalObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[wojna]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testIfHashCodeIsSameForIdenticalObjects -->
-        <test-method status="PASS" signature="testMethodEqualsForTwoEvenObjects()[pri:0, instance:com.epam.ja.kmw.model.BookTest@2d6e8792]" name="testMethodEqualsForTwoEvenObjects" duration-ms="0" started-at="2016-05-04T17:03:12Z" finished-at="2016-05-04T17:03:12Z">
+        <test-method status="PASS" signature="testIfHashCodeIsSameForIdenticalObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testIfHashCodeIsSameForIdenticalObjects" duration-ms="1" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[pokoj]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testIfHashCodeIsSameForIdenticalObjects -->
+        <test-method status="PASS" signature="testIfHashCodeIsDifferentForTwoDifferObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testIfHashCodeIsDifferentForTwoDifferObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[historia polski]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testIfHashCodeIsDifferentForTwoDifferObjects -->
+        <test-method status="PASS" signature="testIfHashCodeIsSameForIdenticalObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testIfHashCodeIsSameForIdenticalObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[historia polski]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testIfHashCodeIsSameForIdenticalObjects -->
+        <test-method status="PASS" signature="testMethodEqualsForTwoDifferentObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testMethodEqualsForTwoDifferentObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[wojna]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMethodEqualsForTwoDifferentObjects -->
+        <test-method status="PASS" signature="testMethodEqualsForTwoEvenObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testMethodEqualsForTwoEvenObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[wojna]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMethodEqualsForTwoEvenObjects -->
+        <test-method status="PASS" signature="testMethodEqualsForTwoDifferentObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testMethodEqualsForTwoDifferentObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[pokoj]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMethodEqualsForTwoDifferentObjects -->
+        <test-method status="PASS" signature="testMethodEqualsForTwoDifferentObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testMethodEqualsForTwoDifferentObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[historia polski]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMethodEqualsForTwoDifferentObjects -->
+        <test-method status="PASS" signature="testMethodEqualsForTwoEvenObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testMethodEqualsForTwoEvenObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[historia polski]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testMethodEqualsForTwoEvenObjects -->
+        <test-method status="PASS" signature="testMethodEqualsForTwoEvenObjects(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:com.epam.ja.kmw.model.BookTest@2812cbfa]" name="testMethodEqualsForTwoEvenObjects" duration-ms="0" started-at="2016-05-10T18:37:27Z" data-provider="booksValues" finished-at="2016-05-10T18:37:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[pokoj]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[matrys]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[adam]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[tag]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testMethodEqualsForTwoEvenObjects -->
       </class> <!-- com.epam.ja.kmw.model.BookTest -->
-      <class name="com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest">
-        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="sadasdasdasdsadas" is-config="true" duration-ms="16" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+      <class name="com.epam.ja.kmw.dao.impl.BookDaoImplTest">
+        <test-method status="PASS" signature="testsMethodAddAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2acf57e3]" name="testsMethodAddAllBooks" duration-ms="356" started-at="2016-05-10T18:37:26Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- sadasdasdasdsadas -->
-        <test-method status="PASS" signature="createTablePropertiesIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="createTablePropertiesIsGood" duration-ms="5" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        </test-method> <!-- testsMethodAddAllBooks -->
+        <test-method status="PASS" signature="testsMethodAddBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2acf57e3]" name="testsMethodAddBook" duration-ms="6" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createTablePropertiesIsGood -->
-        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="sadasdasdasdsadas" is-config="true" duration-ms="0" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        </test-method> <!-- testsMethodAddBook -->
+        <test-method status="PASS" signature="testsMethodDelBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2acf57e3]" name="testsMethodDelBook" duration-ms="1" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- sadasdasdasdsadas -->
-        <test-method status="PASS" signature="createTablePropertiesIsWrong()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="createTablePropertiesIsWrong" duration-ms="1" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        </test-method> <!-- testsMethodDelBook -->
+        <test-method status="PASS" signature="testsMethodGetAllBooks()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2acf57e3]" name="testsMethodGetAllBooks" duration-ms="5" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createTablePropertiesIsWrong -->
-        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="sadasdasdasdsadas" is-config="true" duration-ms="0" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        </test-method> <!-- testsMethodGetAllBooks -->
+        <test-method status="PASS" signature="testsMethodUpdateBook()[pri:0, instance:com.epam.ja.kmw.dao.impl.BookDaoImplTest@2acf57e3]" name="testsMethodUpdateBook" duration-ms="1" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- sadasdasdasdsadas -->
-        <test-method status="PASS" signature="getPropertiesIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="getPropertiesIsGood" duration-ms="2" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- getPropertiesIsGood -->
-        <test-method status="PASS" signature="upgradeIsGood()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="upgradeIsGood" duration-ms="5" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- upgradeIsGood -->
-        <test-method status="PASS" signature="sadasdasdasdsadas()[pri:0, instance:com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest@2f7a2457]" name="sadasdasdasdsadas" is-config="true" duration-ms="0" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- sadasdasdasdsadas -->
-      </class> <!-- com.epam.ja.kmw.dao.impl.PropertiesDaoImplTest -->
+        </test-method> <!-- testsMethodUpdateBook -->
+      </class> <!-- com.epam.ja.kmw.dao.impl.BookDaoImplTest -->
       <class name="com.epam.ja.kmw.scraping.LibraryCheckerTest">
-        <test-method status="PASS" signature="badlyNamedTest()[pri:0, instance:com.epam.ja.kmw.scraping.LibraryCheckerTest@3f3afe78]" name="badlyNamedTest" duration-ms="0" started-at="2016-05-04T17:03:13Z" finished-at="2016-05-04T17:03:13Z">
+        <test-method status="PASS" signature="badlyNamedTest()[pri:0, instance:com.epam.ja.kmw.scraping.LibraryCheckerTest@880ec60]" name="badlyNamedTest" duration-ms="0" started-at="2016-05-10T18:37:27Z" finished-at="2016-05-10T18:37:27Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- badlyNamedTest -->

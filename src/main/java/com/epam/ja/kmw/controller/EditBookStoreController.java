@@ -14,21 +14,14 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * @author filipm This is controller which allows user editing existing
+ *         bookstores by GUI.
+ */
 public class EditBookStoreController {
 	public static final Logger LOGGER = LogManager.getLogger(EditBookStoreController.class);
 	public static String tabPanel;
-	private String bookStoreName;
 	private int idBookEdit;
-
-	/**
-	 * Sets sent String as book store name.
-	 * 
-	 * @param bookStoreName
-	 *            name of the bookstore
-	 */
-	public void setBookStoreName(String bookStoreName) {
-		this.bookStoreName = bookStoreName;
-	}
 
 	@FXML
 	private TextField nameField;

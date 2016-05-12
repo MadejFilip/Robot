@@ -14,6 +14,10 @@ import org.apache.logging.log4j.Logger;
 import com.epam.ja.kmw.dao.BookDao;
 import com.epam.ja.kmw.model.Book;
 
+/**
+ * @author filipm This is implementation of BookDao. Provides functions needed
+ *         to operate on books.
+ */
 public class BookDaoImpl implements BookDao {
 
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);

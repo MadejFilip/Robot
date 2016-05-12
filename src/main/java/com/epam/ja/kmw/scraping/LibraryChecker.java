@@ -13,6 +13,10 @@ import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
+/**
+ * @author filipm Provides functions needed to check libraries sites and
+ *         download proper books from those sites.
+ */
 public class LibraryChecker {
 	private UserAgent userAgent;
 	private int counter;
@@ -107,7 +111,6 @@ public class LibraryChecker {
 				if (!text.toLowerCase().contains(library.getType().toLowerCase()))
 					continue;
 
-				System.out.println(text);
 				bookList.add(new Book(names.getElement(i).innerText(), library.getName(),
 						author.getElement(i).innerText(), tag.getElement(i).innerText()));
 				counter++;
@@ -119,7 +122,6 @@ public class LibraryChecker {
 				LOGGER.trace("Can't find Book on :");
 				return false;
 			}
-
 		}
 		return true;
 	}

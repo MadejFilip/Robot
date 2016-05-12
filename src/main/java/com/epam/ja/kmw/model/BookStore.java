@@ -1,5 +1,8 @@
 package com.epam.ja.kmw.model;
 
+/**
+ * @author filipm Provides functions needed to operate on bookstores.
+ */
 public class BookStore {
 
 	private int id;
@@ -21,12 +24,19 @@ public class BookStore {
 	 * @param url
 	 *            URL of a created bookstore
 	 * @param nameTag
+	 *            book title
 	 * @param priceTag
+	 *            price of searched books
 	 * @param nextTag
+	 *            tag needed to move to next site
 	 * @param priceValue
+	 *            book price
 	 * @param authorTag
+	 *            book author name
 	 * @param tagsTag
+	 *            keyword for books
 	 * @param type
+	 *            describes keyword which should be saved in database
 	 */
 	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue,
 			String authorTag, String tagsTag, String type) {

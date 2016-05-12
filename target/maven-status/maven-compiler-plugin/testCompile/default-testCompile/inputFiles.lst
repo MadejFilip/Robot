@@ -1,5 +1,4 @@
-/home/filipm/workspace/robotBuly/BookStoreRobot/src/test/java/com/epam/ja/kmw/dao/impl/ConnectionDaoTest.java
-/home/filipm/workspace/robotBuly/BookStoreRobot/src/test/java/com/epam/ja/kmw/model/BookTest.java
-/home/filipm/workspace/robotBuly/BookStoreRobot/src/test/java/com/epam/ja/kmw/dao/impl/PropertiesDaoImplTest.java
-/home/filipm/workspace/robotBuly/BookStoreRobot/src/test/java/com/epam/ja/kmw/scraping/LibraryCheckerTest.java
-/home/filipm/workspace/robotBuly/BookStoreRobot/src/test/java/com/epam/ja/kmw/dao/impl/BookDaoImplTest.java
+/home/filipm/workspace/robotBuly2/Robot/src/test/java/com/epam/ja/kmw/dao/impl/ConnectionDaoTest.java
+/home/filipm/workspace/robotBuly2/Robot/src/test/java/com/epam/ja/kmw/scraping/LibraryCheckerTest.java
+/home/filipm/workspace/robotBuly2/Robot/src/test/java/com/epam/ja/kmw/dao/impl/BookDaoImplTest.java
+/home/filipm/workspace/robotBuly2/Robot/src/test/java/com/epam/ja/kmw/model/BookTest.java

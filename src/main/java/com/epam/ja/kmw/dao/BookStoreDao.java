@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.epam.ja.kmw.model.BookStore;
 
+/**
+ * @author filipm It stores functions needed to operate on bookstores.
+ */
 public interface BookStoreDao {
 
 	/**
@@ -22,7 +25,7 @@ public interface BookStoreDao {
 	 * 
 	 * @param bookStore
 	 *            object that will be updated.
-	 * @return true if operation succeed, false if not.
+	 * @return true if operation succeeds, false if not.
 	 */
 	public boolean updateBookStore(BookStore bookStore);
 

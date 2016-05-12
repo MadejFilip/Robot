@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -26,6 +27,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * @author filipm Main controller in which user can chose operation that he want
+ *         to execute.
+ */
 public class MainLayoutController {
 	public static final Logger LOGGER = LogManager.getLogger(MainLayoutController.class);
 
@@ -36,6 +41,14 @@ public class MainLayoutController {
 
 	@FXML
 	private DatePicker datePicker;
+
+	@FXML
+	Button showBooksByDateButton;
+
+	@FXML
+	Button editBookStoreButton;
+	@FXML
+	Button addBookStoreButton;
 
 	/**
 	 * Initialize main bookstore window. Fills all fields with proper

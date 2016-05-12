@@ -5,6 +5,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * @author filipm Provides functions needed to operate on books.
+ */
 public class Book {
 
 	private IntegerProperty id;
