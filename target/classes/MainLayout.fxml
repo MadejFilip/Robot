@@ -24,7 +24,7 @@
  
                   <ButtonBar prefHeight="40.0" prefWidth="327.0" HBox.hgrow="ALWAYS">
                     <buttons>
-                        <Button fx:id="showBooksByDateButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="157.0" onAction="#handleShowBooks" text="Show Books" />
+                        <Button fx:id="showBooksByDateButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="157.0" onAction="#handleShowBooks" text="Search by tags " />
                         <Button fx:id="editBookStoreButton" mnemonicParsing="false" onAction="#handleEditBookStore" text="Edit Bookstore" />
                       <Button fx:id="addBookStoreButton" mnemonicParsing="false" onAction="#handleAddBookStore" text="Add Bookstore" />
                         <Button mnemonicParsing="false" onAction="#handleDelBookStore" text="Del Bookstore" />

@@ -1,8 +1,7 @@
-test-output/*
+test-output/
 .classpath
 .project
 .settings/
 bin/
 target/
 logs/
-

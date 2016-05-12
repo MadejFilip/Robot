@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextField?>
-
-<AnchorPane minHeight="600.0" prefWidth="800.0"
+<AnchorPane minHeight="300.0" prefWidth="500.0"
 	xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.epam.ja.kmw.controller.ShowBooksController">
 	<children>
@@ -28,7 +27,7 @@
 						<Insets bottom="10.0" top="10.0" />
 					</BorderPane.margin>
 					<children>
-						<TextField fx:id="tagsField" HBox.hgrow="ALWAYS">
+						<TextField fx:id="tagsField" text="Enter a keyword" HBox.hgrow="ALWAYS">
 							<HBox.margin>
 								<Insets left="20.0" />
 							</HBox.margin>
@@ -38,7 +37,7 @@
 							<buttons>
 								<Button mnemonicParsing="false"
 									prefHeight="26.0" prefWidth="157.0" onAction="#handleShowBooks"
-									text="Show Books" />
+									text="Search" />
 							</buttons>
 							<HBox.margin>
 								<Insets right="10.0" />

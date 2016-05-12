@@ -94,7 +94,10 @@ public class ShowBooksController {
 
 							listOfBooks.add(book.getTitle() + " *** " + book.getAuthor() + " *** " + book.getTags());
 						}
-
+						if(listOfBooks.isEmpty())
+						{
+							listOfBooks.add("Nie znaleziono żadnych wyników wyszukiwania");
+						}
 						Platform.runLater(new Runnable() {
 
 							@Override

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
  * @author filipm This is controller which allows user adding new bookstore by
  *         GUI.
  */
+
 public class AddBookStoreController {
 	public static final Logger LOGGER = LogManager.getLogger(AddBookStoreController.class);
 
