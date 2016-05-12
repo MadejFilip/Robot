@@ -43,13 +43,16 @@ public class Scraper {
 			if (libraries.size() == 0) {
 				result = false;
 			}
+
 			CountDownLatch latch = new CountDownLatch(libraries.size());
-			latch.await();
+
 			for (BookStore bookStore : libraries) {
+
 				new Thread(new Runnable() {
 
 					@Override
 					public void run() {
+
 						bookDaoImpl.addAllBooks(new LibraryChecker(bookStore).getFreeBooks());
 						latch.countDown();
 					}

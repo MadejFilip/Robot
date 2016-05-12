@@ -1,8 +1,8 @@
+/home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/controller/FreeBookViewer.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/Main.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/dao/impl/SearcherDaoImpl.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/controller/EditBookStoreController.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/main/TimeChecker.java
-/home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/viewer/FreeBookViewer.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/dao/impl/BookStoreDaoImpl.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/dao/impl/BookDaoImpl.java
 /home/adam/Robocik/Robot/src/main/java/com/epam/ja/kmw/model/BookStore.java

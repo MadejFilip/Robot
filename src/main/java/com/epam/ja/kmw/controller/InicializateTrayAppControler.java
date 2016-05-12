@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.Main;
-import com.epam.ja.kmw.viewer.FreeBookViewer;
 
 import javafx.application.Platform;
 

@@ -6,16 +6,4 @@
       <class name="com.epam.ja.kmw.dao.impl.BookDaoImplTest"/>
     </classes>
   </test> <!-- Default test -->
-  <test name="Default test(failed)">
-    <classes>
-      <class name="com.epam.ja.kmw.dao.impl.BookDaoImplTest">
-        <methods>
-          <include name="testsMethodGetAllBooks"/>
-          <include name="testsMethodAddBook" invocation-numbers="0 1 2 3"/>
-          <include name="testsMethodAddAllBooks" invocation-numbers="0 1 2"/>
-          <include name="testsMethodUpdateBook" invocation-numbers="0 1 2 3"/>
-        </methods>
-      </class> <!-- com.epam.ja.kmw.dao.impl.BookDaoImplTest -->
-    </classes>
-  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

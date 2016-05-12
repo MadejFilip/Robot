@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="31" failures="0" name="TestSuite" time="0.426" errors="0" skipped="0">
+<testsuite tests="31" failures="0" name="TestSuite" time="0.345" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -60,27 +60,27 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.155"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.053"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.013"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.154"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.037"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddAllBooks" time="0.034"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.006"/>
   <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.007"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.008"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.015"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.013"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodDelBook" time="0.006"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodGetAllBooks" time="0.016"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.002"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.004"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodAddBook" time="0.004"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodDelBook" time="0.001"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodGetAllBooks" time="0.003"/>
   <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.001"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.002"/>
   <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.001"/>
-  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0.078"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.001"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.BookDaoImplTest" name="testsMethodUpdateBook" time="0.001"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0.07"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0.001"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0.001"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0"/>
-  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsDifferentForTwoDifferObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0.001"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0"/>
-  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0.001"/>
+  <testcase classname="com.epam.ja.kmw.model.BookTest" name="testIfHashCodeIsSameForIdenticalObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoDifferentObjects" time="0.002"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoDifferentObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoDifferentObjects" time="0"/>
@@ -89,6 +89,6 @@
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoEvenObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoEvenObjects" time="0"/>
   <testcase classname="com.epam.ja.kmw.model.BookTest" name="testMethodEqualsForTwoEvenObjects" time="0"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsGood" time="0.034"/>
-  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsWrong" time="0.017"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsGood" time="0.013"/>
+  <testcase classname="com.epam.ja.kmw.dao.impl.ConnectionDaoTest" name="connectionDaoIsWrong" time="0.003"/>
 </testsuite>

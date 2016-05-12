@@ -10,7 +10,6 @@ import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
 import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.Book;
 import com.epam.ja.kmw.model.BookStore;
-import com.epam.ja.kmw.viewer.FreeBookViewer;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;

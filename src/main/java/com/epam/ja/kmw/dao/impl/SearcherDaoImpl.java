@@ -13,7 +13,7 @@ import com.epam.ja.kmw.model.Book;
 /**
  * @author filipm Provides function needed to search books by tags.
  */
-public class SearcherDaoImpl {
+public class SearcherDaoImpl  {
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
 	private ConnectionDao connectionDao;
 

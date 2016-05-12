@@ -1,8 +1,6 @@
-package com.epam.ja.kmw.viewer;
+package com.epam.ja.kmw.controller;
 
 import java.io.IOException;
-
-import com.epam.ja.kmw.controller.MainLayoutController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
