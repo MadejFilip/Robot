@@ -19,20 +19,6 @@ public class BookDaoImplTest {
 	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
 	private ConnectionDao connectionDao;
 
-	@BeforeMethod
-	public void createTestTable() {
-		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS BooksTest (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime, Author varchar(255),  Tags varchar(255) )";
-		try {
-
-			connectionDao.getStatement().execute(createBooksTableQuery);
-			LOGGER.info("Created BookTest database");
-
-		} catch (SQLException e) {
-			LOGGER.error("Fail to create a table 'BookTest' in database. :" + e.getMessage());
-		}
-	}
-
 	@DataProvider(name = "booksValues")
 	public Object[][] giveData1() {
 		return new Object[][] { { "wojna", "matrys", "adam", "romans" }, { "pokoj", "empik", "adam", "tag" },

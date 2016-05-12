@@ -4,23 +4,41 @@
 	<groupId>com.epam.ja</groupId>
 	<artifactId>BookStoreRobot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>BookStore Robot downloads informations associated with free books from two bookstores sites and saves them in database.
-	Database stores informations about titles, authors, tags, dates of book addition and bookstores names. Main window shows all books but the interface of this robot
-	allows user to choose those with specific tags and shows them in a separate window. User can also add new bookstore, delete or edit existing one thanks to an interface.
-	BookStore Robot provides quick access to data associated with books. User doesn't waste time on searching promotions.</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<compiler.version>3.5.1</compiler.version>
+		<java.version>1.8</java.version>
+		<testNG.version>6.9.10</testNG.version>
+		<log4j.version>2.5</log4j.version>
+		<jaunt.version>1.1.6</jaunt.version>
+		<assertj.version>3.4.1</assertj.version>
+		<sqlite.version>3.8.11.2</sqlite.version>
+		<servlet.version>2.5</servlet.version>
+		<mockito.verion>2.0.2-beta</mockito.verion>
+		<jacoco.version>0.7.6.201602180812</jacoco.version>
+		<maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
+		<maven-surefire-plugin>2.19.1</maven-surefire-plugin>
+		<maven-assembly-plugin-version>2.6</maven-assembly-plugin-version>
+		<awaitility.version>1.7.0</awaitility.version>
+		<dbunit.version>2.5.2</dbunit.version>
+		<h2.version>1.4.191</h2.version>
 	</properties>
+	<description>
+		BookStore Robot downloads informations associated with free books from two bookstores sites and saves them in database.
+		Database stores informations about titles, authors, tags, dates of book addition and bookstores names. Main window shows all books but the interface of this robot
+		allows user to choose those with specific tags and shows them in a separate window. User can also add new bookstore, delete or edit existing one thanks to an interface.
+		BookStore Robot provides quick access to data associated with books. User doesn't waste time on searching promotions.
+	</description>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>${compiler.version}</version>
 				<configuration>
-					<!-- or whatever version you use -->
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -31,111 +49,125 @@
 					<mainClass>com.epam.ja.kmw.Main</mainClass>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--We use assembly plugin in order to define proper packaging of jar 
+				with application. It needs to add external libraries for logging and specify 
+				main class to start application in one of two modes. -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${maven-assembly-plugin-version}</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>manager.Start</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+
+
 	<reporting>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-				</configuration>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>javadoc</report>
-							<report>test-javadoc</report>
-						</reports>
-					</reportSet>
-					<reportSet>
-						<id>aggregate</id>
-						<inherited>false</inherited>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
-				<configuration>
-					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-
-					<!-- <docletPath>/path/to/UmlGraph.jar</docletPath> -->
-					<docletArtifact>
-						<groupId>org.umlgraph</groupId>
-						<artifactId>doclet</artifactId>
-						<version>5.1</version>
-					</docletArtifact>
-					<additionalparam>-views</additionalparam>
-					<useStandardDocletOptions>true</useStandardDocletOptions>
-				</configuration>
+				<version>${maven-javadoc-plugin}</version>
 			</plugin>
 		</plugins>
 	</reporting>
+
+
 	<dependencies>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-			<version>3.3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.9.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jaunt.code</groupId>
-			<artifactId>jaunt</artifactId>
-			<version>1.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.5</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.9.6</version>
-			<scope>test</scope>
+			<version>${testNG.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.verion}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jaunt.code</groupId>
+			<artifactId>jaunt</artifactId>
+			<version>${jaunt.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.5</version>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.8.11.2</version>
+			<version>${sqlite.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<version>${servlet.version}</version>
 		</dependency>
 	</dependencies>
-	<packaging>war</packaging>
 </project>
