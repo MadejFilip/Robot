@@ -1,11 +1,13 @@
 package com.epam.ja.kmw.controller;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.dao.impl.SearcherDaoImpl;
 import com.epam.ja.kmw.model.Book;
+ 
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -76,47 +78,37 @@ public class ShowBooksController {
 		} else {
 
 			new Thread(new Runnable() {
-
 				@Override
 				public void run() {
+					SearcherDaoImpl searcherDaoImpl = new SearcherDaoImpl();
 
-					try (ConnectionDao connectionDao = new ConnectionDao()) {
+					List<Book> listBookStore = searcherDaoImpl.getBooksByTag(tagsField.getText());
+					ObservableList<String> listOfBooks = FXCollections.observableArrayList();
+					ListView<String> listView = new ListView<String>();
 
-						SearcherDaoImpl searcherDaoImpl = new SearcherDaoImpl(connectionDao);
+					// List<Book> books = new
+					// BookDaoImpl().getAllBooksByBookStore(bookStore);
 
-						searcherDaoImpl.getBooksByTag(tagsField.getText());
-
-						ObservableList<String> listOfBooks = FXCollections.observableArrayList();
-
-						ListView<String> listView = new ListView<String>();
-
-						for (Book book : searcherDaoImpl.getBooksByTag(tagsField.getText())) {
-
-							listOfBooks.add(book.getTitle() + " *** " + book.getAuthor() + " *** " + book.getTags());
-						}
-						if(listOfBooks.isEmpty())
-						{
-							listOfBooks.add("Nie znaleziono żadnych wyników wyszukiwania");
-						}
-						Platform.runLater(new Runnable() {
-
-							@Override
-							public void run() {
-
-								listView.setItems(listOfBooks);
-								Tab tab = new Tab(tagsField.getText() + " ");
-								tab.setContent(listView);
-								tabPane.getTabs().add(tab);
-							}
-
-						});
-					} catch (Exception e) {
-						LOGGER.error("Can't close database connection");
+					for (Book book : listBookStore) {
+						listOfBooks.add(book.toString());
 					}
-				}
 
+					if (listOfBooks.isEmpty())
+						listOfBooks.add("Nie znaleziono żadnych wyników wyszukiwania");
+
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							listView.setItems(listOfBooks);
+							Tab tab = new Tab(tagsField.getText());
+							tab.setContent(listView);
+							tabPane.getTabs().add(tab);
+						}
+					});
+				}
 			}).start();
 		}
-
 	}
+
 }

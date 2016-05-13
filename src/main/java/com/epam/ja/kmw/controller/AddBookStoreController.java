@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
-import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.BookStore;
 
 import javafx.fxml.FXML;
@@ -17,7 +16,6 @@ import javafx.stage.Stage;
  * @author filipm This is controller which allows user adding new bookstore by
  *         GUI.
  */
-
 public class AddBookStoreController {
 	public static final Logger LOGGER = LogManager.getLogger(AddBookStoreController.class);
 
@@ -54,7 +52,7 @@ public class AddBookStoreController {
 	 */
 	@FXML
 	private void handleOk() {
-
+		BookStore checkBookStoreDuplicate = new BookStoreDaoImpl().getBookStoreByName(nameField.getText());
 		if (nameField.getText().equals("") || urlField.getText().equals("") || nameTagField.getText().equals("")
 				|| priceTagField.getText().equals("") || nextTagField.getText().equals("")
 				|| authorTagField.getText().equals("")
@@ -63,6 +61,13 @@ public class AddBookStoreController {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error Dialog");
 			alert.setHeaderText("Empty fields");
+			alert.setContentText("Ooops, there was an error!");
+
+			alert.showAndWait();
+		} else if (checkBookStoreDuplicate != null && checkBookStoreDuplicate.getName().equals(nameField.getText())) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setHeaderText("BookStore is existing");
 			alert.setContentText("Ooops, there was an error!");
 
 			alert.showAndWait();
@@ -76,19 +81,16 @@ public class AddBookStoreController {
 
 				@Override
 				public void run() {
-
-					ConnectionDao connectionDao = new ConnectionDao();
-					BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
-
-					bookStoreDaoImpl.addBookStore(bookStore);
-
-					LOGGER.error("Can't close database");
-					connectionDao.close();
-
+					new BookStoreDaoImpl().addBookStore(bookStore);
 				}
 
 			}).start();
-
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Stage thisStage = (Stage) nameField.getScene().getWindow();
 			thisStage.close();
 		}

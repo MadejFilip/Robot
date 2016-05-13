@@ -1,255 +1,79 @@
 package com.epam.ja.kmw.dao.impl;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import com.epam.ja.kmw.dao.BookStoreDao;
 import com.epam.ja.kmw.model.BookStore;
 
 /**
  * @author filipm This is implementation of BookStoreDao. Provides functions
  *         needed to operate on bookstores.
  */
-public class BookStoreDaoImpl implements BookStoreDao {
+public class BookStoreDaoImpl {
 
-	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
-	ConnectionDao connectionDao;
+	SessionFactory sf = HibernateUtil.getSessionFactory();
 
-	/**
-	 * Creates BookStoreDaoImpl object and calls private method
-	 * createTableBooks.
-	 * 
-	 * @param connectionDao
-	 *            initialize created object.
-	 */
-	public BookStoreDaoImpl(ConnectionDao connectionDao) {
-		this.connectionDao = connectionDao;
-		createTableBookStores();
-	}
-
-	/**
-	 * Creates table named BookStores in a database if it doesn't exists. If
-	 * executing statement fails method catches SQLException.
-	 */
-	private void createTableBookStores() {
-
-		String createBookStoresTableQuery = "CREATE TABLE IF NOT EXISTS BookStores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ "name varchar(255), url varchar(255), nameTag varchar(255), priceTag varchar(255), "
-				+ "nextTag varchar(255), priceValue varchar(255), add_date datetime default current_datetime, authorTag varchar(255), tagsTag varchar(255), type varchar(255))";
-		try (ResultSet result = connectionDao.getStatement().executeQuery(createBookStoresTableQuery);) {
-
-			LOGGER.info("Created BookStore database");
-		} catch (SQLException e) {
-			LOGGER.error("Fail to create a table 'BookStore' in database. :" + e.getMessage());
-		}
-	}
-
-	@Override
 	public boolean addBookStore(BookStore bookStore) {
 
-		String addBoookStoreQuery = "INSERT INTO BookStores VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Session session = sf.openSession();
+		session.beginTransaction();
+		session.save(bookStore);
+		session.getTransaction().commit();
+		session.close();
+		return true;
 
-		LOGGER.info("Adding bookstore to database...");
-
-		java.util.Date date = new java.util.Date();
-		Date sqlDate = new Date(date.getTime());
-
-		try (PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBoookStoreQuery)) {
-
-			prepareStatement.setString(1, bookStore.getName());
-			prepareStatement.setString(2, bookStore.getUrl());
-			prepareStatement.setString(3, bookStore.getNameTag());
-			prepareStatement.setString(4, bookStore.getPriceTag());
-			prepareStatement.setString(5, bookStore.getNextTag());
-			prepareStatement.setString(6, bookStore.getPriceValue());
-
-			prepareStatement.setDate(7, sqlDate);
-			prepareStatement.setString(8, bookStore.getAuthorTag());
-			prepareStatement.setString(9, bookStore.getTagsTag());
-			prepareStatement.setString(10, bookStore.getType());
-			prepareStatement.executeUpdate();
-
-			LOGGER.info("Successfully add bookstore to database.");
-		} catch (SQLException e) {
-			LOGGER.error("Fail when adding bookstore to database caused by: " + Arrays.toString(e.getStackTrace()));
-		}
-
-		return false;
 	}
 
-	@Override
 	public boolean updateBookStore(BookStore bookStore) {
-		String updateBookStoreQuery = "UPDATE BookStores SET name = ?, url = ?, nameTag = ?, "
-				+ "priceTag = ?, nextTag = ?, priceValue = ?, add_date = ?, authorTag = ?, tagsTag = ?, type  = ?    WHERE id = ?";
 
-		LOGGER.info("Updating book in database...");
-		java.util.Date date = new java.util.Date();
-		Date sqlDate = new Date(date.getTime());
-		try (PreparedStatement prepareStatement = connectionDao.getConnection()
-				.prepareStatement(updateBookStoreQuery)) {
+		Session session = sf.openSession();
+		session.beginTransaction();
 
-			prepareStatement.setString(1, bookStore.getName());
-			prepareStatement.setString(2, bookStore.getUrl());
-			prepareStatement.setString(3, bookStore.getNameTag());
-			prepareStatement.setString(4, bookStore.getPriceTag());
-			prepareStatement.setString(5, bookStore.getNextTag());
-			prepareStatement.setString(6, bookStore.getPriceValue());
-			prepareStatement.setDate(7, sqlDate);
-			prepareStatement.setString(8, bookStore.getAuthorTag());
-			prepareStatement.setString(9, bookStore.getTagsTag());
-			prepareStatement.setString(10, bookStore.getType());
-			prepareStatement.setInt(11, bookStore.getId());
-
-			prepareStatement.executeUpdate();
-
-			LOGGER.info("Successfully updated bookstore in database.");
-			return true;
-		} catch (SQLException e) {
-			LOGGER.error("Fail when updating bookstore in databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
-			return false;
-		}
+		session.update(bookStore);
+		session.getTransaction().commit();
+		session.close();
+		return true;
 	}
 
-	@Override
-	public boolean delBookStore(int bookStoreId) {
-
-		String delBookStoreQuery = "DELETE from BookStores WHERE id = " + bookStoreId;
-
-		LOGGER.info("Deleting bookstore from database...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(delBookStoreQuery)) {
-
-			LOGGER.info("Successfully deleted bookstore from database.");
-			return true;
-		} catch (SQLException e) {
-			LOGGER.error("Fail when deleting bookstore from database caused by: " + Arrays.toString(e.getStackTrace()));
-			return false;
-		}
+	public boolean delBookStore(String nameBookStore) {
+		System.out.println(nameBookStore);
+		Session session = sf.openSession();
+		session.beginTransaction();
+		Query q = session.createQuery("delete from BookStore e where e.name=:name");
+		q.setParameter("name", nameBookStore);
+		q.executeUpdate();
+		session.getTransaction().commit();
+		session.close();
+		return true;
 
 	}
 
-	@Override
 	public List<BookStore> getAllBooksStores() {
 
-		String getListOfBookStoresQuery = "SELECT * FROM BookStores";
+		Session session = sf.openSession();
+		session.beginTransaction();
+		List<BookStore> list = session.createCriteria(BookStore.class).list();
+		session.getTransaction().commit();
+		session.close();
+		return list;
 
-		List<BookStore> listOfBookStores = new ArrayList<>();
-
-		LOGGER.info("Getting all bookstores from base...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(getListOfBookStoresQuery)) {
-
-			while (result.next()) {
-
-				int id = result.getInt(1);
-				String name = result.getString(2);
-				String url = result.getString(3);
-				String nameTag = result.getString(4);
-				String priceTag = result.getString(5);
-				String nextTag = result.getString(6);
-				String priceValue = result.getString(7);
-				String authorTag = result.getString(9);
-				String tagsTag = result.getString(10);
-				String type = result.getString(11);
-				BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag,
-						tagsTag, type);
-
-				bookStore.setId(id);
-				listOfBookStores.add(bookStore);
-			}
-			LOGGER.info("Successfully collected all the bookstores from the database.");
-
-			return listOfBookStores;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to collect list of bookstores from database.");
-			return null;
-		}
 	}
 
-	@Override
-	public BookStore getBookStoreById(int bookStoreId) {
-		String getBooksQuery = "SELECT * FROM Books WHERE id = '" + bookStoreId + "';";
-
-		LOGGER.info("Getting bookStore " + bookStoreId + " from database...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {
-
-			result.next();
-
-			int id = result.getInt(1);
-			String name = result.getString(2);
-			String url = result.getString(3);
-			String nameTag = result.getString(4);
-			String priceTag = result.getString(5);
-			String nextTag = result.getString(6);
-			String priceValue = result.getString(7);
-
-			String authorTag = result.getString(9);
-			String tagsTag = result.getString(10);
-			String type = result.getString(11);
-			BookStore bookStore = new BookStore(name, url, nameTag, priceTag, nextTag, priceValue, authorTag, tagsTag,
-					type);
-			bookStore.setId(id);
-
-			LOGGER.info("Successfully collected bookStore " + bookStoreId + " from database.");
-
-			return bookStore;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail when try to collect bookStore " + bookStoreId + " form database.");
-			return null;
-		}
-	}
-
-	/**
-	 * Returned object is stored in a database and is an instance of a BookStore
-	 * class. It is selected by its name. If executing statement fails method
-	 * catches SQLException and returns null.
-	 * 
-	 * @param bookStoreName
-	 *            name of a bookstore that will be returned.
-	 * @return a specific bookstore by its name.
-	 */
 	public BookStore getBookStoreByName(String bookStoreName) {
-		String getBooksQuery = "SELECT * FROM BookStores WHERE name = '" + bookStoreName + "';";
 
-		LOGGER.info("Getting bookStore " + bookStoreName + " from database...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {
-
-			result.next();
-
-			int id = result.getInt(1);
-			String url = result.getString(3);
-			String nameTag = result.getString(4);
-			String priceTag = result.getString(5);
-			String nextTag = result.getString(6);
-			String priceValue = result.getString(7);
-			String authorTag = result.getString(9);
-			String tagsTag = result.getString(10);
-			String type = result.getString(11);
-			BookStore bookStore = new BookStore(bookStoreName, url, nameTag, priceTag, nextTag, priceValue, authorTag,
-					tagsTag, type);
-
-			bookStore.setId(id);
-
-			LOGGER.info("Successfully collected bookStore " + bookStoreName + " from database.");
-
-			return bookStore;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail when try to collect bookStore " + bookStoreName + " form database.");
+		Session session = sf.openSession();
+		session.beginTransaction();
+		Query q = session.createQuery("from BookStore e where e.name=:name");
+		q.setParameter("name", bookStoreName);
+		BookStore bookStore = (BookStore) q.uniqueResult();
+		session.getTransaction().commit();
+		session.close();
+		if (bookStore == null) {
 			return null;
 		}
+		return bookStore;
 	}
-
 }

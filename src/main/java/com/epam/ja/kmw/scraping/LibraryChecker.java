@@ -1,5 +1,6 @@
 package com.epam.ja.kmw.scraping;
 
+ 
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,6 +93,7 @@ public class LibraryChecker {
 	 * @return true if operation succeed, false if not.
 	 */
 	private boolean getFromSubSite(String url) {
+		System.out.println(url);
 		try {
 			userAgent.visit(url);
 		} catch (ResponseException e) {
@@ -110,8 +112,8 @@ public class LibraryChecker {
 				text = text.replaceAll("&amp;", "&");
 				if (!text.toLowerCase().contains(library.getType().toLowerCase()))
 					continue;
-
-				bookList.add(new Book(names.getElement(i).innerText(), library.getName(),
+				
+				bookList.add(new Book(names.getElement(i).innerText().toString(), library,
 						author.getElement(i).innerText(), tag.getElement(i).innerText()));
 				counter++;
 				if (counter >= 100) {

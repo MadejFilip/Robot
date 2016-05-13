@@ -1,217 +1,49 @@
 package com.epam.ja.kmw.dao.impl;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
-import com.epam.ja.kmw.dao.BookDao;
 import com.epam.ja.kmw.model.Book;
+import com.epam.ja.kmw.model.BookStore;
 
 /**
  * @author filipm This is implementation of BookDao. Provides functions needed
  *         to operate on books.
  */
-public class BookDaoImpl implements BookDao {
-
-	private static final Logger LOGGER = LogManager.getLogger(BookDaoImpl.class);
-	private ConnectionDao connectionDao;
-
-	/**
-	 * Creates BookDaoImpl object and calls private method createTableBooks.
-	 * 
-	 * @param connectionDao
-	 *            initialize created object.
-	 */
-	public BookDaoImpl(ConnectionDao connectionDao) {
-		this.connectionDao = connectionDao;
-		createTableBooks();
-	}
-
-	@Override
-	public boolean addBook(Book book) {
-		String addBookQuery = "INSERT INTO Books VALUES (NULL, ?, ?, ?, ?, ?)";
-
-		LOGGER.info("Adding book to database...");
-
-		java.util.Date date = new java.util.Date();
-		Date sqlDate = new Date(date.getTime());
-
-		try (PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery)) {
-
-			prepareStatement.setString(1, book.getTitle());
-			prepareStatement.setString(2, book.getBookStore());
-			prepareStatement.setDate(3, sqlDate);
-			prepareStatement.setString(4, book.getAuthor());
-			prepareStatement.setString(5, book.getTags());
-			prepareStatement.executeUpdate();
-			LOGGER.info("Successfully added book to database.");
-			return true;
-		} catch (SQLException e) {
-			LOGGER.error("Fail when adding book to databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
-			return false;
-		}
-
-	}
-
-	/**
-	 * Creates table named Books in a database if it doesn't exists. If
-	 * executing statement fails method catches SQLException.
-	 */
-	private void createTableBooks() {
-		String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS Books (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ " Title varchar(255), BookStore varchar(255), add_date datetime default current_datetime, Author varchar(255),  Tags varchar(255) )";
-		try {
-
-			connectionDao.getStatement().execute(createBooksTableQuery);
-			LOGGER.info("Created Book database");
-
-		} catch (SQLException e) {
-			LOGGER.error("Fail to create a table 'Book' in database. :" + e.getMessage());
-		}
-
-	}
+public class BookDaoImpl {
+	SessionFactory sf = HibernateUtil.getSessionFactory();
 
 	public boolean addAllBooks(List<Book> listOfBooks) {
 
-		for (Book book : listOfBooks) {
-			if (!addBook(book))
-				return false;
+		StatelessSession session = sf.openStatelessSession();
+		Transaction tx = session.beginTransaction();
+		for (int i = 0; i < listOfBooks.size(); i++) {
+			session.insert(listOfBooks.get(i));
 		}
+		tx.commit();
+		session.close();
 		return true;
 	}
 
-	public boolean updateBook(Book book) {
-		String addBookQuery = "UPDATE Books SET Title = ?, BookStore = ?, add_date = ?, Author = ?, Tags = ? WHERE id = ?";
-
-		LOGGER.info("Updating book in database...");
-
-		java.util.Date date = new java.util.Date();
-		Date sqlDate = new Date(date.getTime());
-
-		try (PreparedStatement prepareStatement = connectionDao.getConnection().prepareStatement(addBookQuery)) {
-
-			prepareStatement.setString(1, book.getTitle());
-			prepareStatement.setString(2, book.getBookStore());
-			prepareStatement.setDate(3, sqlDate);
-			prepareStatement.setInt(4, book.getId());
-
-			prepareStatement.executeUpdate();
-			LOGGER.info("Successfully updated book in database.");
-			return true;
-		} catch (SQLException e) {
-			LOGGER.error("Fail when updating book in databse. Caused by: \n" + Arrays.toString(e.getStackTrace()));
-			return false;
-		}
+	/**
+	 * 
+	 * @param bookStore
+	 * @return
+	 */
+	public List<Book> getAllBooksByBookStore(BookStore bookStore) {
+		Session session = sf.openSession();
+		session.beginTransaction();
+		Query query = session.createQuery("select b from Book b where b.bookStore=:bookstore_id");
+		query.setInteger("bookstore_id", bookStore.getId());
+		List<Book> lists = query.list();
+		session.getTransaction().commit();
+		session.close();
+		return lists;
 
 	}
-
-	public boolean delBook(int bookId) {
-
-		String delBookQuery = "DELETE From Books WHERE id = " + bookId;
-		LOGGER.info("Deleting book from database...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(delBookQuery);) {
-
-			LOGGER.info("Successfully deleted book from database.");
-		} catch (SQLException e) {
-			LOGGER.error("Fail when deleting book from database. Caused by: \n" + Arrays.toString(e.getStackTrace()));
-		}
-		return false;
-
-	}
-
-	public List<Book> getAllBooks() {
-		List<Book> books = new ArrayList<>();
-
-		String getListOfBooksQuery = "SELECT * FROM Books";
-
-		LOGGER.info("Getting all books from base...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery)) {
-
-			while (result.next()) {
-
-				int id = result.getInt(1);
-				String title = result.getString(2);
-				String bookStore = result.getString(3);
-				String author = result.getString(5);
-				String tags = result.getString(6);
-				Book book = new Book(title, bookStore, author, tags);
-				books.add(book);
-				book.setId(id);
-			}
-			LOGGER.info("Successfully collected all the books from the database.");
-
-			return books;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to collect list of books from database.");
-			return null;
-		}
-	}
-
-	public Book getBookById(int bookId) {
-		String getBooksQuery = "SELECT * FROM Books WHERE id = '" + bookId + "';";
-
-		LOGGER.info("Getting book " + bookId + " from database...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(getBooksQuery)) {
-
-			result.next();
-
-			String title = result.getString(2);
-			String bookStore = result.getString(3);
-			String author = result.getString(5);
-			String tags = result.getString(6);
-			Book book = new Book(title, bookStore, author, tags);
-
-			LOGGER.info("Successfully collected book " + bookId + " from database.");
-
-			return book;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail when try to collect book " + bookId + " form database.");
-			return null;
-		}
-
-	}
-
-	@Override
-	public List<Book> getAllBooksForOneBookStore(String bookStoreName) {
-		List<Book> books = new ArrayList<>();
-
-		String getListOfBooksQuery = "SELECT * FROM Books WHERE bookStore = '" + bookStoreName + "';";
-
-		LOGGER.info("Getting books from base for " + bookStoreName + " bookstore...");
-
-		try (ResultSet result = connectionDao.getStatement().executeQuery(getListOfBooksQuery);) {
-
-			while (result.next()) {
-
-				int id = result.getInt(1);
-				String title = result.getString(2);
-				String bookStore = result.getString(3);
-				String author = result.getString(5);
-				String tags = result.getString(6);
-				Book book = new Book(title, bookStore, author, tags);
-				books.add(book);
-				book.setId(id);
-			}
-			LOGGER.info("Successfully collected books from the database for " + bookStoreName + " bookstore.");
-
-			return books;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			LOGGER.error("Fail to collect list of books from database for " + bookStoreName + "bookstore.");
-			return null;
-		}
-	}
-
 }

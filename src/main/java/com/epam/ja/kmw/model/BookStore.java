@@ -1,61 +1,77 @@
 package com.epam.ja.kmw.model;
 
-/**
- * @author filipm Provides functions needed to operate on bookstores.
- */
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "BookStore")
 public class BookStore {
 
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "bookstore_id")
+	private Integer id;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "url")
 	private String url;
+	@Column(name = "nameTag")
 	private String nameTag;
+	@Column(name = "priceTag")
 	private String priceTag;
+	@Column(name = "nextTag")
 	private String nextTag;
+	@Column(name = "priceValue")
 	private String priceValue;
+	@Column(name = "authorTag")
 	private String authorTag;
+	@Column(name = "tagsTag")
 	private String tagsTag;
+	@Column(name = "type")
 	private String type;
 
-	/**
-	 * Creates object of a BookStore class and initializes it.
-	 * 
-	 * @param name
-	 *            name of a created bookstore
-	 * @param url
-	 *            URL of a created bookstore
-	 * @param nameTag
-	 *            book title
-	 * @param priceTag
-	 *            price of searched books
-	 * @param nextTag
-	 *            tag needed to move to next site
-	 * @param priceValue
-	 *            book price
-	 * @param authorTag
-	 *            book author name
-	 * @param tagsTag
-	 *            keyword for books
-	 * @param type
-	 *            describes keyword which should be saved in database
-	 */
-	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue,
-			String authorTag, String tagsTag, String type) {
-		this.setType(type);
-		this.setTagsTag(tagsTag);
-		this.setAuthorTag(authorTag);
-		this.setName(name);
-		this.setUrl(url);
-		this.setNameTag(nameTag);
-		this.setPriceTag(priceTag);
-		this.setNextTag(nextTag);
-		this.setPriceValue(priceValue);
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Book> book;
+
+	public Set<Book> getBook() {
+		return book;
 	}
 
-	public int getId() {
+	public void setBook(Set<Book> book) {
+		this.book = book;
+	}
+
+	public BookStore() {
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public BookStore(String name, String url, String nameTag, String priceTag, String nextTag, String priceValue,
+			String authorTag, String tagsTag, String type) {
+		this.name = name;
+		this.url = url;
+		this.nameTag = nameTag;
+		this.priceTag = priceTag;
+		this.nextTag = nextTag;
+		this.priceValue = priceValue;
+		this.authorTag = authorTag;
+		this.tagsTag = tagsTag;
+		this.type = type;
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

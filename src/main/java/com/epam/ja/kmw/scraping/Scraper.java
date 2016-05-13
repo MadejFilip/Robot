@@ -1,6 +1,5 @@
 package com.epam.ja.kmw.scraping;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -9,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.epam.ja.kmw.dao.impl.BookDaoImpl;
 import com.epam.ja.kmw.dao.impl.BookStoreDaoImpl;
-import com.epam.ja.kmw.dao.impl.ConnectionDao;
 import com.epam.ja.kmw.model.BookStore;
 
 /**
@@ -19,31 +17,16 @@ import com.epam.ja.kmw.model.BookStore;
 public class Scraper {
 	public static final Logger LOGGER = LogManager.getLogger(Scraper.class);
 
-	private List<BookStore> getBookStores() throws SQLException {
-		try (ConnectionDao connectionDao = new ConnectionDao()) {
-			BookStoreDaoImpl bookStoreDaoImpl = new BookStoreDaoImpl(connectionDao);
-			return bookStoreDaoImpl.getAllBooksStores();
-		}
-
-	}
-
-	/**
-	 * Initializes downloading of books from proper bookstores and saves those
-	 * books to database. If connection to database fails method catches
-	 * SQLException.
-	 * 
-	 * @return true if operation succeed, false if there is not any bookstores.
-	 */
 	public boolean downloading() {
 		boolean result = true;
-		try (ConnectionDao connectionDao = new ConnectionDao()) {
-			BookDaoImpl bookDaoImpl = new BookDaoImpl(connectionDao);
+		BookDaoImpl bookDaoImpl = new BookDaoImpl();
 
-			List<BookStore> libraries = getBookStores();
-			if (libraries.size() == 0) {
-				result = false;
-			}
+		List<BookStore> libraries = new BookStoreDaoImpl().getAllBooksStores();
 
+		if (libraries.size() == 0) {
+			result = false;
+		}
+		try {
 			CountDownLatch latch = new CountDownLatch(libraries.size());
 
 			for (BookStore bookStore : libraries) {
@@ -58,13 +41,13 @@ public class Scraper {
 					}
 				}).start();
 			}
+
 			latch.await();
-		} catch (SQLException e) {
-			LOGGER.error("Couldn't close database: " + e.getMessage());
 		} catch (InterruptedException e) {
-			LOGGER.error("Thread exception" + e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		return result;
 	}
-
 }
